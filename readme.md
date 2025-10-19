@@ -1,5 +1,5 @@
 # GBF Tool Utility  
-[![pages-build-deployment](https://github.com/MizaGBF/GBFTU/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/MizaGBF/GBFAL/actions/workflows/pages/pages-build-deployment)  
+[![pages-build-deployment](https://github.com/MizaGBF/GBFTU/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/MizaGBF/GBFTU/actions/workflows/pages/pages-build-deployment)  
 Web page with tool and utilities for Granblue Fantasy.  
 Click [Here](https://mizagbf.github.io/GBFTU) to access it.  
   
