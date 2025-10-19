@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GBF Asset Lookup</title>
+	<meta name="title" content="Granblue Fantasy Tool Utility">
+	<meta name="description" content="The Granblue Fantasy Tool Utility project (GBFTU). Find various utility tools and applications for Granblue Fantasy!">
+	<meta name="theme-color" content="#5217b0">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mizagbf.github.io/GBFTU/">
+	<meta property="og:title" content="Granblue Fantasy Asset Lookup">
+	<meta property="og:description" content="The Granblue Fantasy Tool Utility project (GBFTU). Find various utility tools and applications for Granblue Fantasy!">
+	<meta property="og:image" content="https://mizagbf.github.io/GBFTU/assets/ui/card.png">
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://mizagbf.github.io/GBFTU/">
+	<meta property="twitter:title" content="Granblue Fantasy Asset Lookup">
+	<meta property="twitter:description" content="The Granblue Fantasy Tool Utility project (GBFTU). Find various utility tools and applications for Granblue Fantasy!">
+	<meta property="twitter:image" content="https://mizagbf.github.io/GBFTU/assets/ui/card.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="assets/icon.png">
+	<link rel="stylesheet" href="../GBFML/css/style.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="../GBFML/js/util.js"></script>
+	<script src="../GBFML/js/audio_player.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/tools/spark_tracker.js"></script>
+	<script src="js/tools/bullet_tracker.js"></script>
+	<script src="js/tools/kirin_calc.js"></script>
+	<script src="js/tools/roll_sim.js"></script>
+	<script src="js/tools/defense.js"></script>
+	<script src="js/tools/binomial.js"></script>
+	<script src="js/tools/jukebox.js"></script>
+	<script src="js/tools/save_management.js"></script>
+	<link rel="dns-prefetch" href="https://prd-game-a-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a1-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a2-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a3-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a4-granbluefantasy.akamaized.net/" />
+	<link rel="dns-prefetch" href="https://prd-game-a5-granbluefantasy.akamaized.net/" />
+</head>
+<body onload="init()">
+	<a href="index.html"><img id="title-header" src="assets/ui/header.png" alt="header"></a>
+	<!-- Mini buttons -->
+	<div class="margin">
+		<a class="mini-btn" href="../GBFAL" title="Asset Lookup"><img class="mini-btn-icon" src="../GBFAL/assets/icon.png" /></a>
+		<a class="mini-btn" href="spark.html" title="Spark Maker"><img class="mini-btn-icon" src="../GBFAL/assets/spark/moon.png" /></a>
+		<a class="mini-btn" href="ranker.html" title="Character Ranker"><img class="mini-btn-icon" src="../GBFML/assets/ui/icon/appear.png" /></a>
+		<a class="mini-btn" href="smash.html" title="Smash or Pass"><img class="mini-btn-icon" src="../GBFAL/assets/smash/smash.png" /></a>
+		<a class="mini-btn" href="../GBFAP" title="Animation Player"><img class="mini-btn-icon" src="../GBFAP/assets/icon.png" /></a>
+	</div>
+	<!-- Tab buttons -->
+	<div class="margin">
+		<button class="tab-button" id="tab-spark-tracker" alt="index" onclick="open_tool('spark-tracker')"><img class="tab-button-icon" src="assets/ui/spark_tracker/crystal.png" />Spark Tracker</button>
+		<button class="tab-button" id="tab-bullet-tracker" alt="index" onclick="open_tool('bullet-tracker')"><img class="tab-button-icon" src="assets/ui/bullet_tracker/icon.png" />Bullet Tracker</button>
+		<button class="tab-button" id="tab-roll-sim" alt="index" onclick="open_tool('roll-sim')"><img class="tab-button-icon" src="assets/ui/roll_sim/ssr.png" />Gacha Sim.</button>
+		<button class="tab-button" id="tab-kirin-calc" alt="index" onclick="open_tool('kirin-calc')"><img class="tab-button-icon" src="assets/ui/kirin_calc/omega.png" />Anima Calc.</button>
+		<button class="tab-button" id="tab-defense" alt="index" onclick="open_tool('defense')"><img class="tab-button-icon" src="assets/ui/defense/icon.png" />Defense Calc.</button>
+		<button class="tab-button" id="tab-binomial" alt="index" onclick="open_tool('binomial')"><img class="tab-button-icon" src="assets/ui/binomial/icon.png" />Roll Chance</button>
+		<button class="tab-button" id="tab-jukebox" alt="jukebox" onclick="open_tool('jukebox')"><img class="tab-button-icon" src="../GBFML/assets/ui/icon/jukebox.png" />Jukebox</button>
+		<button class="tab-button" id="tab-save-management" alt="index" onclick="open_tool('save-management')"><img class="tab-button-icon" src="assets/ui/save_management/icon.png" />Local Data</button>
+	</div>
+	<!-- Content area -->
+	<div id="content" class="tab-content">
+		<div style="height:100px"> <!-- Placeholder-->
+		</div>
+	</div>
+</body>
+<footer>
+	<div id="footer">
+		<a href="https://github.com/MizaGBF/GBFTU" title="Source Code"><img class="img-link" src="../GBFML/assets/ui/icon/github.png"></a>
+		<a href="../GBFAL" title="GBF Asset Lookup"><img class="img-link" src="../GBFAL/assets/icon.png"></a>
+		<a href="../GBFAP" title="GBF Animation Player"><img class="img-link" src="../GBFAP/assets/icon.png"></a>
+		<a href="https://mizagbf.github.io/" title="Home Page"><img class="img-link" src="../GBFML/assets/ui/mypage.png"></a>
+	</div>
+	<div id="copyright">
+		Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.
+	</div>
+</footer>
+</html>

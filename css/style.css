@@ -1,0 +1,38 @@
+.tool-block {
+	display: inline-block;
+}
+
+.tool-label {
+	min-width: 180px;
+	display: inline-block;
+	text-align: right;
+}
+
+.tool-icon {
+	width: 65px;
+	height: 65px;
+}
+
+.effect-dim {
+	filter: brightness(50%);
+}
+
+.tool-block-hover:hover {
+	background-color: #0000ff44;
+}
+
+.tool-block-active:active {
+	animation: animation-button-press 0.1s;
+}
+
+/* mobile/tablet layout */
+@media (hover: none) or (pointer: coarse) {
+	@media (orientation: portrait) {
+		.tool-icon {
+			width: 65px;
+			height: 65px;
+		}
+	}
+	@media (orientation: landscape) {
+	}
+}
