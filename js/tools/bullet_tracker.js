@@ -405,7 +405,7 @@ class BulletTracker extends ToolBase
 					img.onclick = () => {
 						this.add(bullet);
 					};
-					container.appendChild(document.createTextNode(" x" + count));
+					container.appendChild(document.createTextNode(" x" + final_count));
 				}
 			}
 			if(span.childNodes.length > 0)
