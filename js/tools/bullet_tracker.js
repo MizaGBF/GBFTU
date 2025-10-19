@@ -206,7 +206,9 @@ class BulletTracker extends ToolBase
 		this.data = {};
 		this.elements = {};
 		
-		this.tree[0].appendChild(document.createTextNode("Left click and Right click to manipulate a bullet count."));
+		this.tree[0].appendChild(document.createTextNode("Left click and Right click to select the bullets that you need."));
+		this.tree[0].appendChild(document.createElement("br"));
+		this.tree[0].appendChild(document.createTextNode("The total of what you need for the crafts is at the bottom."));
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
 		this.mobile = add_to(
@@ -221,12 +223,13 @@ class BulletTracker extends ToolBase
 				}
 			}
 		);
-		this.mobile.style.width = "300px";
+		this.mobile.style.width = "250px";
 		this.mobile_bottom = this.mobile.cloneNode();
 		this.mobile_bottom.innerText = this.mobile.innerText;
 		this.mobile_bottom.onclick = this.mobile.onclick;
 		
-		add_to(this.tree[0], "br", {br:true});
+		add_to(this.tree[0], "br");
+		add_to(this.tree[0], "hr");
 		
 		let grid = add_to(this.tree[0], "div");
 		grid.style.display = "grid";
@@ -280,7 +283,7 @@ class BulletTracker extends ToolBase
 				this.elements[bullet] = {block:block, img:img, txt:txt};
 			}
 		}
-		this.tree[0].appendChild(document.createElement("br"));
+		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
 		this.tree[0].appendChild(this.mobile_bottom);
 		this.tree[0].appendChild(document.createElement("br"));
@@ -362,10 +365,8 @@ class BulletTracker extends ToolBase
 		let frag = document.createDocumentFragment();
 		if(has_content)
 		{
-			// text
-			
-			
 			// bullet list
+			add_to(frag, "hr");
 			add_to(frag, "span", {innertext:"Selected Bullets", br:true});
 			let span = add_to(frag, "span", {br:true});
 			for(const [bullet, count] of Object.entries(this.data))
@@ -410,11 +411,13 @@ class BulletTracker extends ToolBase
 			}
 			if(span.childNodes.length > 0)
 			{
+				add_to(frag, "hr");
 				add_to(frag, "span", {innertext:"Bullets required in the craft", br:true});
 				frag.appendChild(span);
 				frag.appendChild(document.createElement("br"));
 			}
 			// materials
+			add_to(frag, "hr");
 			add_to(frag, "span", {innertext:"Total Material Cost", br:true});
 			span = add_to(frag, "span", {br:true});
 			for(const [id, count] of Object.entries(loot))
@@ -435,6 +438,7 @@ class BulletTracker extends ToolBase
 				add_to(container, "img", {cls:["tool-icon"]}).src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg";
 				container.appendChild(document.createTextNode(" x" + count));
 			}
+			add_to(frag, "hr");
 		}
 		update_next_frame(() => {
 			this.result.innerHTML = "";
