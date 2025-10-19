@@ -28,10 +28,6 @@
 /* mobile/tablet layout */
 @media (hover: none) or (pointer: coarse) {
 	@media (orientation: portrait) {
-		.tool-icon {
-			width: 65px;
-			height: 65px;
-		}
 	}
 	@media (orientation: landscape) {
 	}
