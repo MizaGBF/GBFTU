@@ -31,7 +31,7 @@ class DefenseCalculator extends ToolBase
 			this.tree[0],
 			"span",
 			{
-				innertext:"Damage Unchanged"
+				innertext:"Normal damage"
 			}
 		);
 	}
@@ -57,7 +57,7 @@ class DefenseCalculator extends ToolBase
 			else if(f < 1)
 				this.result.innerText = "Damage are reduced: x" + f;
 			else
-				this.result.innerText = "Damage are unchanged";
+				this.result.innerText = "Normal damage";
 		}
 		catch(err)
 		{
