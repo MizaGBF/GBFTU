@@ -13,7 +13,7 @@ class SaveManager extends ToolBase
 			this.tree[0],
 			"span",
 			{
-				innerhtml:"The content of this web page is saved in your browser local storage.<br>Here you can export or import this data.",
+				innerhtml:"The content of this web page is saved in your browser local storage.<br>Here you can export or import this data.<br>Note: The data is automatically wiped if you're using Private Browsing.",
 				br:true
 			}
 		);
