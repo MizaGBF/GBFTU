@@ -207,10 +207,13 @@ class AdvyrntureOptimizer extends ToolBase
 				block,
 				"img",
 				{
-					cls:["preview-noborder", "index-image", "effect-dim"],
+					cls:["effect-dim"],
 					br:true
 				}
 			);
+			img.style.minWidth = "140px";
+			img.style.maxWidth = "140px";
+			img.style.height = "80px";
 			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + buddy + ".jpg";
 			let txt = add_to(
 				block,
@@ -250,9 +253,12 @@ class AdvyrntureOptimizer extends ToolBase
 				block,
 				"img",
 				{
-					cls:["preview-noborder", "index-image", "effect-dim"]
+					cls:["effect-dim"]
 				}
 			);
+			img.style.minWidth = "140px";
+			img.style.maxWidth = "140px";
+			img.style.height = "80px";
 			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + helm + ".jpg";
 			this.elements["helm-" + helm] = {block:block, img:img};
 		}
@@ -282,9 +288,12 @@ class AdvyrntureOptimizer extends ToolBase
 				block,
 				"img",
 				{
-					cls:["preview-noborder", "index-image", "effect-dim"]
+					cls:["effect-dim"]
 				}
 			);
+			img.style.minWidth = "140px";
+			img.style.maxWidth = "140px";
+			img.style.height = "80px";
 			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + arm + ".jpg";
 			this.elements["arm-" + arm] = {block:block, img:img};
 		}
