@@ -31,7 +31,7 @@ class DefenseCalculator extends ToolBase
 			this.tree[0],
 			"span",
 			{
-				innertext:"Normal damage"
+				innerhtml:"<b>Example:</b><br>Base Damage: 100000<br>Final Damage: 100000"
 			}
 		);
 	}
@@ -53,11 +53,17 @@ class DefenseCalculator extends ToolBase
 			f = 1 / (1 + f);
 			f = (Math.floor(f * 10000) / 10000);
 			if(f > 1)
-				this.result.innerText = "Damage are increased: x" + f;
+			{
+				this.result.innerHTML = "<b>Example:</b><br>Base Damage: 100000<br>Final Damage: " + Math.round(100000 * f) + "<br>Damage are increased: x" + f;
+			}
 			else if(f < 1)
-				this.result.innerText = "Damage are reduced: x" + f;
+			{
+				this.result.innerHTML = "<b>Example:</b><br>Base Damage: 100000<br>Final Damage: " + Math.round(100000 * f) + "<br>Damage are reduced: x" + f;
+			}
 			else
-				this.result.innerText = "Normal damage";
+			{
+				this.result.innerHTML = "<b>Example:</b><br>Base Damage: 100000<br>Final Damage: 100000";
+			}
 		}
 		catch(err)
 		{
