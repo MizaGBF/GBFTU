@@ -50,6 +50,15 @@ class SparkTracker extends ToolBase
 		this.load();
 	}
 	
+	static get_tool_save_info()
+	{
+		return {
+			name: "Spark Tracker",
+			key: SparkTracker.c_key,
+			storage_key: SparkTracker.c_storage_key
+		};
+	}
+	
 	calculate(timestamp = null)
 	{
 		try

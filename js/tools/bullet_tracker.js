@@ -338,6 +338,15 @@ class BulletTracker extends ToolBase
 		this.load();
 	}
 	
+	static get_tool_save_info()
+	{
+		return {
+			name: "Bullet Tracker",
+			key: BulletTracker.c_key,
+			storage_key: BulletTracker.c_storage_key
+		};
+	}
+	
 	add(bullet)
 	{
 		if(!(bullet in this.data))

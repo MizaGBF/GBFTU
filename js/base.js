@@ -14,7 +14,7 @@ class ToolBase
 	}
 	
 	// return null if it can't save,
-	// else {name:"Tool Name", key:"locale storage key"}
+	// else {name:"Tool Name", key:"tool key", storage_key:"locale storage key"}
 	static get_tool_save_info()
 	{
 		return null;

@@ -75,6 +75,15 @@ class KirinCalculator extends ToolBase
 		this.load();
 	}
 	
+	static get_tool_save_info()
+	{
+		return {
+			name: "Anima Calc.",
+			key: KirinCalculator.c_key,
+			storage_key: KirinCalculator.c_storage_key
+		};
+	}
+	
 	calculate(i)
 	{
 		try

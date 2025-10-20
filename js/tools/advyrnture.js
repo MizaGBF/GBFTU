@@ -342,6 +342,15 @@ class AdvyrntureOptimizer extends ToolBase
 		this.update();
 	}
 	
+	static get_tool_save_info()
+	{
+		return {
+			name: "Advyrnture",
+			key: AdvyrntureOptimizer.c_key,
+			storage_key: AdvyrntureOptimizer.c_storage_key
+		};
+	}
+	
 	toggle_buddy(id)
 	{
 		if(!(id in this.data.buddy))

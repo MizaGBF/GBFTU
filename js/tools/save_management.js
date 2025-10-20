@@ -40,6 +40,55 @@ class SaveManager extends ToolBase
 				br:true
 			}
 		).style.width = "250px";
+		add_to(this.tree[0], "hr");
+		add_to(
+			this.tree[0],
+			"span",
+			{
+				innertext:"Below, you can clear the stored data of a tool:",
+				br:true
+			}
+		);
+		for(const tool of Object.values(tool_constructors))
+		{
+			const info = tool.get_tool_save_info();
+			if(info != null)
+			{
+				add_to(
+					this.tree[0],
+					"button",
+					{
+						cls:["std-button"],
+						innertext:info.name,
+						onclick:(() => {
+							this.clear(info);
+						}),
+						br:true
+					}
+				).style.width = "250px";
+			}
+		}
+	}
+	
+	clear(info)
+	{
+		try
+		{
+			if(localStorage.getItem(info.storage_key) != null)
+			{
+				if(window.confirm("ARE YOU SURE?\nThe data of '" + info.name + "' will be deleted."))
+				{
+					localStorage.removeItem(info.storage_key);
+					push_popup("The data of '" + info.name + "' has been cleared.");
+				}
+			}
+			else push_popup("'" + info.name + "' has no data in the locale storage.");
+		}
+		catch(err)
+		{
+			console.error("Exception thrown", err.stack);
+			push_popup("An unexpected error occured, the local storage might be unaccessible.");
+		}
 	}
 	
 	export_all()
