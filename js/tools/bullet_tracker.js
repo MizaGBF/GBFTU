@@ -220,6 +220,8 @@ class BulletTracker extends ToolBase
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("Left click and Right click to select the bullets that you need."));
 		this.tree[0].appendChild(document.createElement("br"));
+		this.tree[0].appendChild(document.createTextNode("Hold Shift to change by 10 at once."));
+		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("The total of what you need for the crafts is at the bottom."));
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
@@ -281,15 +283,21 @@ class BulletTracker extends ToolBase
 				txt.style.width = "100%";
 				txt.style.textAlign = "center";
 				// functions
-				block.onclick = () => {
-					if(this.mobile.classList.contains("audio-button-enabled"))
-						this.sub(bullet)
-					else
-						this.add(bullet);
+				block.onclick = (event) => {
+					let count = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < count; ++i)
+					{
+						if(this.mobile.classList.contains("audio-button-enabled"))
+							this.sub(bullet)
+						else
+							this.add(bullet);
+					}
 					event.preventDefault();
 				};
 				block.oncontextmenu = (event) => {
-					this.sub(bullet);
+					let count = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < count; ++i)
+						this.sub(bullet);
 					event.preventDefault();
 				};
 				this.elements[bullet] = {block:block, img:img, txt:txt};
@@ -403,15 +411,21 @@ class BulletTracker extends ToolBase
 				container.style.marginRight = "5px";
 				let img = add_to(container, "img", {cls:["tool-icon"]});
 				img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-				img.onclick = () => {
-					if(this.mobile.classList.contains("audio-button-enabled"))
-						this.sub(bullet)
-					else
-						this.add(bullet);
+				img.onclick = (event) => {
+					let count = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < count; ++i)
+					{
+						if(this.mobile.classList.contains("audio-button-enabled"))
+							this.sub(bullet)
+						else
+							this.add(bullet);
+					}
 					event.preventDefault();
 				};
 				img.oncontextmenu = (event) => {
-					this.sub(bullet);
+					let count = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < count; ++i)
+						this.sub(bullet);
 					event.preventDefault();
 				};
 				container.appendChild(document.createTextNode(" x" + count));
@@ -429,8 +443,10 @@ class BulletTracker extends ToolBase
 					container.style.marginRight = "5px";
 					let img = add_to(container, "img", {cls:["tool-icon"]});
 					img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-					img.onclick = () => {
-						this.add(bullet);
+					img.onclick = (event) => {
+						let count = event.shiftKey ? 10 : 1;
+						for(let i = 0; i < count; ++i)
+							this.add(bullet);
 					};
 					container.appendChild(document.createTextNode(" x" + final_count));
 				}
