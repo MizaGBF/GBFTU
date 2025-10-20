@@ -144,8 +144,6 @@ class TripleAttackCalculator extends ToolBase
 	{
 		switch(node.value.trim())
 		{
-			case "":
-			case "0":
 			case "Protagonist":
 			{
 				node.style.background = "";
@@ -173,7 +171,13 @@ class TripleAttackCalculator extends ToolBase
 			}
 			default:
 			{
-				node.style.background = "#4f785a";
+				let f = parseFloat(node.value);
+				if(isNaN(f) || f > 0)
+					node.style.background = "#4f785a";
+				else if(f < 0)
+					node.style.background = "#784f5b";
+				else
+					node.style.background = "";
 				break;
 			}
 		}
