@@ -49,7 +49,9 @@ class TripleAttackCalculator extends ToolBase
 			"div"
 		).innerHTML = "<ul><li><b>MC Class</b> assumes the class is fully maxed (max level, ultimate mastery, etc...).</li>"
 			+ "<li><b>Class Mastery</b> is the Triple Attack bonuses you unlock along with mastering classes.</li>"
-			+ "<li>Deduct the <b>Ultima</b> or/and <b>Celestial</b> values from <b>Grid</b>, if your MC is affected in the in-game calculator.</li></ul>";
+			+ "<li>Deduct the <b>Ultima</b> or/and <b>Celestial</b> values from <b>Grid</b>, if your MC is affected in the in-game calculator.</li>"
+			+ "<li><b>Domain</b> is <b>5</b> for Fraux, Haaselia and Maria Theresa.</li>"
+			+ "<li><b>Radiance</b> has no Triple Attack bonus to this date.</li></ul>";
 		
 		let grid = add_to(this.tree[0], "div");
 		grid.style.display = "grid";
