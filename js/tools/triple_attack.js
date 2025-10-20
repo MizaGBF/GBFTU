@@ -88,6 +88,7 @@ class TripleAttackCalculator extends ToolBase
 		this.add_input_row(grid, "assets/ui/triple_attack/passive_emp.png", "Passive 3", ["0", "0", "0", "0"]);
 		this.add_input_row(grid, "assets/ui/triple_attack/domain.png", "Domain", ["0", "0", "0", "0"]);
 		this.add_input_row(grid, "assets/ui/triple_attack/radiance.png", "Radiance", ["0", "0", "0", "0"]);
+		this.add_input_row(grid, "assets/ui/triple_attack/backline.png", "Backline", ["0", "0", "0", "0"]);
 		// Buffs
 		this.add_input_row(grid, "assets/ui/triple_attack/icon.png", "Buff 1", ["0", "0", "0", "0"]);
 		this.add_input_row(grid, "assets/ui/triple_attack/icon2.png", "Buff 2", ["0", "0", "0", "0"]);
@@ -264,6 +265,7 @@ class TripleAttackCalculator extends ToolBase
 				+ this.parse_float(this.elements.passive3[i].value)
 				+ this.parse_float(this.elements.domain[i].value)
 				+ this.parse_float(this.elements.radiance[i].value)
+				+ this.parse_float(this.elements.backline[i].value)
 				+ this.parse_float(this.elements.buff1[i].value)
 				+ this.parse_float(this.elements.buff2[i].value)
 				+ this.parse_float(this.elements.buff3[i].value)
