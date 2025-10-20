@@ -82,6 +82,7 @@ class TripleAttackCalculator extends ToolBase
 			this.elements.awakening[i].value = "Balanced";
 			this.color_cell(this.elements.awakening[i]);
 		}
+		this.add_input_row(grid, "assets/ui/triple_attack/artifact.png", "Artifact", ["0", "0", "0", "0"]);
 		// Passives
 		this.add_input_row(grid, "assets/ui/triple_attack/passive.png", "Passive 1", ["0", "0", "0", "0"]);
 		this.add_input_row(grid, "assets/ui/triple_attack/passive.png", "Passive 2", ["0", "0", "0", "0"]);
@@ -260,6 +261,7 @@ class TripleAttackCalculator extends ToolBase
 				+ this.parse_float(this.elements.emp[i].value)
 				+ this.parse_float(this.elements.ring[i].value)
 				+ this.parse_float(this.elements.earring[i].value)
+				+ this.parse_float(this.elements.artifact[i].value)
 				+ this.parse_float(this.elements.passive1[i].value)
 				+ this.parse_float(this.elements.passive2[i].value)
 				+ this.parse_float(this.elements.passive3[i].value)
