@@ -3,15 +3,24 @@ class ToolBase
 	constructor()
 	{
 		this.tree = [];
-		this.key = null;
-		this.save_buttons = [];
+		this.key = null; // the tool unique identifier key
+		this.save_buttons = []; // store save data button
 	}
 	
+	// return true if the tool is in use
 	is_running()
 	{
 		return this.key == running;
 	}
 	
+	// return null if it can't save,
+	// else {name:"Tool Name", key:"locale storage key"}
+	get_tool_save_info()
+	{
+		return null;
+	}
+	
+	// set/remove the tool-save-pending class on save buttons
 	set_save_pending(state)
 	{
 		for(const btn of this.save_buttons)
@@ -20,11 +29,13 @@ class ToolBase
 		}
 	}
 	
+	// called when a save file is loaded
 	reload()
 	{
 		
 	}
 	
+	// used to set the content of tree in the HTML
 	display(node)
 	{
 		let fragment = document.createDocumentFragment();
@@ -36,11 +47,15 @@ class ToolBase
 		});
 	}
 	
+	// export the locale storage content
+	// don't bother to re-implement if no save data
 	static export_storage_data(obj)
 	{
 		return obj;
 	}
 	
+	// import to the locale storage content
+	// don't bother to re-implement if no save data
 	static import_storage_data(obj)
 	{
 		
