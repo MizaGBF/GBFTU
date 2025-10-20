@@ -172,7 +172,9 @@ class TripleAttackCalculator extends ToolBase
 			default:
 			{
 				let f = parseFloat(node.value);
-				if(isNaN(f) || f > 0)
+				if(isNaN(f))
+					node.style.background = "#ff0000";
+				else if(f > 0)
 					node.style.background = "#4f785a";
 				else if(f < 0)
 					node.style.background = "#784f5b";
