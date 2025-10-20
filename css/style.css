@@ -41,9 +41,50 @@
 	animation: animation-button-press 0.1s;
 }
 
+.tool-grid-cell {
+	display:inline-block;
+	height:30px;
+	font-size:18px;
+	background:#00000000;
+	color:white;
+	border:1px solid white;
+	overflow:hidden;
+	white-space:ellipsis;
+	padding:0px;
+	text-align:center;
+}
+
+.tool-grid-cell > img {
+	height:30px;
+	vertical-align:middle;
+	float:left;
+}
+
+.tool-grid-select-cell {
+	height:32px;
+	appearance:none;
+}
+
+.tool-grid-select-cell > option {
+	color:black;
+	background:white;
+}
+
 /* mobile/tablet layout */
 @media (hover: none) or (pointer: coarse) {
 	@media (orientation: portrait) {
+		.tool-grid-cell {
+			height:40px;
+			font-size:14px;
+		}
+		
+		.tool-grid-cell > img {
+			display:none;
+		}
+		
+		.tool-grid-select-cell {
+			height:42px;
+		}
 	}
 	@media (orientation: landscape) {
 	}
