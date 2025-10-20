@@ -29,6 +29,7 @@ class TripleAttackCalculator extends ToolBase
 		"Shieldsworn":7,
 		"Soldier":17,
 		"Spartan":7,
+		"Sumaibito":-45,
 		"Tormentor":7,
 		"Viking":20,
 		"Warlock":7,
