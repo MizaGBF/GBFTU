@@ -2,6 +2,38 @@ class TripleAttackCalculator extends ToolBase
 {
 	static c_key = Object.freeze("triple-attack");
 	static c_storage_key = Object.freeze("gbftu-triple-attack");
+	static c_classes = Object.freeze({
+		"None/Other":0,
+		"Apsaras":10,
+		"Bandit Tycoon":7,
+		"Boogeyman":10,
+		"Cavalier":17,
+		"Chaos Ruler":7,
+		"Chrysaor":7,
+		"Doctor":7,
+		"Elysian":7,
+		"Glorybringer":7,
+		"Iatromantis":10,
+		"Kengo":7,
+		"Luchador":16,
+		"Lumberjack":7,
+		"Mariachi":10,
+		"Masquerade":22,
+		"Monk":7,
+		"Nekomancer":5,
+		"Nighthound":7,
+		"Relic Buster":27,
+		"Rising Force":7,
+		"Robin Hood":14,
+		"Runeslayer":31,
+		"Shieldsworn":7,
+		"Soldier":17,
+		"Spartan":7,
+		"Tormentor":7,
+		"Viking":20,
+		"Warlock":7,
+		"Yamato":7
+	});
 	
 	constructor()
 	{
@@ -11,12 +43,24 @@ class TripleAttackCalculator extends ToolBase
 			cls:["tab-content", "container"]
 		}));
 		this.elements = [];
+		add_to(
+			this.tree[0],
+			"div"
+		).innerHTML = "<ul><li><b>MC Class</b> assumes the class is fully maxed (max level, ultimate mastery, etc...).</li>"
+			+ "<li><b>Class Mastery</b> is the Triple Attack bonuses you unlock along with mastering classes.</li>"
+			+ "<li>Deduct the <b>Ultima</b> or/and <b>Celestial</b> values from <b>Grid</b>, if your MC is affected in the in-game calculator.</li></ul>";
+		
 		let grid = add_to(this.tree[0], "div");
 		grid.style.display = "grid";
 		grid.style.gridTemplateColumns = "repeat(5, 20%)";
 		// name row
 		this.add_input_row(grid, null, "", ["Gran/Djeeta", "Ally 2", "Ally 3", "Ally 4"]);
 		grid.children[0].classList.toggle("tool-grid-cell", false); // remove the style of top left corner
+		// MC
+		this.add_select_row(grid, "assets/ui/triple_attack/class.png", "MC Class", Object.keys(TripleAttackCalculator.c_classes));
+		this.add_select_row(grid, "assets/ui/triple_attack/mastered.png", "Class Mastery", ["0", "1", "2", "3"]);
+		this.elements.classmastery[0].value = "3";
+		this.color_cell(this.elements.classmastery[0]);
 		// crucible
 		this.add_select_row(grid, "assets/ui/triple_attack/crucible.png", "Crucible Wonder", ["0", "3", "5"]);
 		// grid row
@@ -142,7 +186,8 @@ class TripleAttackCalculator extends ToolBase
 	
 	color_cell(node)
 	{
-		switch(node.value.trim())
+		const val = node.value;
+		switch(val.trim())
 		{
 			case "Protagonist":
 			{
@@ -171,15 +216,25 @@ class TripleAttackCalculator extends ToolBase
 			}
 			default:
 			{
-				let f = parseFloat(node.value);
-				if(isNaN(f))
-					node.style.background = "#ff0000";
-				else if(f > 0)
-					node.style.background = "#4f785a";
-				else if(f < 0)
-					node.style.background = "#784f5b";
+				if(val in TripleAttackCalculator.c_classes)
+				{
+					if(val == "None/Other")
+						node.style.background = "";
+					else
+						node.style.background = "#4f785a";
+				}
 				else
-					node.style.background = "";
+				{
+					let f = parseFloat(val);
+					if(isNaN(f))
+						node.style.background = "#ff0000";
+					else if(f > 0)
+						node.style.background = "#4f785a";
+					else if(f < 0)
+						node.style.background = "#784f5b";
+					else
+						node.style.background = "";
+				}
 				break;
 			}
 		}
@@ -195,6 +250,8 @@ class TripleAttackCalculator extends ToolBase
 				+ this.parse_float(this.elements.ultima[i].value)
 				+ this.parse_float(this.elements.celestial[i].value)
 				)
+				+ (TripleAttackCalculator.c_classes[this.elements.mcclass[i].value] ?? 0)
+				+ this.parse_float(this.elements.classmastery[i].value)
 				+ this.parse_float(this.elements.cruciblewonder[i].value)
 				+ this.parse_float(this.elements.emp[i].value)
 				+ this.parse_float(this.elements.ring[i].value)
