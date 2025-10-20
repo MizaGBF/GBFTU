@@ -206,6 +206,18 @@ class BulletTracker extends ToolBase
 		this.data = {};
 		this.elements = {};
 		
+		this.save_buttons.push(add_to(
+			this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Save",
+				onclick:(() => {
+					this.save();
+				})
+			}
+		));
+		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("Left click and Right click to select the bullets that you need."));
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("The total of what you need for the crafts is at the bottom."));
@@ -284,15 +296,7 @@ class BulletTracker extends ToolBase
 			}
 		}
 		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
-		this.tree[0].appendChild(this.mobile_bottom);
-		this.tree[0].appendChild(document.createElement("br"));
-		this.tree[0].appendChild(document.createTextNode("Below will appear:"));
-		add_to(this.tree[0], "ul").innerHTML = "<li>The list of bullets that you selected (You can click as normal to modify the amount)</li>"
-			+ "<li>The bullets needed to craft them (Click on them to add to the list)</li>"
-			+ "<li>The list of materials required</li>";
-		this.result = add_to(this.tree[0], "div");
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -302,7 +306,27 @@ class BulletTracker extends ToolBase
 					this.save();
 				})
 			}
-		);
+		));
+		this.tree[0].appendChild(document.createElement("br"));
+		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
+		this.tree[0].appendChild(this.mobile_bottom);
+		this.tree[0].appendChild(document.createElement("br"));
+		this.tree[0].appendChild(document.createTextNode("Below will appear:"));
+		add_to(this.tree[0], "ul").innerHTML = "<li>The list of bullets that you selected (You can click as normal to modify the amount)</li>"
+			+ "<li>The bullets needed to craft them (Click on them to add to the list)</li>"
+			+ "<li>The list of materials required</li>";
+		this.result = add_to(this.tree[0], "div");
+		this.save_buttons.push(add_to(
+			this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Save",
+				onclick:(() => {
+					this.save();
+				})
+			}
+		));
 		this.load();
 	}
 	
@@ -313,6 +337,7 @@ class BulletTracker extends ToolBase
 		++this.data[bullet];
 		this.elements[bullet].img.classList.toggle("effect-dim", false);
 		this.elements[bullet].txt.innerText = "" + this.data[bullet];
+		this.set_save_pending(true);
 		this.update();
 	}
 	
@@ -327,6 +352,7 @@ class BulletTracker extends ToolBase
 			this.elements[bullet].img.classList.toggle("effect-dim", true);
 			delete this.data[bullet];
 		}
+		this.set_save_pending(true);
 		this.update();
 	}
 	
@@ -473,6 +499,7 @@ class BulletTracker extends ToolBase
 			console.error("Exception thrown", err.stack);
 			this.data = {};
 		}
+		this.set_save_pending(false);
 	}
 	
 	reload()
@@ -484,6 +511,7 @@ class BulletTracker extends ToolBase
 	{
 		localStorage.setItem(BulletTracker.c_storage_key, JSON.stringify(this.data));
 		push_popup("Your progress is saved.");
+		this.set_save_pending(false);
 	}
 	
 	static export_storage_data(obj)

@@ -1,3 +1,19 @@
+@keyframes tool-save-pending-animation {
+	0% {
+		background-color: #314a44;
+	}
+	50% {
+		background-color: #189e7f;
+	}
+	100% {
+		background-color: #314a44;
+	}
+}
+
+.tool-save-pending {
+	animation: tool-save-pending-animation 2s infinite linear;
+}
+
 .tool-block {
 	display: inline-block;
 }

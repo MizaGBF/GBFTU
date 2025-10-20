@@ -37,6 +37,7 @@ class KirinCalculator extends ToolBase
 				input.value = "0";
 				input.placeholder = "Number";
 				input.onkeyup = (() => {
+					this.set_save_pending(true);
 					this.calculate(t);
 				});
 				this.inputs.push(input);
@@ -60,7 +61,7 @@ class KirinCalculator extends ToolBase
 				add_to(this.tree[0], "br");
 		}
 		add_to(this.tree[0], "br", {br:true});
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -70,7 +71,7 @@ class KirinCalculator extends ToolBase
 					this.save();
 				})
 			}
-		);
+		));
 		this.load();
 	}
 	
@@ -123,6 +124,7 @@ class KirinCalculator extends ToolBase
 			console.error("Exception thrown", err.stack);
 			this.last_run = null;
 		}
+		this.set_save_pending(false);
 	}
 	
 	reload()
@@ -143,6 +145,7 @@ class KirinCalculator extends ToolBase
 			this.inputs[7].value
 		]));
 		push_popup("Your progress is saved.");
+		this.set_save_pending(false);
 	}
 	
 	static export_storage_data(obj)

@@ -24,6 +24,7 @@ class SparkTracker extends ToolBase
 			input.value = "0";
 			input.placeholder = "Number";
 			input.onkeyup = (() => {
+				this.set_save_pending(true);
 				this.calculate();
 			});
 			this.inputs.push(input);
@@ -35,7 +36,7 @@ class SparkTracker extends ToolBase
 			{innertext:"Set your values."}
 		);
 		add_to(this.tree[0], "br", {br:true});
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -45,7 +46,7 @@ class SparkTracker extends ToolBase
 					this.save();
 				})
 			}
-		);
+		));
 		this.load();
 	}
 	
@@ -136,6 +137,7 @@ class SparkTracker extends ToolBase
 			console.error("Exception thrown", err.stack);
 			this.last_run = null;
 		}
+		this.set_save_pending(false);
 	}
 	
 	reload()
@@ -153,6 +155,7 @@ class SparkTracker extends ToolBase
 		{
 			localStorage.setItem(SparkTracker.c_storage_key, JSON.stringify(this.last_run));
 			push_popup("Your progress is saved.");
+			this.set_save_pending(false);
 		}
 	}
 	

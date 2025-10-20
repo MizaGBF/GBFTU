@@ -4,11 +4,20 @@ class ToolBase
 	{
 		this.tree = [];
 		this.key = null;
+		this.save_buttons = [];
 	}
 	
 	is_running()
 	{
 		return this.key == running;
+	}
+	
+	set_save_pending(state)
+	{
+		for(const btn of this.save_buttons)
+		{
+			btn.classList.toggle("tool-save-pending", state);
+		}
 	}
 	
 	reload()

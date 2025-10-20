@@ -139,7 +139,7 @@ class AdvyrntureOptimizer extends ToolBase
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("The top 10 results are sorted by requirements met and skill bonuses (drop boosts, huge success boosts, etc...)."));
 		this.tree[0].appendChild(document.createElement("br"));
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -150,7 +150,7 @@ class AdvyrntureOptimizer extends ToolBase
 				}),
 				br:true
 			}
-		);
+		));
 		add_to(
 			this.tree[0],
 			"label",
@@ -173,6 +173,7 @@ class AdvyrntureOptimizer extends ToolBase
 			{
 				this.elements["zone-" + zone.id].img.classList.toggle("effect-dim", zone.unlock > this.data.lvl);
 			}
+			this.set_save_pending(true);
 			this.update();
 		};
 		for(let i = 0; i < AdvyrntureOptimizer.c_levels.length; ++i)
@@ -289,7 +290,7 @@ class AdvyrntureOptimizer extends ToolBase
 		}
 		// save
 		add_to(this.tree[0],"hr");
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -300,7 +301,7 @@ class AdvyrntureOptimizer extends ToolBase
 				}),
 				br:true
 			}
-		);
+		));
 		// zones
 		for(const zone of AdvyrntureOptimizer.c_zones)
 		{
@@ -316,7 +317,7 @@ class AdvyrntureOptimizer extends ToolBase
 		}
 		// save
 		add_to(this.tree[0],"hr");
-		add_to(
+		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
 			{
@@ -327,7 +328,7 @@ class AdvyrntureOptimizer extends ToolBase
 				}),
 				br:true
 			}
-		);
+		));
 		this.load();
 		this.update();
 	}
@@ -353,6 +354,7 @@ class AdvyrntureOptimizer extends ToolBase
 			this.elements["buddy-"+id].img.classList.toggle("effect-dim", true);
 			this.elements["buddy-"+id].txt.innerText = "Locked";
 		}
+		this.set_save_pending(true);
 		this.update();
 	}
 	
@@ -363,6 +365,7 @@ class AdvyrntureOptimizer extends ToolBase
 			this.data[key][id] = false;
 		this.data[key][id] = !this.data[key][id];
 		this.elements[key+"-"+id].img.classList.toggle("effect-dim", !this.data[key][id]);
+		this.set_save_pending(true);
 		this.update();
 	}
 	
@@ -659,6 +662,7 @@ class AdvyrntureOptimizer extends ToolBase
 			console.error("Exception thrown", err.stack);
 			this.data = {lvl:1,buddy:{},helm:{},arm:{}};
 		}
+		this.set_save_pending(false);
 	}
 	
 	reload()
@@ -670,6 +674,7 @@ class AdvyrntureOptimizer extends ToolBase
 	{
 		localStorage.setItem(AdvyrntureOptimizer.c_storage_key, JSON.stringify(this.data));
 		push_popup("Your progress is saved.");
+		this.set_save_pending(false);
 	}
 	
 	static export_storage_data(obj)
