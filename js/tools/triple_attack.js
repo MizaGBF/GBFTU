@@ -285,10 +285,20 @@ class TripleAttackCalculator extends ToolBase
 				}
 			}
 			if(ta > 100)
+			{
 				this.elements.total[i].innerText = "" + Math.min(100, ta) + "% (" + ta + "%)";
+				this.elements.total[i].style.background = "green";
+			}
+			else if(ta < 0)
+			{
+				this.elements.total[i].innerText = "" + Math.max(0, ta) + "% (" + ta + "%)";
+				this.elements.total[i].style.background = "red";
+			}
 			else
+			{
 				this.elements.total[i].innerText = "" + ta + "%";
-			this.elements.total[i].style.background = (ta >= 100) ? "green" : "";
+				this.elements.total[i].style.background = "";
+			}
 		}
 	}
 	
