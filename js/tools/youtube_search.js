@@ -115,7 +115,6 @@ class YoutubeSearch extends ToolBase
 		{jp:"ヤマト", value:"Yamato"},
 		{jp:"シールドスウォーン", value:"Shieldsworn"},
 		{jp:"モンク", value:"Monk"},
-		{jp:"クリュサオル", value:"Chrysaor"},
 		{group:true, label:"V"},
 		{jp:"ヴァイキング", value:"Viking"},
 		{jp:"パラディン", value:"Paladin"},
