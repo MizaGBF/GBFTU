@@ -126,6 +126,16 @@ class AdvyrntureOptimizer extends ToolBase
 		"123":{name:"Cat Teaser",combat:0,perception:0,endurance:0,affinity:3,luck:0,skill:[4,"Young Cat"]},
 		"124":{name:"Beach Ball",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Ursula"]}
 	});
+	/********************************************
+	Equipment skills format (Might need refactor in the future):
+	- 0 : None
+	- 1 : Stat Boost. Params: Zone name, boosted stat, value
+	- 2 : Max drop boost. Params: Zone name
+	- 3 : Huge Success boost when stat requirements are met
+	- 4 : Buddy Exp boost. Params: Buddy name
+	- 5 : Buddy Exp boost and Huge Success boost. Params: Buddy name
+	- 6 : Chance to negate stall
+	********************************************/
 	
 	constructor()
 	{
