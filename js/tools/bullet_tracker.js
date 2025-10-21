@@ -205,6 +205,7 @@ class BulletTracker extends ToolBase
 		}));
 		this.data = {};
 		this.elements = {};
+		this.result_tree = [];
 		
 		this.save_buttons.push(add_to(
 			this.tree[0],
@@ -284,20 +285,22 @@ class BulletTracker extends ToolBase
 				txt.style.textAlign = "center";
 				// functions
 				block.onclick = (event) => {
-					let count = event.shiftKey ? 10 : 1;
-					for(let i = 0; i < count; ++i)
+					let iter = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < iter; ++i)
 					{
 						if(this.mobile.classList.contains("audio-button-enabled"))
 							this.sub(bullet)
 						else
 							this.add(bullet);
 					}
+					this.update();
 					event.preventDefault();
 				};
 				block.oncontextmenu = (event) => {
-					let count = event.shiftKey ? 10 : 1;
-					for(let i = 0; i < count; ++i)
+					let iter = event.shiftKey ? 10 : 1;
+					for(let i = 0; i < iter; ++i)
 						this.sub(bullet);
+					this.update();
 					event.preventDefault();
 				};
 				this.elements[bullet] = {block:block, img:img, txt:txt};
@@ -323,7 +326,22 @@ class BulletTracker extends ToolBase
 		add_to(this.tree[0], "ul").innerHTML = "<li>The list of bullets that you selected (You can click as normal to modify the amount)</li>"
 			+ "<li>The bullets needed to craft them (Click on them to add to the list)</li>"
 			+ "<li>The list of materials required</li>";
-		this.result = add_to(this.tree[0], "div");
+		// result area
+		let result = add_to(this.tree[0], "div");
+		this.result_tree.push(add_to(result, "hr"));
+		this.result_tree.push(add_to(result, "span", {innertext:"Selected Bullets"}));
+		this.result_tree.push(add_to(result, "br"));
+		this.result_tree.push(add_to(result, "span"));
+		this.result_tree.push(add_to(result, "hr"));
+		this.result_tree.push(add_to(result, "span", {innertext:"Bullets required in the craft"}));
+		this.result_tree.push(add_to(result, "br"));
+		this.result_tree.push(add_to(result, "span"));
+		this.result_tree.push(add_to(result, "hr"));
+		this.result_tree.push(add_to(result, "span", {innertext:"Total Material Cost"}));
+		this.result_tree.push(add_to(result, "br"));
+		this.result_tree.push(add_to(result, "span"));
+		this.result_tree.push(add_to(result, "hr"));
+		
 		this.save_buttons.push(add_to(
 			this.tree[0],
 			"button",
@@ -355,7 +373,6 @@ class BulletTracker extends ToolBase
 		this.elements[bullet].img.classList.toggle("effect-dim", false);
 		this.elements[bullet].txt.innerText = "" + this.data[bullet];
 		this.set_save_pending(true);
-		this.update();
 	}
 	
 	sub(bullet)
@@ -370,7 +387,6 @@ class BulletTracker extends ToolBase
 			delete this.data[bullet];
 		}
 		this.set_save_pending(true);
-		this.update();
 	}
 	
 	update()
@@ -405,7 +421,202 @@ class BulletTracker extends ToolBase
 			}
 		}
 		// render
-		let frag = document.createDocumentFragment();
+		for(const elem of this.result_tree)
+		{
+			elem.style.display = has_content ? "" : "none";
+		}
+		if(has_content)
+		{
+			// needed for later
+			const fragments = [
+				document.createDocumentFragment(),
+				document.createDocumentFragment(),
+				document.createDocumentFragment()
+			];
+			const childrens = [
+				Array.from(this.result_tree[3].children),
+				Array.from(this.result_tree[7].children),
+				Array.from(this.result_tree[11].children)
+			];
+			// hr
+			// selected bullets
+			for(let t = 0 ; t < 4; ++t)
+				this.result_tree[t].style.display = "";
+			let i = 0;
+			for(const [bullet, count] of Object.entries(this.data))
+			{
+				if(i >= childrens[0].length) // we must create a new node
+				{
+					let container = add_to(fragments[0], "span");
+					container.style.display= "inline-block";
+					container.style.width = "max-content";
+					container.style.marginRight = "5px";
+					let img = add_to(container, "img", {cls:["tool-icon"]});
+					img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
+					img.onclick = (event) => {
+						let iter = event.shiftKey ? 10 : 1;
+						for(let i = 0; i < iter; ++i)
+						{
+							if(this.mobile.classList.contains("audio-button-enabled"))
+								this.sub(bullet)
+							else
+								this.add(bullet);
+						}
+						this.update();
+						event.preventDefault();
+					};
+					img.oncontextmenu = (event) => {
+						let iter = event.shiftKey ? 10 : 1;
+						for(let i = 0; i < iter; ++i)
+							this.sub(bullet);
+						this.update();
+						event.preventDefault();
+					};
+					add_to(container, "span", {innertext:" x" + count});
+				}
+				else
+				{
+					const ref = childrens[0][i].children;
+					const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
+					if(url != ref[0].src)
+					{
+						ref[0].src = url;
+						ref[0].onclick = (event) => {
+							let iter = event.shiftKey ? 10 : 1;
+							for(let i = 0; i < iter; ++i)
+							{
+								if(this.mobile.classList.contains("audio-button-enabled"))
+									this.sub(bullet)
+								else
+									this.add(bullet);
+							}
+							this.update();
+							event.preventDefault();
+						};
+						ref[0].oncontextmenu = (event) => {
+							let iter = event.shiftKey ? 10 : 1;
+							for(let i = 0; i < iter; ++i)
+								this.sub(bullet);
+							this.update();
+							event.preventDefault();
+						};
+					}
+					ref[1].innerText = " x" + count;
+				}
+				++i;
+			}
+			// dependant bullets
+			let dependant_added = 0;
+			for(const [bullet, count] of Object.entries(dependancies))
+			{
+				const final_count = count - (bullet in this.data ? this.data[bullet] : 0);
+				if(final_count > 0)
+				{
+					if(dependant_added >= childrens[1].length) // we must create a new node
+					{
+						
+							let container = add_to(fragments[1], "span");
+							container.style.display= "inline-block";
+							container.style.width = "max-content";
+							container.style.marginRight = "5px";
+							let img = add_to(container, "img", {cls:["tool-icon"]});
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
+							img.onclick = (event) => {
+								let iter = Math.min(
+									count - (bullet in this.data ? this.data[bullet] : 0),
+									event.shiftKey ? 10 : 1
+								);
+								for(let i = 0; i < iter; ++i)
+									this.add(bullet);
+								this.update();
+								event.preventDefault();
+							};
+							add_to(container, "span", {innertext:" x" + final_count});
+					}
+					else
+					{
+						const ref = childrens[1][dependant_added].children;
+						const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
+						if(url != ref[0].src)
+						{
+							ref[0].src = url;
+						}
+						ref[0].onclick = (event) => {
+							let iter = Math.min(
+								count - (bullet in this.data ? this.data[bullet] : 0),
+								event.shiftKey ? 10 : 1
+							);
+							for(let i = 0; i < iter; ++i)
+								this.add(bullet);
+							this.update();
+							event.preventDefault();
+						};
+						ref[1].innerText = " x" + final_count;
+					}
+					++dependant_added;
+				}
+			}
+			if(dependant_added == 0)
+			{
+				for(let t = 4 ; t < 8; ++t)
+					this.result_tree[t].style.display = "none";
+			}
+			// materials
+			i = 0;
+			for(const [entries, path] of [
+				[loot, "sp/assets/item/article/s/"],
+				[evolution, "sp/assets/item/evolution/s/"]
+			])
+			{
+				for(const [id, count] of Object.entries(entries))
+				{
+					if(i >= childrens[2].length) // we must create a new node
+					{
+						let container = add_to(fragments[2], "span");
+						container.style.display= "inline-block";
+						container.style.width = "max-content";
+						container.style.marginRight = "5px";
+						add_to(container, "img", {cls:["tool-icon"]}).src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg";
+						add_to(container, "span", {innertext:" x" + count});
+					}
+					else
+					{
+						const ref = childrens[2][i].children;
+						const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg";
+						if(url != ref[0].src)
+							ref[0].src = url;
+						ref[1].innerText = " x" + count;
+					}
+					++i;
+				}
+			}
+			this.result_tree[12].style.display = "";
+			// apply changes for each category
+			for(const [i, j, datalen, childrenlen] of [
+				[0, 3, Object.keys(this.data).length, childrens[0].length],
+				[1, 7, dependant_added, childrens[1].length],
+				[2, 11, Object.keys(loot).length + Object.keys(evolution).length, childrens[2].length]
+			])
+			{
+				let diff = childrenlen - datalen;
+				if(diff < 0)
+				{
+					// add new nodes if any
+					this.result_tree[j].appendChild(fragments[i]);
+				}
+				else
+				{
+					// remove extra nodes
+					while(diff > 0)
+					{
+						this.result_tree[j].lastChild.remove();
+						--diff;
+					}
+				}
+			}
+		}
+		
+		/*let frag = document.createDocumentFragment();
 		if(has_content)
 		{
 			// bullet list
@@ -494,7 +705,7 @@ class BulletTracker extends ToolBase
 		update_next_frame(() => {
 			this.result.innerHTML = "";
 			this.result.appendChild(frag);
-		});
+		});*/
 	}
 	
 	load()
@@ -525,6 +736,7 @@ class BulletTracker extends ToolBase
 			this.data = {};
 		}
 		this.set_save_pending(false);
+		this.update();
 	}
 	
 	reload()
