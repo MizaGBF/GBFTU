@@ -2,7 +2,7 @@ class YoutubeSearch extends ToolBase
 {
 	static c_key = Object.freeze("youtube-search");
 	static c_content = Object.freeze([
-		{disabled:true, jp:"", value:"Please Select", selected:true},
+		{jp:"", value:"Any", selected:true},
 		{group:true, label:"Regalia"},
 		{jp:"シヴァhl", value:"Shiva"},
 		{jp:"エウロペhl", value:"Europa"},
