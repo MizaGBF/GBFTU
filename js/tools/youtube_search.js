@@ -36,7 +36,7 @@ class YoutubeSearch extends ToolBase
 		{jp:"ワムデュスhl", value:"Wamdus"},
 		{jp:"ガレヲンhl", value:"Galleon"},
 		{jp:"イーウィヤhl", value:"Ewiyar"},
-		{jp:"オーhl", value:"Lu Woh"},
+		{jp:"ル・オーhl", value:"Lu Woh"},
 		{jp:"フェディエルhl", value:"Fediel"},
 		{group:true, label:"Apocalypse"},
 		{jp:"ルシファーhl", value:"Dark Rapture (Hard)"},
