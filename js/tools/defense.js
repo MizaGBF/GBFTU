@@ -17,7 +17,7 @@ class DefenseCalculator extends ToolBase
 				innertext:"Defense Buff (%)"
 			}
 		);
-		label.for = "defense-input";
+		label.htmlFor = "defense-input";
 		this.input = add_to(block, "input", {cls:["styled-input"], id:"defense-input"});
 		this.input.style.width = "200px";
 		this.input.type = "text";

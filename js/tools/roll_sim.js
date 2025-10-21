@@ -33,7 +33,7 @@ class RollSimulator extends ToolBase
 					innertext:entries[i]
 				}
 			);
-			label.for = "gacha-sim-" + i;
+			label.htmlFor = "gacha-sim-" + i;
 			
 			let input = add_to(block, "input", {cls:["styled-input"], id:"spark-tracker-" + i});
 			input.style.width = "200px";

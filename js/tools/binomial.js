@@ -33,7 +33,7 @@ class BinomialCalculator extends ToolBase
 					innertext:entries[i]
 				}
 			);
-			label.for = "binomial-" + i;
+			label.htmlFor = "binomial-" + i;
 			
 			let input = add_to(block, "input", {cls:["styled-input"], id:"spark-tracker-" + i});
 			input.style.width = "200px";

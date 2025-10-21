@@ -168,7 +168,7 @@ class AdvyrntureOptimizer extends ToolBase
 			{
 				innertext:"Level"
 			}
-		).for = "advyrnture-lvl";
+		).htmlFor = "advyrnture-lvl";
 		this.level = add_to(
 			this.tree[0],
 			"select",
