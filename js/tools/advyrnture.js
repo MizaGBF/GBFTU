@@ -49,7 +49,8 @@ class AdvyrntureOptimizer extends ToolBase
 		{combat:44,perception:38,endurance:45,affinity:47,luck:21},
 		{combat:47,perception:41,endurance:48,affinity:50,luck:22},
 		{combat:47,perception:43,endurance:48,affinity:52,luck:22},
-		{combat:49,perception:45,endurance:50,affinity:52,luck:22}
+		{combat:49,perception:45,endurance:50,affinity:52,luck:22},
+		{combat:49,perception:47,endurance:50,affinity:52,luck:23}
 	]);
 	static c_buddies = Object.freeze({
 		"1": {
