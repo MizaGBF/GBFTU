@@ -450,7 +450,15 @@ class AdvyrntureOptimizer extends ToolBase
 			for(const equipment of Object.values(equipments))
 			{
 				const stats = { ...equipment.stats};
-				const boosts = {maxdrop:0,success:0,req:0,stall:0,exp:0};
+				/*
+				- maxdrop: Max drop +1 effects
+				- success: Boost to huge success rate
+				- req: Boost to huge success rate if stat requirements are met (Straw hat)
+				- stall: Chance to not stall
+				- exp: Boost to a buddy's exp
+				- any: Flag used for when no equipment is used or buddy
+				*/
+				const boosts = {maxdrop:0,success:0,req:0,stall:0,exp:0,any:0};
 				const buddy_names = [
 					(equipment.bud[0] == null) ? null : AdvyrntureOptimizer.c_buddies[equipment.bud[0]].name,
 					(equipment.bud[1] == null) ? null : AdvyrntureOptimizer.c_buddies[equipment.bud[1]].name
@@ -531,8 +539,14 @@ class AdvyrntureOptimizer extends ToolBase
 					if(stats[s] >= zone[s])
 						++stat_met;
 				}
+				// reset req is stat requirements aren't met
 				if(stat_met < 5)
 					boosts.req = 0;
+				// any flag
+				if(equipment.hid == "0") ++boosts.any;
+				if(equipment.aid == "0") ++boosts.any;
+				if(equipment.bud[0] == null) ++boosts.any;
+				if(equipment.bud[1] == null) ++boosts.any;
 				results[zone.id].push({stat_met:stat_met, equipment:equipment, boosts:boosts, stats:stats});
 			}
 			results[zone.id].sort(this.result_sort);
@@ -654,7 +668,7 @@ class AdvyrntureOptimizer extends ToolBase
 		diff = b.boosts.success + b.boosts.req - (a.boosts.success + a.boosts.req);
 		if(diff != 0)
 			return diff;
-		const list = (a.stat_met == 5) ? ["maxdrop", "exp"] : ["stall", "exp", "maxdrop"];
+		const list = (a.stat_met == 5) ? ["maxdrop", "exp", "any"] : ["stall", "exp", "maxdrop", "any"];
 		for(const attr of list)
 		{
 			diff = b.boosts[attr] - a.boosts[attr];
