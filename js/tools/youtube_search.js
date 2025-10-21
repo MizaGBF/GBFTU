@@ -74,6 +74,7 @@ class YoutubeSearch extends ToolBase
 		{jp:"ワールドhl", value:"The World"},
 		{group:true, label:"Unite and Fight"},
 		{jp:"古戦場 3500万", value:"Extreme+"},
+		{jp:"古戦場 SWARM", value:"Swarm"},
 		{jp:"古戦場 90hell", value:"Nightmare Lv.90"},
 		{jp:"古戦場 95hell", value:"Nightmare Lv.95"},
 		{jp:"古戦場 100hell", value:"Nightmare Lv.100"},
