@@ -319,26 +319,29 @@ class YoutubeSearch extends ToolBase
 				multiplier = 1000000000000;
 				honor = honor.slice(0, honor.length - 1);
 			}
-			if(/^\d+$/.test(honor))
+			if(/^[0-9.]+$/.test(honor))
 			{
-				honor = parseInt(honor) * multiplier;
-				if(honor >= 1000000000000)
+				honor = parseFloat(honor) * multiplier;
+				if(!isNaN(honor))
 				{
-					honor = "" + Math.floor(honor / 1000000000000) + "兆";
+					if(honor >= 1000000000000)
+					{
+						honor = "" + Math.floor(honor / 1000000000000) + "兆";
+					}
+					else if(honor >= 100000000)
+					{
+						honor = "" + Math.floor(honor / 100000000) + "億";
+					}
+					else if(honor >= 10000)
+					{
+						honor = "" + Math.floor(honor / 10000) + "万";
+					}
+					else
+					{
+						honor = "" + Math.floor(honor);
+					}
+					words.push(honor);
 				}
-				else if(honor >= 100000000)
-				{
-					honor = "" + Math.floor(honor / 100000000) + "億";
-				}
-				else if(honor >= 10000)
-				{
-					honor = "" + Math.floor(honor / 10000) + "万";
-				}
-				else
-				{
-					honor = "" + honor;
-				}
-				words.push(honor);
 			}
 		}
 		this.output = words.join(" ");
