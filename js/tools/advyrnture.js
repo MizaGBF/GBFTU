@@ -504,16 +504,26 @@ class AdvyrntureOptimizer extends ToolBase
 						}
 					}
 				}
-				// micenos island
-				if(zone.id == "9" && equipment.bud[0] == "1" && equipment.bud[1] == "3")
+				// give slight priority to not max-level buddies
+				for(let i = 0; i < 2; ++i)
 				{
-					boosts.success += 1;
-					boosts.stall += 2;
+					if(equipment.bud[i] != null && this.data.buddy[equipment.bud[i]] < 10)
+						++boosts.exp;
 				}
-				// western skydom
-				else if(zone.id == "1" && equipment.bud[0] == "2" && equipment.bud[1] == "4")
+				// buddy skills
+				if(equipment.bud[0] != null && equipment.bud[1] != null)
 				{
-					boosts.maxdrop += 1;
+					// micenos island
+					if(zone.id == "9" && equipment.bud[0] == "1" && equipment.bud[1] == "3")
+					{
+						boosts.success += 1;
+						boosts.stall += 2;
+					}
+					// western skydom
+					else if(zone.id == "1" && equipment.bud[0] == "2" && equipment.bud[1] == "4")
+					{
+						boosts.maxdrop += 1;
+					}
 				}
 				let stat_met = 0;
 				for(const s of ["combat","perception","endurance","affinity","luck"])
