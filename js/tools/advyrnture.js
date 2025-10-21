@@ -531,6 +531,8 @@ class AdvyrntureOptimizer extends ToolBase
 					if(stats[s] >= zone[s])
 						++stat_met;
 				}
+				if(stat_met < 5)
+					boosts.req = 0;
 				results[zone.id].push({stat_met:stat_met, equipment:equipment, boosts:boosts, stats:stats});
 			}
 			results[zone.id].sort(this.result_sort);
