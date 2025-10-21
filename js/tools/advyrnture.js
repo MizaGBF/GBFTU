@@ -632,7 +632,8 @@ class AdvyrntureOptimizer extends ToolBase
 		diff = b.boosts.success + b.boosts.req - (a.boosts.success + a.boosts.req);
 		if(diff != 0)
 			return diff;
-		for(const attr of ["stall", "maxdrop", "exp"])
+		const list = (a.stat_met == 5) ? ["maxdrop", "exp"] : ["stall", "exp", "maxdrop"];
+		for(const attr of list)
 		{
 			diff = b.boosts[attr] - a.boosts[attr];
 			if(diff != 0)
