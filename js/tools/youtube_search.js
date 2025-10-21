@@ -293,7 +293,7 @@ class YoutubeSearch extends ToolBase
 			words.push("マグナ");
 		if(this.elements.fullauto.classList.contains("audio-button-enabled"))
 			words.push("フルオート");
-		if(this.elements.fullauto.classList.contains("audio-button-enabled"))
+		if(this.elements.solo.classList.contains("audio-button-enabled"))
 			words.push("ソロ");
 		let honor = this.elements.honor.value.toLowerCase().trim();
 		if(honor != "")
