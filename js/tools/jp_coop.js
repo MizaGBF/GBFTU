@@ -43,7 +43,10 @@ class JPCoopHelper extends ToolBase
 		this.add_sentence("MC has died", "主人公落ちました");
 		this.add_sentence("<CHARACTER> has died", "<CHARACTER>落ちました");
 		this.add_sentence("Sorry, I made a mistake", "すみませんミスりました");
+		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("Waiting <X%>", "<X>待機");
+		this.add_sentence("Can I have a charge bar summon?", "ゲージ石いただけますか？");
+		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("Can someone do/execute <X%>?", "<X>誰かお願いします");
 		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("Versusia Genesis"));
