@@ -59,7 +59,10 @@ class JPCoopHelper extends ToolBase
 		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("Waiting G50", "G50待機");
 		this.add_sentence("Waiting G100", "G100待機");
+		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("Alexiel please", "ゴブロお願いします");
+		this.add_sentence("I have 2 Alexiels, let me know if you want them", "ゴブロ後２枚あるので欲しい時言ってください");
+		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("No FC", "FCない");
 	}
 	
