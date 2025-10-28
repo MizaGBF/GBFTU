@@ -162,8 +162,8 @@ class YoutubeSearch extends ToolBase
 		this.add_toggle('"Omega"');
 		this.add_toggle('"Full Auto"');
 		this.add_toggle('"Solo"');
-		this.add_input('Honor');
-		this.add_input('Turn');
+		this.add_input('Honor', "eg 400k, 4m");
+		this.add_input('Turn', "eg 1, 2, 3...");
 		this.add_controls();
 		add_to(this.tree[0], "br");
 		add_to(
@@ -229,7 +229,7 @@ class YoutubeSearch extends ToolBase
 		this.elements[this.format_name(name)] = btn;
 	}
 	
-	add_input(name)
+	add_input(name, placeholder)
 	{
 		// note: Reuse audio CSS for convenience
 		let container = add_to(this.tree[0], "div", {
@@ -242,7 +242,7 @@ class YoutubeSearch extends ToolBase
 			cls:["audio-select"],
 			id:"youtube-search-" + this.format_name(name)
 		});
-		input.placeholder = "eg 400k, 4m";
+		input.placeholder = placeholder;
 		input.onkeyup = () => {
 			this.update();
 		};
