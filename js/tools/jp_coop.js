@@ -18,7 +18,9 @@ class JPCoopHelper extends ToolBase
 		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("Yes", "はい");
 		this.add_sentence("No", "いいえ");
+		this.add_sentence("Thanks", "有難う");
 		this.add_sentence("I can try", "やってみる");
+		this.add_sentence("2 times", "2回");
 		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("Elements"));
 		this.tree[0].appendChild(document.createElement("br"));
@@ -39,6 +41,10 @@ class JPCoopHelper extends ToolBase
 		this.add_sentence("We'll start at <TIME>", "00:00から野良募集");
 		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("Raid"));
+		this.tree[0].appendChild(document.createElement("br"));
+		this.add_sentence("1 Turn", "1ターン");
+		this.add_sentence("2 Turn", "2ターン");
+		this.add_sentence("3 Turn", "3ターン");
 		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("MC has died", "主人公落ちました");
 		this.add_sentence("<CHARACTER> has died", "<CHARACTER>落ちました");
