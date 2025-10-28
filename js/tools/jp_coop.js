@@ -43,8 +43,8 @@ class JPCoopHelper extends ToolBase
 		this.tree[0].appendChild(document.createTextNode("Raid"));
 		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("1 Turn", "1ターン");
-		this.add_sentence("2 Turn", "2ターン");
-		this.add_sentence("3 Turn", "3ターン");
+		this.add_sentence("2 Turns", "2ターン");
+		this.add_sentence("3 Turns", "3ターン");
 		this.tree[0].appendChild(document.createElement("br"));
 		this.add_sentence("MC has died", "主人公落ちました");
 		this.add_sentence("<CHARACTER> has died", "<CHARACTER>落ちました");
