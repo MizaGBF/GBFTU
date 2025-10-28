@@ -163,6 +163,7 @@ class YoutubeSearch extends ToolBase
 		this.add_toggle('"Full Auto"');
 		this.add_toggle('"Solo"');
 		this.add_input('Honor');
+		this.add_input('Turn');
 		this.add_controls();
 		add_to(this.tree[0], "br");
 		add_to(
@@ -341,6 +342,18 @@ class YoutubeSearch extends ToolBase
 						honor = "" + Math.floor(honor);
 					}
 					words.push(honor);
+				}
+			}
+		}
+		let turn = this.elements.turn.value.toLowerCase().trim();
+		if(turn != "")
+		{
+			if(/^[0-9]+$/.test(turn))
+			{
+				turn = parseInt(turn)
+				if(!isNaN(turn))
+				{
+					words.push("" + turn + "ターン");
 				}
 			}
 		}
