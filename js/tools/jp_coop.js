@@ -42,6 +42,7 @@ class JPCoopHelper extends ToolBase
 		this.add_sentence("I'm opening (the room)", "野良入れます");
 		this.add_sentence("Closing, there aren't enough people", "あまりにも人が集まらないので解散とします、お越しくださりありがとうございました");
 		this.tree[0].appendChild(document.createElement("br"));
+		this.add_sentence("Please wait a moment", "少々お待ちを");
 		this.add_sentence("We'll start at <TIME>", "00:00から野良募集");
 		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("Raid"));
