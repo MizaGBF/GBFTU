@@ -1,6 +1,123 @@
 class JPCoopHelper extends ToolBase
 {
 	static c_key = Object.freeze("jp-coop");
+	static c_dictionary = Object.freeze({
+		sections : [
+			{
+				title: "Basics",
+				pages : [
+					{
+						list : [
+							{en:"Yes", jp:"はい"},
+							{en:"No", jp:"いいえ"},
+							{en:"Thanks", jp:"有難う"},
+							{en:"Sorry", jp:"すいません"},
+							{en:"I can try", jp:"やってみる"},
+							{en:"2 times", jp:"2回"}
+						]
+					},
+					{
+						list : [
+							{en:"None/Nothing", jp:"皆無"},
+							{en:"Same/Likewise", jp:"同じく"}
+						]
+					},
+					{
+						list : [
+							{en:"Comma (、)", jp:"、"},
+							{en:"Dot (。)", jp:"。"}
+						]
+					}
+				]
+			},
+			{
+				title: "Elements",
+				pages : [
+					{
+						list : [
+							{en:"Fire", jp:"火"},
+							{en:"Water", jp:"水"},
+							{en:"Earth", jp:"土"},
+							{en:"Wind", jp:"風"},
+							{en:"Light", jp:"光"},
+							{en:"Dark", jp:"闇"},
+							{en:"Copy all", jp:"火水土風光闇"}
+						]
+					}
+				]
+			},
+			{
+				title: "Room related",
+				pages : [
+					{
+						list : [
+							{en:"I'm recruiting pubs", jp:"野良募集します"},
+							{en:"I'm opening (the room)", jp:"野良入れます"},
+							{en:"Closing, there aren't enough people", jp:"あまりにも人が集まらないので解散とします、お越しくださりありがとうございました"}
+						]
+					},
+					{
+						list : [
+							{en:"Please wait a moment", jp:"少々お待ちを"},
+							{en:"We'll start at <TIME>", jp:"00:00から野良募集"}
+						]
+					}
+				]
+			},
+			{
+				title: "Raid",
+				pages : [
+					{
+						list : [
+							{en:"1 Turn", jp:"1ターン"},
+							{en:"2 Turns", jp:"2ターン"},
+							{en:"3 Turns", jp:"3ターン"}
+						]
+					},
+					{
+						list : [
+							{en:"MC has died", jp:"主人公落ちました"},
+							{en:"<CHARACTER> has died", jp:"<CHARACTER>落ちました"},
+							{en:"Sorry, I made a mistake", jp:"すみませんミスりました"}
+						]
+					},
+					{
+						list : [
+							{en:"Waiting <X%>", jp:"<X>待機"},
+							{en:"Can I have a charge bar summon?", jp:"ゲージ石いただけますか？"}
+						]
+					},
+					{
+						list : [
+							{en:"Can someone do/execute <X%>?", jp:"<X>誰かお願いします"}
+						]
+					}
+				]
+			},
+			{
+				title: "Versusia Genesis",
+				pages : [
+					{
+						list : [
+							{en:"Waiting G50", jp:"G50待機"},
+							{en:"Waiting G100", jp:"G100待機"}
+						]
+					},
+					{
+						list : [
+							{en:"Alexiel please", jp:"ゴブロお願いします"},
+							{en:"I have 2 Alexiels, let me know if you want them", jp:"ゴブロ後２枚あるので欲しい時言ってください"}
+						]
+					},
+					{
+						list : [
+							{en:"No FC", jp:"FCない"}
+						]
+					}
+				]
+			}
+		]
+	});
 	
 	constructor()
 	{
@@ -13,65 +130,20 @@ class JPCoopHelper extends ToolBase
 		this.tree[0].appendChild(document.createTextNode("Click on a word or sentence to get a japanese equivalent."));
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("Buttons with <PLACEHOLDERS> mean you must modify something."));
-		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("Basis"));
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Yes", "はい");
-		this.add_sentence("No", "いいえ");
-		this.add_sentence("Thanks", "有難う");
-		this.add_sentence("Sorry", "すいません");
-		this.add_sentence("I can try", "やってみる");
-		this.add_sentence("2 times", "2回");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("None/Nothing", "皆無");
-		this.add_sentence("Same/Likewise", "同じく");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Comma (、)", "、");
-		this.add_sentence("Dot (。)", "。");
-		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("Elements"));
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Fire", "火");
-		this.add_sentence("Water", "水");
-		this.add_sentence("Earth", "土");
-		this.add_sentence("Wind", "風");
-		this.add_sentence("Light", "光");
-		this.add_sentence("Dark", "闇");
-		this.add_sentence("Copy all", "火水土風光闇");
-		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("Room related"));
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("I'm recruiting pubs", "野良募集します");
-		this.add_sentence("I'm opening (the room)", "野良入れます");
-		this.add_sentence("Closing, there aren't enough people", "あまりにも人が集まらないので解散とします、お越しくださりありがとうございました");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Please wait a moment", "少々お待ちを");
-		this.add_sentence("We'll start at <TIME>", "00:00から野良募集");
-		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("Raid"));
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("1 Turn", "1ターン");
-		this.add_sentence("2 Turns", "2ターン");
-		this.add_sentence("3 Turns", "3ターン");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("MC has died", "主人公落ちました");
-		this.add_sentence("<CHARACTER> has died", "<CHARACTER>落ちました");
-		this.add_sentence("Sorry, I made a mistake", "すみませんミスりました");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Waiting <X%>", "<X>待機");
-		this.add_sentence("Can I have a charge bar summon?", "ゲージ石いただけますか？");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Can someone do/execute <X%>?", "<X>誰かお願いします");
-		this.tree[0].appendChild(document.createElement("hr"));
-		this.tree[0].appendChild(document.createTextNode("Versusia Genesis"));
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Waiting G50", "G50待機");
-		this.add_sentence("Waiting G100", "G100待機");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("Alexiel please", "ゴブロお願いします");
-		this.add_sentence("I have 2 Alexiels, let me know if you want them", "ゴブロ後２枚あるので欲しい時言ってください");
-		this.tree[0].appendChild(document.createElement("br"));
-		this.add_sentence("No FC", "FCない");
+		for(const section of JPCoopHelper.c_dictionary.sections)
+		{
+			this.tree[0].appendChild(document.createElement("hr"));
+			this.tree[0].appendChild(document.createTextNode(section.title));
+			let first = true;
+			for(const page of section.pages)
+			{
+				this.tree[0].appendChild(document.createElement("br"));
+				for(const entry of page.list)
+				{
+					this.add_sentence(entry.en, entry.jp);
+				}
+			}
+		}
 	}
 	
 	add_sentence(en, jp)
