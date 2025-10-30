@@ -22,6 +22,9 @@ class JPCoopHelper extends ToolBase
 		this.add_sentence("Sorry", "すいません");
 		this.add_sentence("I can try", "やってみる");
 		this.add_sentence("2 times", "2回");
+		this.tree[0].appendChild(document.createElement("br"));
+		this.add_sentence("Comma (、)", "、");
+		this.add_sentence("Dot (。)", "。");
 		this.tree[0].appendChild(document.createElement("hr"));
 		this.tree[0].appendChild(document.createTextNode("Elements"));
 		this.tree[0].appendChild(document.createElement("br"));
