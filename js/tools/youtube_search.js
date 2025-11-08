@@ -119,8 +119,6 @@ class YoutubeSearch extends ToolBase
 		{jp:"バブ・イールの塔", value:"Tower of Babyl"},
 		{jp:"エイプリルフール", value:"April Fool's Day"},
 		{jp:"コラボイベント", value:"Collaboration"}
-		
-		
 	]);
 	static c_elements = Object.freeze([
 		{jp:"", value:"Any", selected:true},
