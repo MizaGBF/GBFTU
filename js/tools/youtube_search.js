@@ -72,6 +72,18 @@ class YoutubeSearch extends ToolBase
 		{jp:"四大天司", value:"Four Primarchs"},
 		{jp:"リンドヴルム", value:"Lindwurm"},
 		{jp:"ワールドhl", value:"The World"},
+		{group:true, label:"Rise of the Beasts"},
+		{jp:"四象降臨 朱雀", value:"Zhuque"},
+		{jp:"四象降臨 アグニス", value:"Agni"},
+		{jp:"四象降臨 玄武", value:"Xuanwu"},
+		{jp:"四象降臨 ネプチューン", value:"Neptune"},
+		{jp:"四象降臨 白虎", value:"Baihu"},
+		{jp:"四象降臨 ティターン", value:"Titan"},
+		{jp:"四象降臨 青竜", value:"Qinglong"},
+		{jp:"四象降臨 ゼピュロス", value:"Zephyrus"},
+		{jp:"四象降臨 四象瑞神100", value:"Shenxian"},
+		{jp:"四象降臨 四象瑞神Lv.100", value:"Shenxian (Lv.100)"},
+		{jp:"四象降臨 四象瑞神Lv.150", value:"Shenxian (Lv.150)"},
 		{group:true, label:"Unite and Fight"},
 		{jp:"古戦場 3500万", value:"Extreme+"},
 		{jp:"古戦場 SWARM", value:"Swarm"},
@@ -80,7 +92,34 @@ class YoutubeSearch extends ToolBase
 		{jp:"古戦場 100hell", value:"Nightmare Lv.100"},
 		{jp:"古戦場 150hell", value:"Nightmare Lv.150"},
 		{jp:"古戦場 200hell", value:"Nightmare Lv.200"},
-		{jp:"古戦場 250hell", value:"Nightmare Lv.250"}
+		{jp:"古戦場 250hell", value:"Nightmare Lv.250"},
+		{group:true, label:"Dread Barrage"},
+		{jp:"ドレバラ ★1", value:"Dread Barrage ★"},
+		{jp:"ドレバラ ★2", value:"Dread Barrage ★★"},
+		{jp:"ドレバラ ★3", value:"Dread Barrage ★★★"},
+		{jp:"ドレバラ ★4", value:"Dread Barrage ★★★★"},
+		{jp:"ドレバラ ★5", value:"Dread Barrage ★★★★★"},
+		{jp:"ドレバラ 強敵95", value:"Unparalleled Foe Lv.95"},
+		{jp:"ドレバラ 強敵135", value:"Unparalleled Foe Lv.135"},
+		{jp:"ドレバラ 強敵175", value:"Unparalleled Foe Lv.175"},
+		{jp:"ドレバラ 強敵215", value:"Unparalleled Foe Lv.215"},
+		{group:true, label:"Records of the Ten"},
+		{jp:"十天衆戦記 3500万", value:"Extreme"},
+		{jp:"十天衆戦記 100hell", value:"Nightmare Lv.100"},
+		{jp:"十天衆戦記 150hell", value:"Nightmare Lv.150"},
+		{group:true, label:"Proving Grounds"},
+		{jp:"ブレイブグラウンド EX", value:"Extreme"},
+		{jp:"ブレイブグラウンド PROUD", value:"Proud"},
+		{jp:"ブレイブグラウンド PROUD+", value:"Proud+"},
+		{group:true, label:"Story Event"},
+		{jp:"シナリオイベント VH", value:"Very Hard"},
+		{jp:"シナリオイベント EX", value:"Extreme"},
+		{group:true, label:"Other Events"},
+		{jp:"バブ・イールの塔", value:"Tower of Babyl"},
+		{jp:"エイプリルフール", value:"April Fool's Day"},
+		{jp:"コラボイベント", value:"Collaboration"}
+		
+		
 	]);
 	static c_elements = Object.freeze([
 		{jp:"", value:"Any", selected:true},
@@ -93,7 +132,7 @@ class YoutubeSearch extends ToolBase
 	]);
 	static c_classes = Object.freeze([
 		{jp:"", value:"Any", selected:true},
-		{group:true, label:"I"},
+		{group:true, label:"I Origin"},
 		{jp:"ファイター・オリジン", value:"Fighter Origin"},
 		{group:true, label:"IV"},
 		{jp:"ベルセルク", value:"Berserker"},
@@ -159,7 +198,7 @@ class YoutubeSearch extends ToolBase
 			YoutubeSearch.c_classes
 		);
 		this.add_toggle('"Granblue"');
-		this.add_toggle('"Omega"');
+		this.add_toggle('"Omega/Magna"');
 		this.add_toggle('"Full Auto"');
 		this.add_toggle('"Solo"');
 		this.add_input('Honor', "eg 400k, 4m");
@@ -276,7 +315,7 @@ class YoutubeSearch extends ToolBase
 	
 	format_name(str)
 	{
-		return str.toLowerCase().replaceAll(" ", "").replaceAll('"', "");
+		return str.toLowerCase().replaceAll(" ", "").replaceAll('"', "").replaceAll("/", "");
 	}
 	
 	update()
@@ -290,7 +329,7 @@ class YoutubeSearch extends ToolBase
 			words.push(this.elements.element.value);
 		if(this.elements.class.value != "")
 			words.push(this.elements.class.value);
-		if(this.elements.omega.classList.contains("audio-button-enabled"))
+		if(this.elements.omegamagna.classList.contains("audio-button-enabled"))
 			words.push("マグナ");
 		if(this.elements.fullauto.classList.contains("audio-button-enabled"))
 			words.push("フルオート");
