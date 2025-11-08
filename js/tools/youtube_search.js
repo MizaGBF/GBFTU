@@ -61,6 +61,7 @@ class YoutubeSearch extends ToolBase
 		{jp:"フリクエ天元", value:"Hexachromatic Hierarch (Free Quest)"},
 		{jp:"ルシゼロ", value:"Dark Rapture Zero"},
 		{jp:"フリクエルシゼロ", value:"Dark Rapture Zero (Free Quest)"},
+		{group:true, label:"Unlimited"},
 		{jp:"ヴェルサシア", value:"Versusia Genesis"},
 		{group:true, label:"Gold Brick Raids"},
 		{jp:"つよばは", value:"Proto Bahamut HL"},
