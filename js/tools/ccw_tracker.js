@@ -431,35 +431,35 @@ class CCWTracker extends ToolBase
 									{
 										this.add_item(materials, "1021", 250); // low orb
 										this.add_item(materials, "1323", 250); // whorl
-										this.add_item(materials, "101", 60); // centrum
+										this.add_item(materials, "102", 60); // centrum
 										break;
 									}
 									case 2: // earth
 									{
 										this.add_item(materials, "1031", 250); // low orb
 										this.add_item(materials, "1333", 250); // whorl
-										this.add_item(materials, "101", 60); // centrum
+										this.add_item(materials, "103", 60); // centrum
 										break;
 									}
 									case 3: // wind
 									{
 										this.add_item(materials, "1041", 250); // low orb
 										this.add_item(materials, "1343", 250); // whorl
-										this.add_item(materials, "101", 60); // centrum
+										this.add_item(materials, "104", 60); // centrum
 										break;
 									}
 									case 4: // light
 									{
 										this.add_item(materials, "1051", 250); // low orb
 										this.add_item(materials, "1353", 250); // whorl
-										this.add_item(materials, "101", 60); // centrum
+										this.add_item(materials, "105", 60); // centrum
 										break;
 									}
 									case 5: // dark
 									{
 										this.add_item(materials, "1061", 250); // low orb
 										this.add_item(materials, "1363", 250); // whorl
-										this.add_item(materials, "101", 60); // centrum
+										this.add_item(materials, "106", 60); // centrum
 										break;
 									}
 								}
