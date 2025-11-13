@@ -544,7 +544,8 @@ class CCWTracker extends ToolBase
 	
 	modify_result(index, url, amount)
 	{
-		this.result.childNodes[index].childNodes[0].src = url;
+		if(this.result.childNodes[index].childNodes[0].src != url)
+			this.result.childNodes[index].childNodes[0].src = url;
 		this.result.childNodes[index].childNodes[1].innerText = " x" + amount;
 	}
 	
