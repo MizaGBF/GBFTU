@@ -447,41 +447,9 @@ class BulletTracker extends ToolBase
 			{
 				if(i >= childrens[0].length) // we must create a new node
 				{
-					let container = add_to(fragments[0], "span");
-					container.style.display= "inline-block";
-					container.style.width = "max-content";
-					container.style.marginRight = "5px";
-					let img = add_to(container, "img", {cls:["tool-icon"]});
-					img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-					img.onclick = (event) => {
-						let iter = event.shiftKey ? 10 : 1;
-						for(let i = 0; i < iter; ++i)
-						{
-							if(this.mobile.classList.contains("audio-button-enabled"))
-								this.sub(bullet)
-							else
-								this.add(bullet);
-						}
-						this.update();
-						event.preventDefault();
-					};
-					img.oncontextmenu = (event) => {
-						let iter = event.shiftKey ? 10 : 1;
-						for(let i = 0; i < iter; ++i)
-							this.sub(bullet);
-						this.update();
-						event.preventDefault();
-					};
-					add_to(container, "span", {innertext:" x" + count});
-				}
-				else
-				{
-					const ref = childrens[0][i].children;
-					const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-					if(url != ref[0].src)
-					{
-						ref[0].src = url;
-						ref[0].onclick = (event) => {
+					this.add_result(
+						fragments[0], "sp/assets/bullet/s/", bullet, count,
+						(event) => {
 							let iter = event.shiftKey ? 10 : 1;
 							for(let i = 0; i < iter; ++i)
 							{
@@ -492,16 +460,42 @@ class BulletTracker extends ToolBase
 							}
 							this.update();
 							event.preventDefault();
-						};
-						ref[0].oncontextmenu = (event) => {
+						},
+						(event) => {
 							let iter = event.shiftKey ? 10 : 1;
 							for(let i = 0; i < iter; ++i)
 								this.sub(bullet);
 							this.update();
 							event.preventDefault();
-						};
-					}
-					ref[1].innerText = " x" + count;
+						}
+					);
+				}
+				else
+				{
+					this.modify_result(
+						childrens[0][i].children,
+						"https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg",
+						count,
+						(event) => {
+							let iter = event.shiftKey ? 10 : 1;
+							for(let i = 0; i < iter; ++i)
+							{
+								if(this.mobile.classList.contains("audio-button-enabled"))
+									this.sub(bullet)
+								else
+									this.add(bullet);
+							}
+							this.update();
+							event.preventDefault();
+						},
+						(event) => {
+							let iter = event.shiftKey ? 10 : 1;
+							for(let i = 0; i < iter; ++i)
+								this.sub(bullet);
+							this.update();
+							event.preventDefault();
+						}
+					);
 				}
 				++i;
 			}
@@ -514,14 +508,9 @@ class BulletTracker extends ToolBase
 				{
 					if(dependant_added >= childrens[1].length) // we must create a new node
 					{
-						
-							let container = add_to(fragments[1], "span");
-							container.style.display= "inline-block";
-							container.style.width = "max-content";
-							container.style.marginRight = "5px";
-							let img = add_to(container, "img", {cls:["tool-icon"]});
-							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-							img.onclick = (event) => {
+						this.add_result(
+							fragments[1], "sp/assets/bullet/s/", bullet, final_count,
+							(event) => {
 								let iter = Math.min(
 									count - (bullet in this.data ? this.data[bullet] : 0),
 									event.shiftKey ? 10 : 1
@@ -530,28 +519,28 @@ class BulletTracker extends ToolBase
 									this.add(bullet);
 								this.update();
 								event.preventDefault();
-							};
-							add_to(container, "span", {innertext:" x" + final_count});
+							},
+							null
+						);
 					}
 					else
 					{
-						const ref = childrens[1][dependant_added].children;
-						const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg";
-						if(url != ref[0].src)
-						{
-							ref[0].src = url;
-						}
-						ref[0].onclick = (event) => {
-							let iter = Math.min(
-								count - (bullet in this.data ? this.data[bullet] : 0),
-								event.shiftKey ? 10 : 1
-							);
-							for(let i = 0; i < iter; ++i)
-								this.add(bullet);
-							this.update();
-							event.preventDefault();
-						};
-						ref[1].innerText = " x" + final_count;
+						this.modify_result(
+							childrens[1][dependant_added].children,
+							"https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/bullet/s/" + bullet + ".jpg",
+							final_count,
+							(event) => {
+								let iter = Math.min(
+									count - (bullet in this.data ? this.data[bullet] : 0),
+									event.shiftKey ? 10 : 1
+								);
+								for(let i = 0; i < iter; ++i)
+									this.add(bullet);
+								this.update();
+								event.preventDefault();
+							},
+							null
+						);
 					}
 					++dependant_added;
 				}
@@ -572,20 +561,17 @@ class BulletTracker extends ToolBase
 				{
 					if(i >= childrens[2].length) // we must create a new node
 					{
-						let container = add_to(fragments[2], "span");
-						container.style.display= "inline-block";
-						container.style.width = "max-content";
-						container.style.marginRight = "5px";
-						add_to(container, "img", {cls:["tool-icon"]}).src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg";
-						add_to(container, "span", {innertext:" x" + count});
+						this.add_result(fragments[2], path, id, count, null, null);
 					}
 					else
 					{
-						const ref = childrens[2][i].children;
-						const url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg";
-						if(url != ref[0].src)
-							ref[0].src = url;
-						ref[1].innerText = " x" + count;
+						this.modify_result(
+							childrens[2][i].children,
+							"https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg",
+							count,
+							null,
+							null
+						);
 					}
 					++i;
 				}
@@ -615,6 +601,30 @@ class BulletTracker extends ToolBase
 				}
 			}
 		}
+	}
+	
+	add_result(fragment, path, id, amount, onclick, oncontext)
+	{
+		let container = add_to(fragment, "span");
+		container.style.display= "inline-block";
+		container.style.width = "max-content";
+		container.style.marginRight = "5px";
+		let img = add_to(container, "img", {cls:["tool-icon"]});
+		img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + path + id + ".jpg";
+		img.onclick = onclick;
+		img.oncontextmenu = oncontext;
+		add_to(container, "span", {innertext:" x" + amount});
+	}
+	
+	modify_result(children, url, amount, onclick, oncontext)
+	{
+		if(url != children[0].src)
+		{
+			children[0].src = url;
+			children[0].onclick = onclick;
+			children[0].oncontextmenu = oncontext;
+		}
+		children[1].innerText = " x" + amount;
 	}
 	
 	load()
