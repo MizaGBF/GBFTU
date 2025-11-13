@@ -81,7 +81,7 @@ class CCWTracker extends ToolBase
 			{
 				grid = this.add_new_grid();
 				this.add_header(grid, entry.label);
-				if(!entry.label.includes("Tier V"))
+				if(entry.label != "Tier V")
 					this.add_elements(grid);
 			}
 			else
