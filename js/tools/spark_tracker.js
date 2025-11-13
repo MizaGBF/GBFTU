@@ -163,7 +163,7 @@ class SparkTracker extends ToolBase
 		else
 		{
 			localStorage.setItem(SparkTracker.c_storage_key, JSON.stringify(this.last_run));
-			push_popup("Your progress is saved.");
+			push_popup("Your changes are saved.");
 			this.set_save_pending(false);
 		}
 	}

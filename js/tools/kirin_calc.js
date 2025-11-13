@@ -153,7 +153,7 @@ class KirinCalculator extends ToolBase
 			this.inputs[6].value,
 			this.inputs[7].value
 		]));
-		push_popup("Your progress is saved.");
+		push_popup("Your changes are saved.");
 		this.set_save_pending(false);
 	}
 	

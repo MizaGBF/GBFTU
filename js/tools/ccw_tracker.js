@@ -280,7 +280,7 @@ class CCWTracker extends ToolBase
 			}
 		}
 		localStorage.setItem(CCWTracker.c_storage_key, JSON.stringify(storage));
-		push_popup("Your progress is saved.");
+		push_popup("Your changes are saved.");
 		this.set_save_pending(false);
 	}
 	
