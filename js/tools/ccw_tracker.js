@@ -3,7 +3,7 @@ class CCWTracker extends ToolBase
 	static c_key = Object.freeze("ccw-tracker");
 	static c_storage_key = Object.freeze("gbftu-ccw-tracker");
 	static c_weapons = Object.freeze([
-		// T4
+		{label:"Tier IV - Replica"},
 		{id:"1040308400", type:"t4-1"}, // zerk
 		{id:"1040012600", type:"t4-1"}, // spart
 		{id:"1040411600", type:"t4-1"}, // bunny
@@ -15,7 +15,8 @@ class CCWTracker extends ToolBase
 		{id:"1040807600", type:"t4-1"}, // ely
 		{id:"1040209700", type:"t4-1"}, // apsa
 		{id:"1040018100", type:"t4-1"}, // chry
-		// T4 type 2
+		
+		{label:"Tier IV - Rusted"},
 		{id:"1040312000", type:"t4-2"}, // lj
 		{id:"1040812100", type:"t4-2"}, // lj
 		{id:"1040214000", type:"t4-2"}, // cav
@@ -27,7 +28,8 @@ class CCWTracker extends ToolBase
 		{id:"1040513800", type:"t4-2"}, // rb
 		{id:"1040914600", type:"t4-2"}, // yama
 		{id:"1040317500", type:"t4-2"}, // shield
-		// T5
+		
+		{label:"Tier V"},
 		{id:"1040318500", type:"t5"}, // vik
 		{id:"1040027000", type:"t5"}, // pala
 		{id:"1040424400", type:"t5"}, // iatro
@@ -36,7 +38,8 @@ class CCWTracker extends ToolBase
 		{id:"1040620200", type:"t5"}, // sumo
 		{id:"1040517400", type:"t5"}, // boog
 		{id:"1040817300", type:"t5"}, // maria
-		// EX2
+		
+		{label:"EX II"},
 		{id:"1040509700", type:"ex2"}, // doc
 		{id:"1040909300", type:"ex2"}, // kengo
 		{id:"1040910300", type:"ex2"}, // rs
@@ -69,76 +72,39 @@ class CCWTracker extends ToolBase
 		));
 		add_to(this.tree[0], "hr");
 		
-		let grid = add_to(this.tree[0], "div");
-		grid.style.display = "grid";
-		grid.style.gridTemplateColumns = "100px repeat(6, 60px)";
+		this.cell_size = "calc(min(90px, 14vw))"; // 100vw / 7 = 14vw
 		
-		add_to(grid, "div");
-		const elems = ["fire", "water", "earth", "wind", "light", "dark"];
-		let bg_colors = ["#ea9999", "#a4c2f4", "#f9cb9c", "#b6d7a8", "#ffe599", "#b4a7d6"];
-		for(let i = 0; i < 6; ++i)
+		let grid = null;
+		for(const entry of CCWTracker.c_weapons)
 		{
-			const div = add_to(grid, "div");
-			const img = add_to(div, "img");
-			img.src = "assets/ui/ccw_tracker/" + elems[i] + ".png";
-			div.style.height = "50px";
-			div.style.textAlign = "center";
-			div.style.backgroundColor = bg_colors[i];
-		}
-		
-		bg_colors = ["#947b7b", "#7e8ca3", "#998876", "#76856f", "#999077", "#7c7887"];
-		for(const wpn of CCWTracker.c_weapons)
-		{
-			this.elements[wpn.id] = [];
-			
-			const a = add_to(grid, "a");
-			a.href = "https://gbf.wiki/index.php?search=" + wpn.id;
-			a.target = "_blank";
-			a.rel = "noopener noreferrer";
-			a.style.height = "100px";
-			const img = add_to(a, "img");
-			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + wpn.id + "_note.jpg";
-			img.style.width = "100px";
-			img.style.height = "100px";
-			
-			if(wpn.type == "t5")
+			if("label" in entry) // section header
 			{
-				const div = add_to(grid, "div");
-				const input = add_to(div, "input", {cls:["checkbox"]});
-				input.type = "checkbox";
-				input.style.marginLeft = "auto";
-				input.style.marginRight = "auto";
-				input.style.marginTop = "30px";
-				input.style.marginBottom = "auto";
-				div.style.textAlign = "center";
-				div.style.gridColumn = "2 / 8";
-				div.style.backgroundColor = "#735d6d";
-				
-				input.onchange = () => {
-					this.set_save_pending(true);
-					this.toggle(input.checked, wpn.id, 0);
-				};
-				this.elements[wpn.id].push(input);
+				grid = this.add_new_grid();
+				this.add_header(grid, entry.label);
+				if(!entry.label.includes("Tier V"))
+					this.add_elements(grid);
 			}
 			else
 			{
-				for(let i = 0; i < 6; ++i)
+				this.elements[entry.id] = [];
+				
+				const a = add_to(grid, "a");
+				a.href = "https://gbf.wiki/index.php?search=" + entry.id;
+				a.target = "_blank";
+				a.rel = "noopener noreferrer";
+				a.style.height = this.cell_size;
+				const img = add_to(a, "img");
+				img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + entry.id + "_note.jpg";
+				img.style.width = this.cell_size;
+				img.style.height = this.cell_size;
+				
+				if(entry.type == "t5")
 				{
-					const div = add_to(grid, "div");
-					const input = add_to(div, "input", {cls:["checkbox"]});
-					input.type = "checkbox";
-					input.style.marginLeft = "auto";
-					input.style.marginRight = "auto";
-					input.style.marginTop = "30px";
-					input.style.marginBottom = "auto";
-					div.style.textAlign = "center";
-					div.style.backgroundColor = bg_colors[i];
-					
-					input.onchange = () => {
-						this.set_save_pending(true);
-						this.toggle(input.checked, wpn.id, i);
-					};
-					this.elements[wpn.id].push(input);
+					this.add_tier5_row(grid, entry.id);
+				}
+				else
+				{
+					this.add_row(grid, entry.id);
 				}
 			}
 		}
@@ -155,6 +121,105 @@ class CCWTracker extends ToolBase
 			}
 		));
 		this.load();
+	}
+	
+	add_new_grid()
+	{
+		let grid = add_to(this.tree[0], "div");
+		grid.style.display = "inline-grid";
+		grid.style.marginLeft = "5px";
+		grid.style.marginTop = "5px";
+		grid.style.gridTemplateColumns = this.cell_size + " repeat(6, min(60px, 12vw))";
+		return grid;
+	}
+	
+	add_header(grid, label)
+	{
+		const save = add_to(grid, "div");
+		save.style.backgroundColor = "#202030";
+		save.style.height = "50px";
+		save.style.textAlign = "center";
+		
+		const btn = add_to(
+			save,
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Save",
+				onclick:(() => {
+					this.save();
+				})
+			}
+		);
+		this.save_buttons.push(btn);
+		btn.style.width = "90%";
+		btn.style.fontSize = "16px";
+		
+		const div = add_to(grid, "div");
+		div.style.textAlign = "center";
+		div.style.gridColumn = "2 / 8";
+		div.style.backgroundColor = "#202030";
+		div.style.paddingTop = "3%";
+		div.textContent = label;
+	}
+	
+	add_elements(grid)
+	{
+		add_to(grid, "div");
+		const elems = ["fire", "water", "earth", "wind", "light", "dark"];
+		const bg_colors = ["#ea9999", "#a4c2f4", "#f9cb9c", "#b6d7a8", "#ffe599", "#b4a7d6"];
+		for(let i = 0; i < 6; ++i)
+		{
+			const div = add_to(grid, "div");
+			const img = add_to(div, "img");
+			img.src = "assets/ui/ccw_tracker/" + elems[i] + ".png";
+			div.style.height = "50px";
+			div.style.textAlign = "center";
+			div.style.backgroundColor = bg_colors[i];
+		}
+	}
+	
+	add_row(grid, id)
+	{
+		const bg_colors = ["#947b7b", "#7e8ca3", "#998876", "#76856f", "#999077", "#7c7887"];
+		for(let i = 0; i < 6; ++i)
+		{
+			const div = add_to(grid, "div");
+			const input = add_to(div, "input", {cls:["checkbox"]});
+			input.type = "checkbox";
+			input.style.marginLeft = "auto";
+			input.style.marginRight = "auto";
+			input.style.marginTop = "30px";
+			input.style.marginBottom = "auto";
+			div.style.textAlign = "center";
+			div.style.backgroundColor = bg_colors[i];
+			
+			input.onchange = () => {
+				this.set_save_pending(true);
+				this.toggle(input.checked, id, i);
+			};
+			this.elements[id].push(input);
+		}
+	}
+	
+	add_tier5_row(grid, id)
+	{
+		const div = add_to(grid, "div");
+		const input = add_to(div, "input", {cls:["checkbox"]});
+		input.type = "checkbox";
+		input.style.marginLeft = "auto";
+		input.style.marginRight = "auto";
+		input.style.marginTop = "30px";
+		input.style.marginBottom = "auto";
+		div.style.textAlign = "center";
+		div.style.gridColumn = "2 / 8";
+		div.style.backgroundColor = "#b5af9a";
+		
+		input.onchange = () => {
+			this.set_save_pending(true);
+			this.toggle(input.checked, id, 0);
+		};
+		this.elements[id].push(input);
 	}
 	
 	static get_tool_save_info()
