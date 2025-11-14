@@ -63,7 +63,7 @@ class TripleAttackCalculator extends ToolBase
 		this.elements.classmastery[0].value = "3";
 		this.color_cell(this.elements.classmastery[0]);
 		// crucible
-		this.add_select_row(grid, "assets/ui/triple_attack/crucible.png", "Crucible Wonder", ["0", "3", "5"]);
+		this.add_select_row(grid, "assets/ui/triple_attack/crucible.png", "Crucible Wonder", ["0", "3", "5", "7"]);
 		// grid row
 		this.add_input_row(grid, "../GBFML/assets/ui/icon/sword.png", "Grid", ["0", "0", "0", "0"]);
 		// ultima row
