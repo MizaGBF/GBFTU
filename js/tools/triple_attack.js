@@ -53,7 +53,7 @@ class TripleAttackCalculator extends ToolBase
 			+ "<li><b>Domain</b> is <b>5</b> for Fraux, Haaselia and Maria Theresa.</li>"
 			+ "<li><b>Radiance</b> has no Triple Attack bonus to this date.</li></ul>";
 		
-		let grid = add_to(this.tree[0], "div", {cls:["tool-tripleattack-grid"]});
+		let grid = add_to(this.tree[0], "div", {cls:["tool-big-grid"]});
 		// name row
 		this.add_input_row(grid, null, "", ["Gran/Djeeta", "Ally 2", "Ally 3", "Ally 4"]);
 		grid.children[0].classList.toggle("tool-grid-cell", false); // remove the style of top left corner

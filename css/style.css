@@ -85,7 +85,7 @@
 	text-overflow:clip;
 }
 
-.tool-tripleattack-grid {
+.tool-big-grid {
 	display:grid;
 	grid-template-columns:180px repeat(4, calc((100% - 180px) / 4));
 }
@@ -116,7 +116,7 @@
 			font-size: 14px;
 		}
 		
-		.tool-tripleattack-grid {
+		.tool-big-grid {
 			display:grid;
 			grid-template-columns:120px repeat(4, calc((100% - 120px) / 4));
 		}
