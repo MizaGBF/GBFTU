@@ -31,6 +31,31 @@ class JPCoopHelper extends ToolBase
 				]
 			},
 			{
+				title: "Room name",
+				pages : [
+					{
+						list : [
+							{en:"Rank 400+", jp:"400↑"},
+							{en:"Rank 375+", jp:"375↑"},
+							{en:"Rank 350+", jp:"350↑"},
+							{en:"Rank 300+", jp:"300↑"},
+							{en:"Rank 250+", jp:"250↑"}
+						]
+					},
+					{
+						list : [
+							{en:"Main <ELEMENT>", jp:"主<E>"},
+							{en:"Weak", jp:"弱"},
+						]
+					},
+					{
+						list : [
+							{en:"Firepower required", jp:"火力求"}
+						]
+					}
+				]
+			},
+			{
 				title: "Elements",
 				pages : [
 					{
