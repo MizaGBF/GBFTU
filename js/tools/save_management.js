@@ -45,7 +45,7 @@ class SaveManager extends ToolBase
 			this.tree[0],
 			"span",
 			{
-				innertext:"Below, you can clear the stored data of a tool:",
+				innertext:"Manage your stored data:",
 				br:true
 			}
 		);
@@ -56,18 +56,48 @@ class SaveManager extends ToolBase
 			{
 				add_to(
 					this.tree[0],
-					"button",
+					"div",
 					{
-						cls:["std-button"],
-						innertext:info.name,
-						onclick:(() => {
-							this.clear(info);
-						}),
-						br:true
+						innertext:info.name
 					}
-				).style.width = "250px";
+				);
+				
+				this.create_manage_button(
+					"Clear",
+					(() => {
+						this.clear(info);
+					})
+				);
+				this.create_manage_button(
+					"Export",
+					(() => {
+						this.export_single(info);
+					})
+				);
+				this.create_manage_button(
+					"Import",
+					(() => {
+						this.import_single(info);
+					})
+				);
+				add_to(this.tree[0], "br");
 			}
 		}
+	}
+	
+	create_manage_button(innertext, onclick)
+	{
+		let btn = add_to(
+			this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:innertext,
+				onclick:onclick
+			}
+		);
+		btn.style.width = "120px";
+		return btn;
 	}
 	
 	clear(info)
@@ -91,6 +121,38 @@ class SaveManager extends ToolBase
 		}
 	}
 	
+	download_file(obj, file_name)
+	{
+		var data_url = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+		let a = document.createElement('a');
+		a.setAttribute("href", data_url);
+		a.setAttribute("download", file_name);
+		a.click();
+	}
+	
+	export_single(info)
+	{
+		const key = info.key;
+		if(!(key in tool_constructors))
+		{
+			push_popup("An unexpected error occured.");
+			return;
+		}
+		let obj = {};
+		obj = tool_constructors[key].export_storage_data(obj);
+		if(obj == {})
+		{
+			push_popup("There is no data to export.");
+		}
+		else
+		{
+			this.download_file(
+				{key:key, obj:obj},
+				"GBFTU_tool_" + key + "_" + new Date().toLocaleString() + ".json"
+			);
+		}
+	}
+	
 	export_all()
 	{
 		let obj = {};
@@ -98,14 +160,20 @@ class SaveManager extends ToolBase
 		{
 			obj = object.export_storage_data(obj);
 		}
-		var data_url = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
-		let a = document.createElement('a');
-		a.setAttribute("href", data_url);
-		a.setAttribute("download", "GBFTU_data_" + new Date().toLocaleString() + ".json");
-		a.click();
+		if(obj == {})
+		{
+			push_popup("There is no data to export.");
+		}
+		else
+		{
+			this.download_file(
+				obj,
+				"GBFTU_data_" + new Date().toLocaleString() + ".json"
+			);
+		}
 	}
 	
-	import_all()
+	upload_file(callback)
 	{
 		let input = document.createElement("input");
 		input.type = "file";
@@ -115,33 +183,78 @@ class SaveManager extends ToolBase
 		{
 			if(this.files.length > 0)
 			{
-				//var url = window.URL.createObjectURL(this.files[0]);
 				var reader = new FileReader();
 				reader.onload = function (e) {
-					try
-					{
-						let obj = JSON.parse(reader.result);
-						if(window.confirm("Are you sure you want to load this data?"))
-						{
-							for(const [key, object] of Object.entries(tool_constructors))
-							{
-								object.import_storage_data(obj);
-								if(key in tools)
-									tools[key].reload();
-							}
-							push_popup("Save file imported");
-						}
-					}
-					catch(err)
-					{
-						console.error("Exception thrown", err.stack);
-						push_popup("The file isn't valid");
-					}
+					callback(reader);
 				};
 				reader.readAsText(this.files[0]);
 			}
 		};
 		input.click();
+	}
+	
+	import_single(info)
+	{
+		const key = info.key;
+		if(!(key in tool_constructors))
+		{
+			push_popup("An unexpected error occured.");
+			return;
+		}
+		this.upload_file((reader) => {
+			try
+			{
+				let data = JSON.parse(reader.result);
+				if(window.confirm("Are you sure you want to load this data for " + info.name +"?"))
+				{
+					if(typeof(data.key) == "undefined" || data.key != key)
+					{
+						push_popup("This file wasn't exported from this tool.");
+					}
+					else if(typeof(data.obj) == "undefined" || data.obj == null)
+					{
+						push_popup("This file contains no data.");
+					}
+					else
+					{
+						tool_constructors[key].import_storage_data(data.obj);
+						if(key in tools)
+							tools[key].reload();
+						push_popup("Save file imported");
+					}
+				}
+			}
+			catch(err)
+			{
+				console.error("Exception thrown", err.stack);
+				push_popup("The file isn't valid");
+			}
+		});
+	}
+	
+	import_all()
+	{
+		this.upload_file((reader) => {
+			try
+			{
+				let obj = JSON.parse(reader.result);
+				if(window.confirm("Are you sure you want to load this data?"))
+				{
+					for(const [key, object] of Object.entries(tool_constructors))
+					{
+						object.import_storage_data(obj);
+						if(key in tools)
+							tools[key].reload();
+					}
+					push_popup("Save file imported");
+				}
+			}
+			catch(err)
+			{
+				console.error("Exception thrown", err.stack);
+				push_popup("The file isn't valid");
+			}
+		});
 	}
 }
 
