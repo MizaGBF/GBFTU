@@ -820,6 +820,11 @@ class DamageCalculator extends ToolBase
 			(1.0 + amplification) *
 			crit_modifier *
 			(
+				gw_atk ?
+				1.25 :
+				1.0
+			) *
+			(
 				use_buff ?
 				(
 					(1.0 + mods.buff_perp) *
