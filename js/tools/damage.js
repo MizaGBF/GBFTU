@@ -2,6 +2,12 @@ class DamageCalculator extends ToolBase
 {
 	static c_key = Object.freeze("damage");
 	static c_storage_key = Object.freeze("gbftu-damage");
+	static c_dmg_type = Object.freeze({
+		AUTO: 0,
+		SKILL: 1,
+		CA: 2,
+		CB: 3
+	});
 	static c_mod_list = Object.freeze([
 		[
 			"might",
@@ -23,6 +29,7 @@ class DamageCalculator extends ToolBase
 			"ele_atk",
 			"crit_dmg",
 			"dmg_cap",
+			"dmg_cap_spe",
 			"dmg_supp",
 			"dmg_amp",
 			"dmg_cap_pen",
@@ -34,23 +41,462 @@ class DamageCalculator extends ToolBase
 		["Assassin", "buff_assassin"],
 		["Unique 1", "buff_unique_a"],
 		["Unique 2", "buff_unique_b"],
-		["Unique 3", "buff_unique_c"]
+		["Unique 3", "buff_unique_c"],
+		["Unique 4", "buff_unique_d"],
+		["Unique 5", "buff_unique_e"]
 	]);
-	static c_soft_caps = Object.freeze([
-		{base:[0, 1, 300000], assassin:[0, 1, 1000000]},
-		{base:[300000, 0.8, 400000], assassin:[1000000, 0.6, 1200000]},
-		{base:[400000, 0.6, 500000], assassin:[1200000, 0.3, 1300000]},
-		{base:[500000, 0.05, 600000], assassin:[1300000, 0.05, 1500000]},
-		{base:[600000, 0.01, Infinity], assassin:[1500000, 0.01, Infinity]}
-	]);
-	static c_last_soft_cap = 600000;
-	static c_hard_caps = Object.freeze([
-		[12000000, 0.2],
-		[15000000, 0.001]
-	]);
+	// https://gbf.wiki/Damage_Cap
+	static c_soft_cap_count = 5;
+	static c_soft_caps = Object.freeze({
+		"Auto":[
+			[0, 1],
+			[300000, 0.8],
+			[400000, 0.6],
+			[500000, 0.05],
+			[600000, 0.01]
+		],
+		"Auto Assassin":[
+			[0, 1],
+			[1000000, 0.6],
+			[1200000, 0.3],
+			[1300000, 0.05],
+			[1500000, 0.01]
+		],
+		"C.A.":[
+			[0, 1],
+			[1500000, 0.6],
+			[1620000, 0.3],
+			[1650000, 0.05],
+			[1685000, 0.01]
+		],
+		/*"C.A. 2.15M":[
+			[0, 1],
+			[1935000, 0.6],
+			[2050000, 0.3],
+			[2100000, 0.05],
+			[2150000, 0.01]
+		],
+		"C.A. 2.42M":[
+			[0, 1],
+			[2180000, 0.6],
+			[2600000, 0.3],
+			[2360000, 0.05],
+			[2420000, 0.01]
+		],
+		"C.A. 2.90M":[
+			[0, 1],
+			[2610000, 0.6],
+			[2760000, 0.3],
+			[2830000, 0.05],
+			[2900000, 0.01]
+		],*/
+		"C.A. 5★ Eternal":[
+			[0, 1],
+			[1800000, 0.6],
+			[1920000, 0.3],
+			[1980000, 0.05],
+			[2020000, 0.01]
+		],
+		/*"C.A. 6★ Et.110":[
+			[0, 1],
+			[2060000, 0.6],
+			[2180000, 0.3],
+			[2240000, 0.05],
+			[2300000, 0.01]
+		],
+		"C.A. 6★ Et.150":[
+			[0, 1],
+			[3160000, 0.6],
+			[3280000, 0.3],
+			[3340000, 0.05],
+			[3400000, 0.01]
+		],*/
+		"C.B. 2C":[
+			[0, 1],
+			[1000000, 0.6],
+			[1120000, 0.3],
+			[1150000, 0.05],
+			[1160000, 0.01]
+		],
+		"C.B. 3C":[
+			[0, 1],
+			[1250000, 0.6],
+			[1370000, 0.3],
+			[1385000, 0.05],
+			[1410000, 0.01]
+		],
+		"C.B. 4C":[
+			[0, 1],
+			[1500000, 0.6],
+			[1620000, 0.3],
+			[1650000, 0.05],
+			[1685000, 0.01]
+		],
+		"Skill 200001": [
+			[0, 1],
+			[20000, 0.5],
+			[50000, 0.2],
+			[100000, 0.05],
+			[150000, 0.01]
+		],
+		"Skill 300002": [
+			[0, 1],
+			[30000, 0.9],
+			[40000, 0.7],
+			[50000, 0.05],
+			[100000, 0.01]
+		],
+		"Skill 300003": [
+			[0, 1],
+			[30000, 0.9],
+			[50000, 0.7],
+			[62500, 0.05],
+			[125000, 0.01]
+		],
+		"Skill 500001": [
+			[0, 1],
+			[50000, 0.5],
+			[66666, 0.3],
+			[83333, 0.05],
+			[166666, 0.01]
+		],
+		"Skill 500002": [
+			[0, 1],
+			[50000, 0.5],
+			[100000, 0.3],
+			[150000, 0.05],
+			[500000, 0.01]
+		],
+		"Skill 500006": [
+			[0, 1],
+			[50000, 0.9],
+			[100000, 0.7],
+			[150000, 0.05],
+			[500000, 0.01]
+		],
+		"Skill 600001": [
+			[0, 1],
+			[60000, 0.5],
+			[80000, 0.3],
+			[100000, 0.05],
+			[200000, 0.01]
+		],
+		"Skill 600002": [
+			[0, 1],
+			[60000, 0.5],
+			[100000, 0.2],
+			[150000, 0.05],
+			[200000, 0.01]
+		],
+		"Skill 750001": [
+			[0, 1],
+			[75000, 0.7],
+			[100000, 0.5],
+			[125000, 0.05],
+			[250000, 0.01]
+		],
+		"Skill 1000002": [
+			[0, 1],
+			[100000, 0.4],
+			[200000, 0.2],
+			[300000, 0.1],
+			[400000, 0.01]
+		],
+		"Skill 1000003": [
+			[0, 1],
+			[100000, 0.5],
+			[133333, 0.3],
+			[166666, 0.05],
+			[333333, 0.01]
+		],
+		"Skill 1000004": [
+			[0, 1],
+			[100000, 0.5],
+			[200000, 0.3],
+			[300000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 1000008": [
+			[0, 1],
+			[100000, 0.6],
+			[200000, 0.3],
+			[300000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 1000009": [
+			[0, 1],
+			[100000, 0.6],
+			[200000, 0.4],
+			[300000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 1000010": [
+			[0, 1],
+			[100000, 0.6],
+			[400000, 0.4],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 1000014": [
+			[0, 1],
+			[100000, 0.9],
+			[200000, 0.7],
+			[300000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 1000015": [
+			[0, 1],
+			[100000, 0.3],
+			[200000, 0.2],
+			[300000, 0.05],
+			[400000, 0.01]
+		],
+		"Skill 1000018": [
+			[0, 1],
+			[100000, 0.6],
+			[150000, 0.4],
+			[250000, 0.1],
+			[400000, 0.01]
+		],
+		"Skill 1000020": [
+			[0, 1],
+			[200000, 0.6],
+			[250000, 0.4],
+			[350000, 0.1],
+			[500000, 0.01]
+		],
+		"Skill 1500004": [
+			[0, 1],
+			[150000, 0.5],
+			[200000, 0.3],
+			[250000, 0.05],
+			[500000, 0.01]
+		],
+		"Skill 2000001": [
+			[0, 1],
+			[200000, 0.6],
+			[300000, 0.4],
+			[400000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 2000002": [
+			[0, 1],
+			[200000, 0.7],
+			[300000, 0.5],
+			[400000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 2000003": [
+			[0, 1],
+			[200000, 0.8],
+			[300000, 0.3],
+			[400000, 0.05],
+			[500000, 0.01]
+		],
+		"Skill 2000004": [
+			[0, 1],
+			[200000, 0.8],
+			[300000, 0.6],
+			[400000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000001": [
+			[0, 1],
+			[300000, 0.5],
+			[400000, 0.3],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000002": [
+			[0, 1],
+			[300000, 0.6],
+			[400000, 0.4],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000003": [
+			[0, 1],
+			[300000, 0.65],
+			[400000, 0.45],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000007": [
+			[0, 1],
+			[300000, 0.8],
+			[400000, 0.6],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000008": [
+			[0, 1],
+			[300000, 0.9],
+			[400000, 0.7],
+			[500000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 3000009": [
+			[0, 1],
+			[300000, 0.9],
+			[400000, 0.7],
+			[500000, 0.1],
+			[1000000, 0.01]
+		],
+		"Skill 5000004": [
+			[0, 1],
+			[500000, 0.6],
+			[600000, 0.4],
+			[700000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 5000006": [
+			[0, 1],
+			[500000, 0.7],
+			[600000, 0.5],
+			[700000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 5000010": [
+			[0, 1],
+			[500000, 0.9],
+			[600000, 0.8],
+			[700000, 0.1],
+			[1000000, 0.01]
+		],
+		"Skill 6000001": [
+			[0, 1],
+			[600000, 0.7],
+			[800000, 0.5],
+			[1000000, 0.05],
+			[2000000, 0.01]
+		],
+		"Skill 6000002": [
+			[0, 1],
+			[600000, 0.9],
+			[800000, 0.7],
+			[1000000, 0.1],
+			[2000000, 0.01]
+		],
+		"Skill 600007": [
+			[0, 1],
+			[600000, 0.5],
+			[800000, 0.3],
+			[1000000, 0.05],
+			[2000000, 0.01]
+		],
+		"Skill 7000001": [
+			[0, 1],
+			[700000, 0.7],
+			[800000, 0.4],
+			[900000, 0.1],
+			[1000000, 0.01]
+		],
+		"Skill 7000002": [
+			[0, 1],
+			[700000, 0.7],
+			[800000, 0.25],
+			[900000, 0.05],
+			[1000000, 0.01]
+		],
+		"Skill 7000004": [
+			[0, 1],
+			[700000, 0.7],
+			[900000, 0.5],
+			[1400000, 0.05],
+			[2000000, 0.01]
+		],
+		"Skill 8000006": [
+			[0, 1],
+			[1000000, 0.4],
+			[1200000, 0.3],
+			[1600000, 0.05],
+			[1700000, 0.01]
+		],
+		"Skill 8000007": [
+			[0, 1],
+			[1100000, 0.4],
+			[1300000, 0.3],
+			[1700000, 0.05],
+			[1800000, 0.01]
+		],
+		"Skill 10000001": [
+			[0, 1],
+			[1000000, 0.6],
+			[1200000, 0.3],
+			[1300000, 0.05],
+			[1500000, 0.01]
+		],
+		"Skill 12000002": [
+			[0, 1],
+			[1200000, 0.8],
+			[1600000, 0.6],
+			[2000000, 0.4],
+			[2400000, 0.01]
+		],
+		"Skill Unknown": [
+			[0, 1],
+			[700000, 0.9],
+			[1000000, 0.5],
+			[1100000, 0.05],
+			[1200000, 0.01]
+		]
+	});
+	static c_hard_cap_count = 3;
+	static c_hard_caps = Object.freeze({
+		"6.6M" : [
+			[0, 1],
+			[6000000, 0.5],
+			[7000000, 0.1],
+			[8000000, 0.001]
+		],
+		"13.1M" : [
+			[0, 1],
+			[12000000, 0.5],
+			[14000000, 0.1],
+			[15000000, 0.001]
+		]
+	});
+	// https://gbf.wiki/Damage_Cap#Additional_Skill_Damage_Reduction
+	static c_skill_cap_count = 3;
+	static c_skill_caps = Object.freeze({
+		"100" : [ // 100 and below
+			[0, 1],
+			[3000000, 0.2],
+			[4500000, 0.01]
+		],
+		"200" : [
+			[0, 1],
+			[5000000, 0.2],
+			[7500000, 0.01]
+		],
+		"300" : [
+			[0, 1],
+			[6000000, 0.2],
+			[9000000, 0.01]
+		],
+		"400" : [
+			[0, 1],
+			[7000000, 0.2],
+			[10500000, 0.01]
+		],
+		"500" : [
+			[0, 1],
+			[8000000, 0.2],
+			[12000000, 0.01]
+		],
+		"600" : [
+			[0, 1],
+			[12000000, 0.2],
+			[15000000, 0.01]
+		]
+	});
+	
 	static c_color_critical = "#ff0000";
 	static c_color_good = "#357a47";
 	static c_color_bad = "#a15e3a";
+	static c_color_red = "#a13a3a";
+	static c_color_blue = "#3a89a1";
+	static c_color_purple = "#a13a74";
 	
 	constructor()
 	{
@@ -93,37 +539,48 @@ class DamageCalculator extends ToolBase
 		
 		this.add_text_cell(grid, "assets/ui/damage/def_up.png", "Enemy DEF.");
 		this.add_text_cell(grid, "assets/ui/damage/def_down.png", "Def Down (%)");
-		this.add_text_cell(grid, "assets/ui/damage/wpn.png", "Crit. WPN.");
+		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open (%)");
 		
 		this.add_input_cell(grid, "10", "def");
 		this.add_input_cell(grid, "0", "def_down");
+		this.add_input_cell(grid, "0", "wide_open");
+		
+		this.add_text_cell(grid, "assets/ui/damage/wpn.png", "Crit. WPN.");
+		this.add_text_cell(grid, "assets/ui/damage/bullet.png", "Bullet Mod. (%)");
+		this.add_invisible_cell(grid);
+		
 		this.add_select_cell(grid, ["None", "Crab Grab", "Gae Bulg", "Mjolnir"], "crit_wpn");
+		this.add_input_cell(grid, "0", "bullet");
+		this.add_invisible_cell(grid);
 		
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Toggles");
 		grid = this.create_grid(this.tree[0], 4, false);
 		this.add_text_cell(grid, "assets/ui/damage/ele_up.png", "Ele. Advantage");
-		this.add_text_cell(grid, "assets/ui/damage/red_skill.png", "Skill DMG");
-		this.add_text_cell(grid, "assets/ui/damage/assassin.png", "Assassin");
-		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Raid cap");
-		
-		this.add_select_cell(grid, ["Yes", "No"], "advantage");
-		this.add_select_cell(grid, ["No", "Yes"], "is_skill");
-		this.add_select_cell(grid, ["No", "Yes"], "is_assassin");
-		this.add_select_cell(grid, ["6.6M", "13.1M"], "raid_cap");
-		
+		this.add_text_cell(grid, "assets/ui/damage/dmg_type.png", "DMG Type");
 		this.add_text_cell(grid, "assets/ui/damage/crew.png", "Crew Ship");
 		this.add_text_cell(grid, "assets/ui/damage/reactor.png", "Crew Reactor");
-		this.add_text_cell(grid, "assets/ui/damage/gw_fo.png", "GW First Officer");
-		this.add_text_cell(grid, "assets/ui/damage/gw_atk.png", "GW Attack");
-		
+
+		this.add_select_cell(grid, ["Yes", "No"], "advantage");
+		this.add_select_cell(grid, ["Auto", "Skill", "C.A.", "C.B."], "damage_type");
 		this.add_select_cell(grid, ["Yes", "No"], "ship");
 		this.add_select_cell(grid, ["Yes", "No"], "reactor");
+		
+		this.add_text_cell(grid, "assets/ui/damage/assassin.png", "C.A. Assassin");
+		this.add_text_cell(grid, "assets/ui/damage/gw_fo.png", "GW First Officer");
+		this.add_text_cell(grid, "assets/ui/damage/gw_atk.png", "GW Attack");
+		this.add_text_cell(grid, "assets/ui/damage/atk_up.png", "GW Pity");
+		
+		this.add_select_cell(grid, ["No", "Yes"], "is_assassin");
 		this.add_select_cell(grid, ["No", "Yes"], "gw_fo");
 		this.add_select_cell(grid, ["No", "Yes"], "gw_atk");
+		this.add_select_cell(grid, ["No", "Yes"], "gw_pity");
 		
+		add_to(this.tree[0], "span", {cls:["small-text"], innerhtml:"For auto attack assassins, simply change the 'Soft Cap type' to 'Auto Assassin' further below."});
+		
+		// wonder
 		add_to(this.tree[0], "hr");
-		this.add_anchor(this.tree[0], "Wonders");
+		this.add_anchor(this.tree[0], "Wonders", "https://gbf.wiki/Wonders");
 		grid = this.create_grid(this.tree[0], 4, false);
 		
 		this.add_text_cell(grid, "assets/ui/damage/wonder_amp.jpg", "Chara. AMP (%)");
@@ -136,8 +593,13 @@ class DamageCalculator extends ToolBase
 		this.add_select_cell(grid, ["Yes", "No"], "wonder_6d");
 		this.add_select_cell(grid, ["Yes", "No"], "wonder_m2");
 		
+		
+		// grid and buffs
 		add_to(this.tree[0], "hr");
-		this.add_anchor(this.tree[0], "Grid");
+		this.add_anchor(this.tree[0], "Grid / Buffs", "https://gbf.wiki/Damage_Formula/Detailed_Damage_Formula");
+		add_to(this.tree[0], "br");
+		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"(Input what's in the Estimate calculator, plus any other standard buff)"});
+		
 		grid = this.create_grid(this.tree[0], 4, true);
 		
 		this.add_mod_header(grid);
@@ -151,10 +613,11 @@ class DamageCalculator extends ToolBase
 			}
 			this.add_grid_mods(grid, DamageCalculator.c_mod_list[i]);
 		}
+		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"'Crit DMG' is where you can input the expected damage boost from crit buffs."});
 		
 		// specific mods
 		add_to(this.tree[0], "hr");
-		this.add_anchor(this.tree[0], "Buffs");
+		this.add_anchor(this.tree[0], "Other Buffs");
 		grid = this.create_grid(this.tree[0], 4, true);
 		
 		this.add_mod_header(
@@ -171,6 +634,67 @@ class DamageCalculator extends ToolBase
 			this.add_text_cell(grid, null, "0", key + "_total");
 		}
 		
+		// soft caps
+		add_to(this.tree[0], "hr");
+		this.add_anchor(this.tree[0], "Soft caps", "https://gbf.wiki/Damage_Cap");
+		add_to(this.tree[0], "br");
+		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"(The various caps are applied after one another and Supplemental is applied after Soft caps)"});
+		
+		grid = this.create_grid(this.tree[0], 5, false);
+		
+		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Soft Cap type");
+		this.add_select_cell(grid, Object.keys(DamageCalculator.c_soft_caps), "soft_cap_type");
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		
+		this.add_text_cell(grid, null, "Soft cap");
+		this.add_text_cell(grid, null, "After boost");
+		this.add_text_cell(grid, null, "Dampening");
+		this.add_text_cell(grid, null, "After boost");
+		this.add_text_cell(grid, null, "Range DMG");
+		
+		for(let i = 0; i < DamageCalculator.c_soft_cap_count; ++i)
+		{
+			this.add_text_cell(grid, null, "", "soft_cap_base_" + i);
+			this.add_text_cell(grid, null, "", "soft_cap_" + i);
+			this.add_text_cell(grid, null, "", "soft_dampening_base_" + i);
+			this.add_text_cell(grid, null, "", "soft_dampening_" + i);
+			this.add_text_cell(grid, null, "0", "soft_damage_" + i);
+		}
+		grid = this.create_grid(this.tree[0], 5, false);
+		this.skill_cap_grid = grid;
+		this.add_text_cell(grid, "assets/ui/damage/skill.png", "Skill reduction");
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		
+		for(let i = 0; i < DamageCalculator.c_skill_cap_count; ++i)
+		{
+			this.add_text_cell(grid, null, "", "skill_cap_base_" + i);
+			this.add_text_cell(grid, null, "", "skill_cap_" + i);
+			this.add_text_cell(grid, null, "", "skill_dampening_base_" + i);
+			this.add_text_cell(grid, null, "", "skill_dampening_" + i);
+			this.add_text_cell(grid, null, "", "skill_damage_" + i);
+		}
+		
+		grid = this.create_grid(this.tree[0], 5, false);
+		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Hard cap");
+		this.add_select_cell(grid, ["6.6M", "13.1M"], "raid_cap");
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		this.add_invisible_cell(grid);
+		
+		for(let i = 0; i < DamageCalculator.c_hard_cap_count; ++i)
+		{
+			this.add_text_cell(grid, null, "", "hard_cap_base_" + i);
+			this.add_text_cell(grid, null, "", "hard_cap_" + i);
+			this.add_text_cell(grid, null, "", "hard_dampening_base_" + i);
+			this.add_text_cell(grid, null, "", "hard_dampening_" + i);
+			this.add_text_cell(grid, null, "", "hard_damage_" + i);
+		}
+		
 		// results
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Results");
@@ -180,66 +704,38 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, "assets/ui/damage/def_up.png", "DEF");
 		this.add_text_cell(grid, "assets/ui/damage/ele_atk.png", "");
 		this.add_text_cell(grid, "assets/ui/damage/dmg_amp.png", "");
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open");
 		
 		this.add_text_cell(grid, null, "", "info_atk");
 		this.add_text_cell(grid, null, "", "info_def");
 		this.add_text_cell(grid, null, "", "info_ele");
 		this.add_text_cell(grid, null, "", "info_amp");
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, null, "", "info_wide_open");
 		
 		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Cap up");
 		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Effect. Cap");
 		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Raw DMG.");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Over Soft Cap");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Overdamage");
+		this.add_text_cell(grid, "assets/ui/damage/over_soft.png", "Over Soft");
+		this.add_text_cell(grid, "assets/ui/damage/over_hard.png", "Over Hard");
 		
 		this.add_text_cell(grid, null, "", "info_dmg_cap");
 		this.add_text_cell(grid, null, "", "info_effective_cap");
 		this.add_text_cell(grid, null, "", "info_raw_dmg");
-		this.add_text_cell(grid, null, "", "info_beyond_soft");
-		this.add_text_cell(grid, null, "", "info_overdamage");
+		this.add_text_cell(grid, null, "", "info_over_soft");
+		this.add_text_cell(grid, null, "", "info_over_hard");
 		
-		this.add_invisible_cell(grid);
 		this.add_invisible_cell(grid);
 		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Final DMG");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "In-game");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Difference");
-		
+		this.add_text_cell(grid, "assets/ui/damage/ingame.png", "In-game");
+		this.add_text_cell(grid, "assets/ui/damage/difference.png", "Difference");
 		this.add_invisible_cell(grid);
+		
 		this.add_invisible_cell(grid);
 		this.add_text_cell(grid, null, "", "info_final");
 		this.add_input_cell(grid, "", "observed");
 		this.add_text_cell(grid, null, "", "info_difference");
+		this.add_invisible_cell(grid);
 		
-		add_to(this.tree[0], "hr");
-		this.add_anchor(this.tree[0], "Soft caps");
-		grid = this.create_grid(this.tree[0], 5, false);
-		this.add_text_cell(grid, null, "Soft cap");
-		this.add_text_cell(grid, null, "After boost");
-		this.add_text_cell(grid, null, "Dampening");
-		this.add_text_cell(grid, null, "After boost");
-		this.add_text_cell(grid, null, "Range DMG");
-		
-		for(let i = 0; i < DamageCalculator.c_soft_caps.length; ++i)
-		{
-			this.add_text_cell(grid, null, "", "soft_cap_base_" + i);
-			this.add_text_cell(grid, null, "", "soft_cap_" + i);
-			this.add_text_cell(grid, null, "", "soft_dampening_base_" + i);
-			this.add_text_cell(grid, null, "", "soft_dampening_" + i);
-			this.add_text_cell(grid, null, "0", "soft_damage_" + i);
-		}
-		add_to(this.tree[0], "span", {innertext:"Hard soft caps"});
-		grid = this.create_grid(this.tree[0], 5, false);
-		for(let i = 0; i < DamageCalculator.c_hard_caps.length; ++i)
-		{
-			const [soft_cap, dampening] = DamageCalculator.c_hard_caps[i];
-			this.add_text_cell(grid, null, this.round(soft_cap));
-			this.add_text_cell(grid, null, this.round(soft_cap), "hard_cap_" + i);
-			this.add_text_cell(grid, null, (dampening * 100) + "%");
-			this.add_text_cell(grid, null, "", "hard_dampening_" + i);
-			this.add_text_cell(grid, null, "0", "hard_damage_" + i);
-		}
 		add_to(this.tree[0], "hr");
 		this.save_buttons.push(add_to(
 			this.tree[0],
@@ -253,8 +749,11 @@ class DamageCalculator extends ToolBase
 			}
 		));
 		
+		// bonus damage
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Variations / Bonus Damage test");
+		add_to(this.tree[0], "br");
+		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"(Wide screen recommended)"});
 		grid = this.create_grid(this.tree[0], 1, false);
 		grid.style.gridTemplateColumns = "repeat(11, calc(100% / 11))";
 		this.add_select_cell(grid, [
@@ -300,7 +799,7 @@ class DamageCalculator extends ToolBase
 	}
 	
 	// add a text with some buttons to scroll up or down
-	add_anchor(node, txt)
+	add_anchor(node, txt, wiki_link)
 	{
 		const anchor_pos = this.anchors.length;
 		const span = add_to(node, "span");
@@ -328,6 +827,21 @@ class DamageCalculator extends ToolBase
 				})
 			}
 		).style.width = "40px";
+		if(wiki_link != null)
+		{
+			const btn = add_to(span, "button", {cls:["std-button"]});
+			// I hate css, hack to align it with the rest
+			btn.style.position = "relative";
+			btn.style.top = "-2px";
+			btn.style.width = "40px";
+			btn.style.height = "40px";
+			btn.style.padding = "0px";
+			const a = add_to(btn, "a");
+			a.target = "_blank";
+			a.rel = "noopener noreferrer";
+			a.href = wiki_link;
+			add_to(a, "img", {cls:["mini-btn-icon"]}).src = "../GBFML/assets/ui/icon/wiki.png";
+		}
 		span.appendChild(document.createTextNode(" " + txt));
 		this.anchors.push(span);
 	}
@@ -537,18 +1051,6 @@ class DamageCalculator extends ToolBase
 								node.style.background = DamageCalculator.c_color_good;
 							break;
 						}
-						case "skill_boost":
-						{
-							if(f == 0)
-								node.style.background = "";
-							else if(f < -99)
-								node.style.background = DamageCalculator.c_color_critical;
-							else if(f < 0)
-								node.style.background = DamageCalculator.c_color_bad;
-							else
-								node.style.background = DamageCalculator.c_color_good;
-							break;
-						}
 						case "def_down":
 						{
 							if(f == 0)
@@ -575,6 +1077,8 @@ class DamageCalculator extends ToolBase
 							break;
 						}
 						case "wonder_amp":
+						case "wide_open":
+						case "skill_boost":
 						case "atk":
 						{
 							if(f == 0)
@@ -605,6 +1109,48 @@ class DamageCalculator extends ToolBase
 						case "variation_mod":
 						{
 							node.style.background = DamageCalculator.c_color_good;
+							break;
+						}
+						case "damage_type":
+						case "soft_cap_type":
+						{
+							switch(node.value)
+							{
+								case "Auto":
+								{
+									node.style.background = DamageCalculator.c_color_good;
+									break;
+								}
+								case "Auto Assassin":
+								{
+									node.style.background = DamageCalculator.c_color_red;
+									break;
+								}
+								case "C.A.":
+								case "C.A. 2.15M":
+								case "C.A. 2.42M":
+								case "C.A. 2.90M":
+								case "C.A. 5★ Eternal":
+								case "C.A. 6★ Et.110":
+								case "C.A. 6★ Et.150":
+								{
+									node.style.background = DamageCalculator.c_color_purple;
+									break;
+								}
+								case "C.B.":
+								case "C.B. 2C":
+								case "C.B. 3C":
+								case "C.B. 4C":
+								{
+									node.style.background = DamageCalculator.c_color_blue;
+									break;
+								}
+								default:
+								{
+									node.style.background = DamageCalculator.c_color_bad;
+									break;
+								}
+							}
 							break;
 						}
 						default:
@@ -691,28 +1237,51 @@ class DamageCalculator extends ToolBase
 			);
 			this.color_cell(this.elements[mod + "_total"]);
 		}
+		
 		// adjustments
 		for(const key of Object.keys(mods))
 		{
 			if(key != "dmg_supp") // supp doesn't need to be converted
 				mods[key] /= 100.0;
 		}
+		mods.dmg_cap_spe += 1.0;
 		mods.dmg_cap_pen += 1.0;
 		
 		// toggles
 		const advantage = this.elements.advantage.value == "Yes";
-		const is_skill = this.elements.is_skill.value == "Yes";
+		const damage_type = (
+			this.elements.damage_type.value == "Auto" ?
+			DamageCalculator.c_dmg_type.AUTO :
+			(
+				this.elements.damage_type.value == "Skill" ?
+				DamageCalculator.c_dmg_type.SKILL :
+				(
+					this.elements.damage_type.value == "C.A." ?
+					DamageCalculator.c_dmg_type.CA :
+					DamageCalculator.c_dmg_type.CB
+				)
+				
+			)
+		);
 		const is_assassin = this.elements.is_assassin.value == "Yes";
-		const hard_cap = this.elements.raid_cap.value == "6.6M" ? 6600000 : 13100000;
+		const hard_cap_str = this.elements.raid_cap.value;
+		const hard_cap = hard_cap_str == "6.6M" ? 6600000 : 13100000;
 		const crew_ship = this.elements.ship.value == "Yes" ? 1.1 : 1.0;
 		const crew_reactor = this.elements.reactor.value == "Yes" ? 1.1 : 1.0;
 		const gw_fo = this.elements.gw_fo.value == "Yes";
+		const gw_pity = this.elements.gw_pity.value == "Yes";
 		const gw_atk = this.elements.gw_atk.value == "Yes";
 		const yupei = this.elements.wonder_yupei.value == "Yes";
 		const w6d = this.elements.wonder_6d.value == "Yes";
 		const wm2 = this.elements.wonder_m2.value == "Yes";
 		const use_buff = this.elements.buff_enable.value == "Enabled";
 		const round_up = this.elements.round_up.value == "Yes";
+		
+		// assassin + CA combo
+		if(is_assassin && damage_type == DamageCalculator.c_dmg_type.CA)
+		{
+			mods.dmg_cap += 0.3;
+		}
 		
 		// others
 		let crit_modifier = 1.0;
@@ -744,13 +1313,27 @@ class DamageCalculator extends ToolBase
 			99,
 			this.parse(this.elements.def_down.value)
 		) / 100;
+		
+		let bullet = Math.min(
+			99,
+			this.parse(this.elements.bullet.value)
+		) / 100 + 1.0;
+		
+		let wide_open = Math.max(
+			0,
+			this.parse(this.elements.wide_open.value)
+		) / 100;
+		this.set_text_cell(this.elements.info_wide_open, 100 * wide_open, 2, true);
+		this.color_cell(this.elements.info_wide_open);
+		wide_open += 1.0;
+		
 		let elemental_atk = (
 			mods.ele_atk +
 			(yupei ? 0.1 : 0) +
 			(advantage ? 0.5 : 0) +
 			(wm2 ? 0.03 : 0)
 		);
-		this.set_text_cell(this.elements.info_ele, 100*elemental_atk, 2, true);
+		this.set_text_cell(this.elements.info_ele, 100 * elemental_atk, 2, true);
 		this.color_cell(this.elements.info_ele);
 		
 		let amplification = (
@@ -758,10 +1341,10 @@ class DamageCalculator extends ToolBase
 			Math.max(0, this.parse(this.elements.wonder_amp.value) / 100) +
 			(yupei ? 0.05 : 0)
 		);
-		this.set_text_cell(this.elements.info_amp, 100*amplification, 2, true);
+		this.set_text_cell(this.elements.info_amp, 100 * amplification, 2, true);
 		this.color_cell(this.elements.info_amp);
 		
-		if(is_skill)
+		if(damage_type != DamageCalculator.c_dmg_type.AUTO)
 			mods.dmg_supp *= (1.0 + amplification);
 		
 		let damage_cap = (
@@ -779,10 +1362,10 @@ class DamageCalculator extends ToolBase
 			(
 				(atk > 51290 && atk < 74400) ?
 				(
-					(Math.floor(Math.floor(Math.ceil(atk / 10) * crew_ship) * crew_reactor) + 2)
+					(Math.floor(Math.floor(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor) + 2)
 				) :
 				(
-					Math.ceil(Math.ceil(Math.ceil(atk / 10) * crew_ship) * crew_reactor)
+					Math.ceil(Math.ceil(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor)
 				)
 			) * 10
 		);
@@ -798,7 +1381,7 @@ class DamageCalculator extends ToolBase
 			adjusted_raw_atk *
 			(
 				base_multiplier + (
-					is_skill ?
+					damage_type == DamageCalculator.c_dmg_type.SKILL ?
 					(
 						skill_multiplier + (
 							yupei ? 0.05 : 0
@@ -818,10 +1401,16 @@ class DamageCalculator extends ToolBase
 			(1.0 + mods.enmity_ex) *
 			(1.0 + elemental_atk) *
 			(1.0 + amplification) *
+			wide_open *
 			crit_modifier *
 			(
 				gw_atk ?
 				1.25 :
+				1.0
+			) *
+			(
+				gw_pity ?
+				1.30 :
 				1.0
 			) *
 			(
@@ -840,106 +1429,58 @@ class DamageCalculator extends ToolBase
 		this.set_text_cell(this.elements.info_raw_dmg, raw_damage);
 		
 		// soft caps
-		let soft_caps = {};
-		for(let i = 0; i < DamageCalculator.c_soft_caps.length; ++i)
+		const soft_cap_str = this.elements.soft_cap_type.value;
+		let [soft_caps, capped_dmg] = this.generate_soft_cap(
+			"soft",
+			DamageCalculator.c_soft_caps[this.elements.soft_cap_type.value],
+			DamageCalculator.c_soft_cap_count,
+			raw_damage,
+			effective_cap * wide_open,
+			mods.dmg_cap_pen
+		);
+		let over_soft = raw_damage - capped_dmg;
+		this.set_text_cell(this.elements.info_over_soft, over_soft);
+
+		// apply supplemental
+		capped_dmg += mods.dmg_supp;
+
+		// skill soft caps
+		let skill_caps = [];
+		if(damage_type == DamageCalculator.c_dmg_type.SKILL)
 		{
-			const [val, dampening, next] = (
-				is_assassin ?
-				DamageCalculator.c_soft_caps[i].assassin :
-				DamageCalculator.c_soft_caps[i].base
-			);
-			// boosted value, boosted dampening, effective damage in range
-			soft_caps[val] = [
-				val * effective_cap,
-				Math.min(1.0, dampening * mods.dmg_cap_pen),
-				0
-			];
-			this.set_text_cell(this.elements["soft_cap_base_" + i], val);
-			this.set_text_cell(this.elements["soft_cap_" + i], soft_caps[val][0]);
-			this.set_text_cell(this.elements["soft_dampening_base_" + i], (dampening * 100), 5, true);
-			this.set_text_cell(this.elements["soft_dampening_" + i], (soft_caps[val][1] * 100), 5, true);
+			const threshold = "" + ((skill_multiplier * 100) - (skill_multiplier * 100) % 100);
+			if(threshold in DamageCalculator.c_skill_caps)
+			{
+				[skill_caps, capped_dmg] = this.generate_soft_cap(
+					"skill",
+					DamageCalculator.c_skill_caps[threshold],
+					DamageCalculator.c_skill_cap_count,
+					capped_dmg,
+					1.0,
+					1.0
+				);
+				this.skill_cap_grid.style.display = "grid";
+			}
+			else this.skill_cap_grid.style.display = "none";
 		}
-		let capped_dmg_sum = 0;
-		for(let i = 0; i < DamageCalculator.c_soft_caps.length; ++i)
-		{
-			const [val, dampening, next] = (
-				is_assassin ?
-				DamageCalculator.c_soft_caps[i].assassin :
-				DamageCalculator.c_soft_caps[i].base
-			);
-			// damage in that range
-			soft_caps[val][2] = Math.min(
-				Math.max(
-					0,
-					raw_damage - soft_caps[val][0]
-				),
-				(
-					next in soft_caps ?
-					soft_caps[next][0] :
-					next
-				) - val
-			) * soft_caps[val][1];
-			this.set_text_cell(this.elements["soft_damage_" + i], soft_caps[val][2]);
-			
-			capped_dmg_sum += soft_caps[val][2];
-		}
-		let beyond_soft = raw_damage - soft_caps[DamageCalculator.c_last_soft_cap][2];
-		this.set_text_cell(this.elements.info_beyond_soft, beyond_soft);
+		else this.skill_cap_grid.style.display = "none";
 		
 		// hard caps
-		// works mostly the same as soft caps
-		let hard_caps = {};
-		const last_soft_cap = soft_caps[DamageCalculator.c_last_soft_cap];
-		for(let i = 0; i < DamageCalculator.c_hard_caps.length; ++i)
-		{
-			const [val, dampening] = DamageCalculator.c_hard_caps[i];
-			hard_caps[val] = [
-				val, // unchanged for now
-				dampening * last_soft_cap[1],
-				0
-			];
-			//this.set_text_cell(this.elements["hard_" + i], hard_caps[val][0]);
-			this.set_text_cell(this.elements["hard_dampening_" + i], (hard_caps[val][1] * 100), 5, true);
-		}
-		let hard_capped_dmg_sum = 0;
-		for(let i = 0; i < DamageCalculator.c_hard_caps.length; ++i)
-		{
-			const [val, dampening] = DamageCalculator.c_hard_caps[i];
-			if(capped_dmg_sum >= hard_caps[val][0])
-			{
-				hard_caps[val][2] = Math.min(
-					(
-						raw_damage -
-						(
-							(last_soft_cap[2] / last_soft_cap[1]) +
-							hard_capped_dmg_sum
-						)
-					) * hard_caps[val][1],
-					(
-						(
-							i == 0 ?
-							hard_caps[DamageCalculator.c_hard_caps[i+1]][0] :
-							Infinity
-						) - hard_caps[val][1]
-					) * dampening
-				)
-			}
-			this.set_text_cell(this.elements["hard_damage_" + i], hard_caps[val][2]);
-			
-			hard_capped_dmg_sum += hard_caps[val][2] / hard_caps[val][1];
-			capped_dmg_sum += hard_caps[val][2];
-			
-		}
-		
-		let overdamage = soft_caps[DamageCalculator.c_last_soft_cap][2];
-		for(const [unused1, unused2, val] of Object.values(hard_caps))
-			overdamage += val;
-		this.set_text_cell(this.elements.info_overdamage, overdamage);
-		
-		let final_damage = Math.min(
-			Math.round(raw_damage + overdamage + mods.dmg_supp),
-			hard_cap
+		let [hard_caps, final_damage] = this.generate_soft_cap(
+			"hard",
+			DamageCalculator.c_hard_caps[hard_cap_str],
+			DamageCalculator.c_hard_cap_count,
+			capped_dmg,
+			mods.dmg_cap_spe * (
+				damage_type == DamageCalculator.c_dmg_type.AUTO ?
+				wide_open :
+				1.0
+			),
+			1.0
 		);
+		
+		let over_hard = capped_dmg - final_damage;
+		this.set_text_cell(this.elements.info_over_hard, over_hard);
 		this.set_text_cell(this.elements.info_final, final_damage);
 		
 		let value = this.elements.observed.value;
@@ -954,68 +1495,116 @@ class DamageCalculator extends ToolBase
 		}
 		this.color_cell(this.elements.info_difference);
 		
-		// details section
+		// bonus damage section
 		const variation_mod = this.parse(
 			this.elements.variation_mod.value.slice(
 				0,
 				this.elements.variation_mod.value.length - 1
 			)
 		) / 100;
+		
 		for(let i = 0; i < 10; ++i)
 		{
 			for(let j = -5; j <= 5; ++j)
 			{
 				// base damage
 				const dmg = raw_damage * (1 + (j / 100) + (i / 1000));
-				// following will hold current cap details and the next one
-				let cap_current;
-				let cap_next = (
-					is_assassin ?
-					DamageCalculator.c_soft_caps[0].assassin[0] :
-					DamageCalculator.c_soft_caps[0].base[0]
-				);
-				// the variable holding the final damage
-				let dmg_sum = 0;
-				// apply soft caps
-				for(let n = 0; n < DamageCalculator.c_soft_caps.length; ++n)
-				{
-					cap_current = cap_next; // pass next to current
-					if(n == DamageCalculator.c_soft_caps.length - 1)
-					{
-						dmg_sum += (
-							Math.max(
-								dmg - soft_caps[cap_current][0],
-								0
-							) * soft_caps[cap_current][1]
-						);
-					}
-					else
-					{
-						// get next one
-						cap_next = (
-							is_assassin ?
-							DamageCalculator.c_soft_caps[n + 1].assassin[0] :
-							DamageCalculator.c_soft_caps[n + 1].base[0]
-						);
-						dmg_sum += (
-							Math.min(
-								soft_caps[cap_next][0] - soft_caps[cap_current][0],
-								Math.max(
-									dmg - soft_caps[cap_current][0],
-									0
-								)
-							) * soft_caps[cap_current][1]
-						);
-					}
-				}
+				// apply caps
+				let dmg_sum = this.apply_simple_soft_caps(dmg, soft_caps);
+				// multiply by bonus damage multiplier
+				dmg_sum *= variation_mod;
+				// add supp
+				dmg_sum += mods.dmg_supp;
+				// extra caps
+				if(skill_caps.length > 0)
+					dmg_sum = this.apply_simple_soft_caps(dmg_sum, skill_caps);
+				dmg_sum = this.apply_simple_soft_caps(dmg_sum, hard_caps);
+				// round up
 				if(round_up)
 					dmg_sum += 1;
-				dmg_sum *= variation_mod;
-				dmg_sum += mods.dmg_supp;
 				dmg_sum = Math.ceil(dmg_sum);
 				this.set_text_cell(this.elements["variation_" + j + "_" + i], dmg_sum);
 			}
 		}
+	}
+	
+	generate_soft_cap(key, base_caps, count, raw_damage, effective_cap, dmg_cap_pen)
+	{
+		let caps = [];
+		for(let i = 0; i < count; ++i)
+		{
+			const [val, dampening] = base_caps[i];
+			caps.push([
+				val * effective_cap,
+				Math.min(1.0, dampening * dmg_cap_pen),
+				0
+			]);
+			this.set_text_cell(this.elements[key + "_cap_base_" + i], val);
+			this.set_text_cell(this.elements[key + "_cap_" + i], caps[i][0]);
+			this.set_text_cell(this.elements[key + "_dampening_base_" + i], (dampening * 100), 5, true);
+			this.set_text_cell(this.elements[key + "_dampening_" + i], (caps[i][1] * 100), 5, true);
+		}
+		let capped_dmg_sum = 0;
+		let last_cap = null;
+		for(let i = 0; i < count; ++i)
+		{
+			const [val, dampening] = base_caps[i];
+			if(i == count -1)
+			{
+				caps[i][2] = Math.max(
+					0,
+					raw_damage - caps[i][0]
+				) * caps[i][1];
+			}
+			else
+			{
+				caps[i][2] = Math.min(
+					Math.max(
+						0,
+						raw_damage - caps[i][0]
+					),
+					caps[i + 1][0] - val
+				) * caps[i][1];
+			}
+			this.set_text_cell(this.elements[key + "_damage_" + i], caps[i][2]);
+			
+			last_cap = caps[i];
+			capped_dmg_sum += caps[i][2];
+		}
+		return [
+			caps,
+			capped_dmg_sum
+		];
+	}
+	
+	apply_simple_soft_caps(dmg, caps)
+	{
+		let dmg_sum = 0;
+		for(let n = 0; n < caps.length; ++n)
+		{
+			if(n == caps.length - 1)
+			{
+				dmg_sum += (
+					Math.max(
+						dmg - caps[n][0],
+						0
+					) * caps[n][1]
+				);
+			}
+			else
+			{
+				dmg_sum += (
+					Math.min(
+						caps[n + 1][0] - caps[n][0],
+						Math.max(
+							dmg - caps[n][0],
+							0
+						)
+					) * caps[n][1]
+				);
+			}
+		}
+		return dmg_sum;
 	}
 	
 	load()
