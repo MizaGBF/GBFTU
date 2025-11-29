@@ -1448,7 +1448,7 @@ class DamageCalculator extends ToolBase
 		let skill_caps = [];
 		if(damage_type == DamageCalculator.c_dmg_type.SKILL)
 		{
-			const threshold = "" + ((skill_multiplier * 100) - (skill_multiplier * 100) % 100);
+			const threshold = "" + (100 + (skill_multiplier * 100) - (skill_multiplier * 100) % 100);
 			if(threshold in DamageCalculator.c_skill_caps)
 			{
 				[skill_caps, capped_dmg] = this.generate_soft_cap(
