@@ -1335,6 +1335,7 @@ class DamageCalculator extends ToolBase
 			case "Gae Bulg": crit_modifier += 2.0; break;
 			case "Crab Grab": crit_modifier += 1.3; break;
 		}
+		crit_modifier += mods.crit_dmg;
 		
 		// math stuff
 		let base_multiplier = Math.max(
@@ -1431,7 +1432,6 @@ class DamageCalculator extends ToolBase
 			(1.0 + mods.enmity) *
 			(1.0 + mods.enmity_magna) *
 			(1.0 + mods.enmity_ex) *
-			(1.0 + mods.crit_dmg) *
 			(1.0 + elemental_atk) *
 			(1.0 + amplification) *
 			crit_modifier *
