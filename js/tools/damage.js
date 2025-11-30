@@ -1639,7 +1639,6 @@ class DamageCalculator extends ToolBase
 			this.set_text_cell(this.elements[key + "_dampening_" + i], (caps[i][1] * 100), 5, true);
 		}
 		let capped_dmg_sum = 0;
-		let last_cap = null;
 		for(let i = 0; i < count; ++i)
 		{
 			const [val, dampening] = base_caps[i];
@@ -1662,7 +1661,6 @@ class DamageCalculator extends ToolBase
 			}
 			this.set_text_cell(this.elements[key + "_damage_" + i], caps[i][2]);
 			
-			last_cap = caps[i];
 			capped_dmg_sum += caps[i][2];
 		}
 		return [
