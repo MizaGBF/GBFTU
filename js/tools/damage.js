@@ -491,6 +491,24 @@ class DamageCalculator extends ToolBase
 		]
 	});
 	
+	static c_flurry = Object.freeze({
+		"2 Hits": (1.0 / 2.0),
+		"3 Hits": (1.0 / 3.0),
+		"4 Hits": (1.0 / 4.0),
+		"5 Hits": (1.0 / 5.0),
+		"6 Hits": (1.0 / 6.0),
+		"7 Hits": (1.0 / 7.0),
+		"8 Hits": (1.0 / 8.0),
+		"9 Hits": (1.0 / 9.0),
+		"10 Hits": (1.0 / 10.0),
+		"11 Hits": (1.0 / 11.0),
+		"12 Hits": (1.0 / 12.0),
+		"13 Hits": (1.0 / 13.0),
+		"14 Hits": (1.0 / 14.0),
+		"15 Hits": (1.0 / 15.0),
+		"16 Hits": (1.0 / 16.0)
+	});
+	
 	static c_color_critical = "#ff0000";
 	static c_color_good = "#357a47";
 	static c_color_bad = "#a15e3a";
@@ -539,19 +557,24 @@ class DamageCalculator extends ToolBase
 		
 		this.add_text_cell(grid, "assets/ui/damage/def_up.png", "Enemy DEF.");
 		this.add_text_cell(grid, "assets/ui/damage/def_down.png", "Def Down (%)");
-		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open (%)");
+		this.add_text_cell(grid, "assets/ui/damage/flurry.png", "Flurry");
 		
 		this.add_input_cell(grid, "10", "def");
 		this.add_input_cell(grid, "0", "def_down");
-		this.add_input_cell(grid, "0", "wide_open");
+		this.add_select_cell(grid, [
+			"None", "2 Hits", "3 Hits", "4 Hits",
+			"5 Hits", "6 Hits", "7 Hits", "8 Hits",
+			"9 Hits", "10 Hits", "11 Hits", "12 Hits",
+			"13 Hits", "14 Hits", "15 Hits", "16 Hits"
+		], "flurry");
 		
 		this.add_text_cell(grid, "assets/ui/damage/wpn.png", "Crit. WPN.");
 		this.add_text_cell(grid, "assets/ui/damage/bullet.png", "Bullet Mod. (%)");
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open (%)");
 		
 		this.add_select_cell(grid, ["None", "Crab Grab", "Gae Bulg", "Mjolnir"], "crit_wpn");
 		this.add_input_cell(grid, "0", "bullet");
-		this.add_invisible_cell(grid);
+		this.add_input_cell(grid, "0", "wide_open");
 		
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Toggles");
@@ -561,7 +584,7 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, "assets/ui/damage/crew.png", "Crew Ship");
 		this.add_text_cell(grid, "assets/ui/damage/reactor.png", "Crew Reactor");
 
-		this.add_select_cell(grid, ["Yes", "No"], "advantage");
+		this.add_select_cell(grid, ["Advantaged", "None", "Disadvantaged"], "ele_advantage");
 		this.add_select_cell(grid, ["Auto", "Skill", "C.A.", "C.B."], "damage_type");
 		this.add_select_cell(grid, ["Yes", "No"], "ship");
 		this.add_select_cell(grid, ["Yes", "No"], "reactor");
@@ -728,13 +751,13 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Final DMG");
 		this.add_text_cell(grid, "assets/ui/damage/ingame.png", "In-game");
 		this.add_text_cell(grid, "assets/ui/damage/difference.png", "Difference");
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, "assets/ui/damage/flurry.png", "Flurry Sum");
 		
 		this.add_invisible_cell(grid);
 		this.add_text_cell(grid, null, "", "info_final");
 		this.add_input_cell(grid, "", "observed");
 		this.add_text_cell(grid, null, "", "info_difference");
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, null, "", "info_flurry");
 		
 		add_to(this.tree[0], "hr");
 		this.save_buttons.push(add_to(
@@ -770,8 +793,10 @@ class DamageCalculator extends ToolBase
 			for(let j = 0; j < 10; ++j)
 				this.add_text_cell(grid, null, "", "variation_" + i + "_" + j);
 		}
-		this.add_text_cell(grid, "", "Round up?");
+		this.add_text_cell(grid, null, "Round up?");
 		this.add_select_cell(grid, ["No", "Yes"], "round_up");
+		this.add_text_cell(grid, null, "Supp.?");
+		this.add_select_cell(grid, ["Yes", "No"], "echo_supp");
 		
 		add_to(this.tree[0], "br");
 		this.save_buttons.push(add_to(
@@ -905,7 +930,7 @@ class DamageCalculator extends ToolBase
 		if(access_as != null && access_as in this.elements)
 			throw new Error("" + access_as + " is already in use");
 		let cell = add_to(grid, "div", {cls:["tool-grid-cell"]});
-		if(icon != null)
+		if(icon != null && icon != "")
 		{
 			const img = add_to(cell, "img");
 			img.src = icon;
@@ -1111,6 +1136,14 @@ class DamageCalculator extends ToolBase
 							node.style.background = DamageCalculator.c_color_good;
 							break;
 						}
+						case "flurry":
+						{
+							if(node.value == "None")
+								node.style.background = "";
+							else
+								node.style.background = DamageCalculator.c_color_good;
+							break;
+						}
 						case "damage_type":
 						case "soft_cap_type":
 						{
@@ -1159,6 +1192,7 @@ class DamageCalculator extends ToolBase
 							{
 								case "Yes":
 								case "Enabled":
+								case "Advantaged":
 								case "6.6M":
 								case "Crab Grab":
 								case "Gae Bulg":
@@ -1168,6 +1202,7 @@ class DamageCalculator extends ToolBase
 									break;
 								}
 								case "No":
+								case "Disadvantaged":
 								case "13.1M":
 								{
 									node.style.background = DamageCalculator.c_color_bad;
@@ -1248,7 +1283,15 @@ class DamageCalculator extends ToolBase
 		mods.dmg_cap_pen += 1.0;
 		
 		// toggles
-		const advantage = this.elements.advantage.value == "Yes";
+		const advantage = (
+			this.elements.ele_advantage.value == "Advantaged" ?
+			0.5 :
+			(
+				this.elements.ele_advantage.value == "Disadvantaged" ?
+				-0.25 :
+				0
+			)
+		);
 		const damage_type = (
 			this.elements.damage_type.value == "Auto" ?
 			DamageCalculator.c_dmg_type.AUTO :
@@ -1276,6 +1319,7 @@ class DamageCalculator extends ToolBase
 		const wm2 = this.elements.wonder_m2.value == "Yes";
 		const use_buff = this.elements.buff_enable.value == "Enabled";
 		const round_up = this.elements.round_up.value == "Yes";
+		const echo_supp = this.elements.echo_supp.value == "Yes";
 		
 		// assassin + CA combo
 		if(is_assassin && damage_type == DamageCalculator.c_dmg_type.CA)
@@ -1330,7 +1374,7 @@ class DamageCalculator extends ToolBase
 		let elemental_atk = (
 			mods.ele_atk +
 			(yupei ? 0.1 : 0) +
-			(advantage ? 0.5 : 0) +
+			advantage +
 			(wm2 ? 0.03 : 0)
 		);
 		this.set_text_cell(this.elements.info_ele, 100 * elemental_atk, 2, true);
@@ -1358,38 +1402,26 @@ class DamageCalculator extends ToolBase
 		let effective_cap = (1.0 + damage_cap) * (1.0 + amplification);
 		this.set_text_cell(this.elements.info_effective_cap, effective_cap * 100, 4, true);
 		
-		let adjusted_raw_atk = Math.ceil(
-			(
-				(atk > 51290 && atk < 74400) ?
-				(
-					(Math.floor(Math.floor(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor) + 2)
-				) :
-				(
-					Math.ceil(Math.ceil(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor)
-				)
-			) * 10
-		);
+		// adjust raw atk calcul
+		let flurry_sum_mul = 1.0;
+		if(this.elements.flurry.value in DamageCalculator.c_flurry)
+		{
+			atk *= DamageCalculator.c_flurry[this.elements.flurry.value];
+			flurry_sum_mul = 1.0 / DamageCalculator.c_flurry[this.elements.flurry.value];
+		}
+		
+		let adjusted_raw_atk = this.adjust_raw_atk(atk, bullet, crew_ship, crew_reactor);
 		this.set_text_cell(this.elements.info_atk, adjusted_raw_atk);
 		
+		// effective defense
 		let effective_defense = Math.max(0, 
 			(1 - def_down) * def * (1 - mods.def_ignore)
 		);
 		this.set_text_cell(this.elements.info_def, effective_defense);
 		this.color_cell(this.elements.info_def);
 		
-		let raw_damage = Math.ceil(
-			adjusted_raw_atk *
-			(
-				base_multiplier + (
-					damage_type == DamageCalculator.c_dmg_type.SKILL ?
-					(
-						skill_multiplier + (
-							yupei ? 0.05 : 0
-						)
-					) :
-					0
-				)
-			) * 
+		// combine modifiers
+		let modifiers = ( // pre-calculated here so it can be reused in bonus dmg part
 			(1.0 + mods.might) *
 			(1.0 + mods.might_magna) *
 			(1.0 + mods.might_ex + mods.might_ex_sp) *
@@ -1399,11 +1431,11 @@ class DamageCalculator extends ToolBase
 			(1.0 + mods.enmity) *
 			(1.0 + mods.enmity_magna) *
 			(1.0 + mods.enmity_ex) *
+			(1.0 + mods.crit_dmg) *
 			(1.0 + elemental_atk) *
 			(1.0 + amplification) *
-			wide_open *
 			crit_modifier *
-			(
+			( // found on some obscure JP blog that it multiplies
 				gw_atk ?
 				1.25 :
 				1.0
@@ -1426,6 +1458,9 @@ class DamageCalculator extends ToolBase
 			) /
 			effective_defense
 		);
+		
+		// raw damage
+		let raw_damage = this.calcul_raw_damage(adjusted_raw_atk, base_multiplier, damage_type, skill_multiplier, yupei, modifiers);
 		this.set_text_cell(this.elements.info_raw_dmg, raw_damage);
 		
 		// soft caps
@@ -1441,6 +1476,11 @@ class DamageCalculator extends ToolBase
 		let over_soft = raw_damage - capped_dmg;
 		this.set_text_cell(this.elements.info_over_soft, over_soft);
 
+		// apply wide open (non AUTO)
+		if(damage_type != DamageCalculator.c_dmg_type.AUTO)
+		{
+			capped_dmg *= wide_open;
+		}
 		// apply supplemental
 		capped_dmg += mods.dmg_supp;
 
@@ -1479,9 +1519,11 @@ class DamageCalculator extends ToolBase
 			1.0
 		);
 		
+		// results
 		let over_hard = capped_dmg - final_damage;
 		this.set_text_cell(this.elements.info_over_hard, over_hard);
 		this.set_text_cell(this.elements.info_final, final_damage);
+		this.set_text_cell(this.elements.info_flurry, final_damage * flurry_sum_mul);
 		
 		let value = this.elements.observed.value;
 		if(value.trim() != "" && this.is_number(value))
@@ -1496,7 +1538,7 @@ class DamageCalculator extends ToolBase
 		this.color_cell(this.elements.info_difference);
 		
 		// bonus damage section
-		const variation_mod = this.parse(
+		const echo = this.parse(
 			this.elements.variation_mod.value.slice(
 				0,
 				this.elements.variation_mod.value.length - 1
@@ -1508,13 +1550,31 @@ class DamageCalculator extends ToolBase
 			for(let j = -5; j <= 5; ++j)
 			{
 				// base damage
-				const dmg = raw_damage * (1 + (j / 100) + (i / 1000));
+				// Note:
+				// for auto with a non 100% echo, we redo most of the calcul from scratch
+				// otherwise, we reuse the raw_damage value
+				const dmg = (
+					echo != 1.0 && damage_type == DamageCalculator.c_dmg_type.AUTO ?
+					this.calcul_raw_damage(
+						this.adjust_raw_atk(atk * echo, bullet, crew_ship, crew_reactor),
+						base_multiplier, damage_type, skill_multiplier, yupei, modifiers
+					) :
+					raw_damage
+				) * (1 + (j / 100) + (i / 1000));
 				// apply caps
 				let dmg_sum = this.apply_simple_soft_caps(dmg, soft_caps);
-				// multiply by bonus damage multiplier
-				dmg_sum *= variation_mod;
+				// apply wide open
+				dmg_sum *= wide_open;
 				// add supp
-				dmg_sum += mods.dmg_supp;
+				if(!echo_supp)
+				{
+					dmg_sum += mods.dmg_supp;
+				}
+				// apply echo (non AUTO)
+				if(echo != 1.0 && damage_type != DamageCalculator.c_dmg_type.AUTO)
+				{
+					dmg_sum *= echo;
+				}
 				// extra caps
 				if(skill_caps.length > 0)
 					dmg_sum = this.apply_simple_soft_caps(dmg_sum, skill_caps);
@@ -1526,6 +1586,40 @@ class DamageCalculator extends ToolBase
 				this.set_text_cell(this.elements["variation_" + j + "_" + i], dmg_sum);
 			}
 		}
+	}
+	
+	adjust_raw_atk(atk, bullet, crew_ship, crew_reactor)
+	{
+		return Math.ceil(
+			(
+				(atk > 51290 && atk < 74400) ?
+				(
+					(Math.floor(Math.floor(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor) + 2)
+				) :
+				(
+					Math.ceil(Math.ceil(Math.ceil(atk * bullet / 10) * crew_ship) * crew_reactor)
+				)
+			) * 10
+		);
+	}
+	
+	calcul_raw_damage(adjusted_raw_atk, base_multiplier, damage_type, skill_multiplier, yupei, modifiers)
+	{
+		return Math.ceil(
+			adjusted_raw_atk *
+			(
+				base_multiplier + (
+					damage_type == DamageCalculator.c_dmg_type.SKILL ?
+					(
+						skill_multiplier + (
+							yupei ? 0.05 : 0
+						)
+					) :
+					0
+				)
+			) * 
+			modifiers
+		);
 	}
 	
 	generate_soft_cap(key, base_caps, count, raw_damage, effective_cap, dmg_cap_pen)
