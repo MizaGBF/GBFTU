@@ -5,8 +5,7 @@ class DamageCalculator extends ToolBase
 	static c_dmg_type = Object.freeze({
 		AUTO: 0,
 		SKILL: 1,
-		CA: 2,
-		CB: 3
+		CA: 2
 	});
 	static c_mod_list = Object.freeze([
 		[
@@ -111,27 +110,6 @@ class DamageCalculator extends ToolBase
 			[3340000, 0.05],
 			[3400000, 0.01]
 		],*/
-		"C.B. 2C":[
-			[0, 1],
-			[1000000, 0.6],
-			[1120000, 0.3],
-			[1150000, 0.05],
-			[1160000, 0.01]
-		],
-		"C.B. 3C":[
-			[0, 1],
-			[1250000, 0.6],
-			[1370000, 0.3],
-			[1385000, 0.05],
-			[1410000, 0.01]
-		],
-		"C.B. 4C":[
-			[0, 1],
-			[1500000, 0.6],
-			[1620000, 0.3],
-			[1650000, 0.05],
-			[1685000, 0.01]
-		],
 		"Skill 200001": [
 			[0, 1],
 			[20000, 0.5],
@@ -585,7 +563,7 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, "assets/ui/damage/reactor.png", "Crew Reactor");
 
 		this.add_select_cell(grid, ["Advantaged", "None", "Disadvantaged"], "ele_advantage");
-		this.add_select_cell(grid, ["Auto", "Skill", "C.A.", "C.B."], "damage_type");
+		this.add_select_cell(grid, ["Auto", "Skill", "C.A."], "damage_type");
 		this.add_select_cell(grid, ["Yes", "No"], "ship");
 		this.add_select_cell(grid, ["Yes", "No"], "reactor");
 		
@@ -1170,7 +1148,7 @@ class DamageCalculator extends ToolBase
 									node.style.background = DamageCalculator.c_color_purple;
 									break;
 								}
-								case "C.B.":
+								case "C.B.": // note: unused
 								case "C.B. 2C":
 								case "C.B. 3C":
 								case "C.B. 4C":
@@ -1298,12 +1276,7 @@ class DamageCalculator extends ToolBase
 			(
 				this.elements.damage_type.value == "Skill" ?
 				DamageCalculator.c_dmg_type.SKILL :
-				(
-					this.elements.damage_type.value == "C.A." ?
-					DamageCalculator.c_dmg_type.CA :
-					DamageCalculator.c_dmg_type.CB
-				)
-				
+				DamageCalculator.c_dmg_type.CA
 			)
 		);
 		const is_assassin = this.elements.is_assassin.value == "Yes";
