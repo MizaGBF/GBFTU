@@ -557,12 +557,12 @@ class DamageCalculator extends ToolBase
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Toggles");
 		grid = this.create_grid(this.tree[0], 4, false);
-		this.add_text_cell(grid, "assets/ui/damage/ele_up.png", "Ele. Advantage");
+		this.add_text_cell(grid, "assets/ui/damage/ele_up.png", "Element");
 		this.add_text_cell(grid, "assets/ui/damage/dmg_type.png", "DMG Type");
 		this.add_text_cell(grid, "assets/ui/damage/crew.png", "Crew Ship");
 		this.add_text_cell(grid, "assets/ui/damage/reactor.png", "Crew Reactor");
 
-		this.add_select_cell(grid, ["Advantaged", "None", "Disadvantaged"], "ele_advantage");
+		this.add_select_cell(grid, ["Advantaged", "None", "Disadvantaged", "Destruction"], "ele_advantage");
 		this.add_select_cell(grid, ["Auto", "Skill", "C.A."], "damage_type");
 		this.add_select_cell(grid, ["Yes", "No"], "ship");
 		this.add_select_cell(grid, ["Yes", "No"], "reactor");
@@ -584,7 +584,7 @@ class DamageCalculator extends ToolBase
 		this.add_anchor(this.tree[0], "Wonders", "https://gbf.wiki/Wonders");
 		grid = this.create_grid(this.tree[0], 4, false);
 		
-		this.add_text_cell(grid, "assets/ui/damage/wonder_amp.jpg", "Chara. AMP (%)");
+		this.add_text_cell(grid, "assets/ui/damage/wonder_amp.jpg", "Chara. AMP. (%)");
 		this.add_text_cell(grid, "assets/ui/damage/yupei.png", "Yupei");
 		this.add_text_cell(grid, "assets/ui/damage/wonder_6d.jpg", "Six Dragons");
 		this.add_text_cell(grid, "assets/ui/damage/wonder_m2.jpg", "Regalia");
@@ -594,6 +594,20 @@ class DamageCalculator extends ToolBase
 		this.add_select_cell(grid, ["Yes", "No"], "wonder_6d");
 		this.add_select_cell(grid, ["Yes", "No"], "wonder_m2");
 		
+		// summons
+		add_to(this.tree[0], "hr");
+		this.add_anchor(this.tree[0], "Summons");
+		grid = this.create_grid(this.tree[0], 4, false);
+		
+		this.add_text_cell(grid, "assets/ui/damage/arcarum.png", "AMP. (%)");
+		this.add_text_cell(grid, "assets/ui/damage/robur.png", "Supplemental");
+		this.add_text_cell(grid, "assets/ui/damage/angel.png", "Cap up");
+		this.add_invisible_cell(grid);
+		
+		this.add_input_cell(grid, "0", "summon_amp");
+		this.add_select_cell(grid, ["None", "Robur 0★", "Belial", "Robur 3★"], "summon_supp");
+		this.add_select_cell(grid, ["None", "0★", "3★", "4★"], "summon_cap_up");
+		this.add_invisible_cell(grid);
 		
 		// grid and buffs
 		add_to(this.tree[0], "hr");
@@ -725,13 +739,13 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, null, "", "info_over_soft");
 		this.add_text_cell(grid, null, "", "info_over_hard");
 		
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, "assets/ui/damage/supplemental.png", "Supplemental");
 		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Final DMG");
 		this.add_text_cell(grid, "assets/ui/damage/ingame.png", "In-game");
 		this.add_text_cell(grid, "assets/ui/damage/difference.png", "Difference");
 		this.add_text_cell(grid, "assets/ui/damage/flurry.png", "Flurry Sum");
 		
-		this.add_invisible_cell(grid);
+		this.add_text_cell(grid, null, "", "info_supplemental");
 		this.add_text_cell(grid, null, "", "info_final");
 		this.add_input_cell(grid, "", "observed");
 		this.add_text_cell(grid, null, "", "info_difference");
@@ -1080,6 +1094,7 @@ class DamageCalculator extends ToolBase
 							break;
 						}
 						case "wonder_amp":
+						case "summon_amp":
 						case "wide_open":
 						case "skill_boost":
 						case "atk":
@@ -1175,6 +1190,8 @@ class DamageCalculator extends ToolBase
 								case "Crab Grab":
 								case "Gae Bulg":
 								case "Mjolnir":
+								case "Belial":
+								case "4★":
 								{
 									node.style.background = DamageCalculator.c_color_good;
 									break;
@@ -1182,6 +1199,8 @@ class DamageCalculator extends ToolBase
 								case "No":
 								case "Disadvantaged":
 								case "13.1M":
+								case "Robur 0★":
+								case "0★":
 								{
 									node.style.background = DamageCalculator.c_color_bad;
 									break;
@@ -1189,6 +1208,13 @@ class DamageCalculator extends ToolBase
 								case "Disabled":
 								{
 									node.style.background = DamageCalculator.c_color_critical;
+									break;
+								}
+								case "3★":
+								case "Robur 3★":
+								case "Destruction":
+								{
+									node.style.background = DamageCalculator.c_color_blue;
 									break;
 								}
 								default:
@@ -1261,11 +1287,12 @@ class DamageCalculator extends ToolBase
 		mods.dmg_cap_pen += 1.0;
 		
 		// toggles
+		const element_str = this.elements.ele_advantage.value;
 		const advantage = (
-			this.elements.ele_advantage.value == "Advantaged" ?
+			["Advantaged", "Destruction"].includes(element_str) ?
 			0.5 :
 			(
-				this.elements.ele_advantage.value == "Disadvantaged" ?
+				element_str == "Disadvantaged" ?
 				-0.25 :
 				0
 			)
@@ -1282,8 +1309,8 @@ class DamageCalculator extends ToolBase
 		const is_assassin = this.elements.is_assassin.value == "Yes";
 		const hard_cap_str = this.elements.raid_cap.value;
 		const hard_cap = hard_cap_str == "6.6M" ? 6600000 : 13100000;
-		const crew_ship = this.elements.ship.value == "Yes" ? 1.1 : 1.0;
-		const crew_reactor = this.elements.reactor.value == "Yes" ? 1.1 : 1.0;
+		const crew_ship = (this.elements.ship.value == "Yes" && element_str != "Destruction") ? 1.1 : 1.0;
+		const crew_reactor = (this.elements.reactor.value == "Yes" && element_str != "Destruction") ? 1.1 : 1.0;
 		const gw_fo = this.elements.gw_fo.value == "Yes";
 		const gw_pity = this.elements.gw_pity.value == "Yes";
 		const gw_atk = this.elements.gw_atk.value == "Yes";
@@ -1293,6 +1320,42 @@ class DamageCalculator extends ToolBase
 		const use_buff = this.elements.buff_enable.value == "Enabled";
 		const round_up = this.elements.round_up.value == "Yes";
 		const echo_supp = this.elements.echo_supp.value == "Yes";
+		switch(this.elements.summon_supp.value)
+		{
+			case "Robur 0★":
+			{
+				mods.dmg_supp += 25000;
+				break;
+			}
+			case "Belial":
+			{
+				mods.dmg_supp += 30000;
+				break;
+			}
+			case "Robur 3★":
+			{
+				mods.dmg_supp += 50000;
+				break;
+			}
+		}
+		switch(this.elements.summon_cap_up.value)
+		{
+			case "0★":
+			{
+				mods.dmg_cap += 0.05;
+				break;
+			}
+			case "3★":
+			{
+				mods.dmg_cap += 0.10;
+				break;
+			}
+			case "4★":
+			{
+				mods.dmg_cap += 0.15;
+				break;
+			}
+		}
 		
 		// assassin + CA combo
 		if(is_assassin && damage_type == DamageCalculator.c_dmg_type.CA)
@@ -1346,10 +1409,16 @@ class DamageCalculator extends ToolBase
 		wide_open += 1.0;
 		
 		let elemental_atk = (
-			mods.ele_atk +
-			(yupei ? 0.1 : 0) +
-			advantage +
-			(wm2 ? 0.03 : 0)
+			element_str == "Destruction" ?
+			(
+				advantage
+			) :
+			(
+				mods.ele_atk +
+				(yupei ? 0.1 : 0) +
+				advantage +
+				(wm2 ? 0.03 : 0)
+			)
 		);
 		this.set_text_cell(this.elements.info_ele, 100 * elemental_atk, 2, true);
 		this.color_cell(this.elements.info_ele);
@@ -1357,6 +1426,7 @@ class DamageCalculator extends ToolBase
 		let amplification = (
 			mods.dmg_amp +
 			Math.max(0, this.parse(this.elements.wonder_amp.value) / 100) +
+			Math.max(0, this.parse(this.elements.summon_amp.value) / 100) +
 			(yupei ? 0.05 : 0)
 		);
 		this.set_text_cell(this.elements.info_amp, 100 * amplification, 2, true);
@@ -1456,6 +1526,7 @@ class DamageCalculator extends ToolBase
 		}
 		// apply supplemental
 		capped_dmg += mods.dmg_supp;
+		this.set_text_cell(this.elements.info_supplemental, mods.dmg_supp);
 
 		// skill soft caps
 		let skill_caps = [];
