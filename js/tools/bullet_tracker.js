@@ -1,5 +1,6 @@
 class BulletTracker extends ToolBase
 {
+	static c_name = Object.freeze("Bullet Tracker");
 	static c_key = Object.freeze("bullet-tracker");
 	static c_storage_key = Object.freeze("gbftu-bullet-tracker");
 	static c_bullets = Object.freeze({
@@ -359,7 +360,7 @@ class BulletTracker extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "Bullet Tracker",
+			name: BulletTracker.c_name,
 			key: BulletTracker.c_key,
 			storage_key: BulletTracker.c_storage_key
 		};

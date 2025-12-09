@@ -1,5 +1,6 @@
 class KirinCalculator extends ToolBase
 {
+	static c_name = Object.freeze("Anima Calc.");
 	static c_key = Object.freeze("kirin-calc");
 	static c_storage_key = Object.freeze("gbftu-kirin-calc");
 	static c_assets = Object.freeze([
@@ -78,7 +79,7 @@ class KirinCalculator extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "Anima Calc.",
+			name: KirinCalculator.c_name,
 			key: KirinCalculator.c_key,
 			storage_key: KirinCalculator.c_storage_key
 		};

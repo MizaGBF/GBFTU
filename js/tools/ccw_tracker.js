@@ -1,5 +1,6 @@
 class CCWTracker extends ToolBase
 {
+	static c_name = Object.freeze("CCW Tracker");
 	static c_key = Object.freeze("ccw-tracker");
 	static c_storage_key = Object.freeze("gbftu-ccw-tracker");
 	static c_weapons = Object.freeze([
@@ -230,7 +231,7 @@ class CCWTracker extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "CCW Tracker",
+			name: CCWTracker.c_name,
 			key: CCWTracker.c_key,
 			storage_key: CCWTracker.c_storage_key
 		};

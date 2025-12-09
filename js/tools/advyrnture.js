@@ -1,5 +1,6 @@
 class AdvyrntureOptimizer extends ToolBase
 {
+	static c_name = Object.freeze("Advyrnture");
 	static c_key = Object.freeze("advyrnture");
 	static c_storage_key = Object.freeze("gbftu-advyrnture");
 	static c_levels = Object.freeze([
@@ -358,7 +359,7 @@ class AdvyrntureOptimizer extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "Advyrnture",
+			name: AdvyrntureOptimizer.c_name,
 			key: AdvyrntureOptimizer.c_key,
 			storage_key: AdvyrntureOptimizer.c_storage_key
 		};

@@ -1,5 +1,6 @@
 class DamageCalculator extends ToolBase
 {
+	static c_name = Object.freeze("DMG Calc.");
 	static c_key = Object.freeze("damage");
 	static c_storage_key = Object.freeze("gbftu-damage");
 	static c_dmg_type = Object.freeze({
@@ -809,7 +810,7 @@ class DamageCalculator extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "DMG Calc.",
+			name: DamageCalculator.c_name,
 			key: DamageCalculator.c_key,
 			storage_key: DamageCalculator.c_storage_key
 		};

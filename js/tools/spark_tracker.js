@@ -1,5 +1,6 @@
 class SparkTracker extends ToolBase
 {
+	static c_name = Object.freeze("Spark Tracker");
 	static c_key = Object.freeze("spark-tracker");
 	static c_storage_key = Object.freeze("gbftu-spark-tracker");
 	
@@ -53,7 +54,7 @@ class SparkTracker extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "Spark Tracker",
+			name: SparkTracker.c_name,
 			key: SparkTracker.c_key,
 			storage_key: SparkTracker.c_storage_key
 		};

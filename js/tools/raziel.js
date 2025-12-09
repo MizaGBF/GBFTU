@@ -1,5 +1,6 @@
 class RazielCalculator extends ToolBase
 {
+	static c_name = Object.freeze("S. Raziel");
 	static c_key = Object.freeze("raziel");
 	static c_storage_key = Object.freeze("gbftu-raziel");
 	
@@ -92,7 +93,7 @@ class RazielCalculator extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "S. Raziel",
+			name: RazielCalculator.c_name,
 			key: RazielCalculator.c_key,
 			storage_key: RazielCalculator.c_storage_key
 		};

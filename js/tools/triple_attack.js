@@ -1,5 +1,6 @@
 class TripleAttackCalculator extends ToolBase
 {
+	static c_name = Object.freeze("TA Calc.");
 	static c_key = Object.freeze("triple-attack");
 	static c_storage_key = Object.freeze("gbftu-triple-attack");
 	static c_classes = Object.freeze({
@@ -123,7 +124,7 @@ class TripleAttackCalculator extends ToolBase
 	static get_tool_save_info()
 	{
 		return {
-			name: "TA Calc.",
+			name: TripleAttackCalculator.c_name,
 			key: TripleAttackCalculator.c_key,
 			storage_key: TripleAttackCalculator.c_storage_key
 		};
