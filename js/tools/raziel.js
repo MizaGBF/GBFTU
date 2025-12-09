@@ -14,7 +14,7 @@ class RazielCalculator extends ToolBase
 		add_to(
 			this.tree[0],
 			"div"
-		).innerHTML = "PLACEHOLDER";
+		).innerHTML = "<a href=\"https://gbf.wiki/Raziel_(Summer)\">Summer Raziel</a>'s passive stack calculator";
 		
 		let grid = this.create_grid(this.tree[0], 4);
 		// name row
