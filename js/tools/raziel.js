@@ -15,20 +15,22 @@ class RazielCalculator extends ToolBase
 		add_to(
 			this.tree[0],
 			"div"
-		).innerHTML = "<a href=\"https://gbf.wiki/Raziel_(Summer)\">Summer Raziel</a>'s passive stack calculator";
+		).innerHTML = "<a href=\"https://gbf.wiki/Raziel_(Summer)\">Summer Raziel</a>'s passive stack calculator.<br><b>BE SURE</b> to properly name the slot she is in \"Raziel\".<br>";
 		
-		let grid = this.create_grid(this.tree[0], 4);
+		let grid = this.create_grid(this.tree[0], 6);
 		// name row
 		this.add_invisible_cell(grid);
 		this.add_input_cell(grid, "Gran/Djeeta", "name_1");
-		this.add_input_cell(grid, "Raziel", "name_2");
+		this.color_cell(this.add_input_cell(grid, "Raziel", "name_2"));
 		this.add_input_cell(grid, "Ally 3", "name_3");
 		this.add_input_cell(grid, "Ally 4", "name_4");
+		this.add_input_cell(grid, "Backline 1", "name_5");
+		this.add_input_cell(grid, "Backline 2", "name_6");
 		
 		for(let i = 1; i <= 4; ++i)
 		{
 			this.add_text_cell(grid, "assets/ui/raziel/" + i + ".png", "Skill " + i);
-			for(let j = 1; j <= 4; ++j)
+			for(let j = 1; j <= 6; ++j)
 			{
 				const cell = this.add_select_cell(grid, ["None/Other", "Red", "Yellow"], "" + j + "_" + i);
 				if(j == 2) // raziel
@@ -52,6 +54,90 @@ class RazielCalculator extends ToolBase
 		}
 		this.add_text_cell(grid, null, "Qilin?");
 		this.add_select_cell(grid, ["No", "Yes"], "kirin");
+		this.add_text_cell(grid, null, "Death 1?");
+		this.add_select_cell(grid, ["None", "Ally 1", "Ally 2", "Ally 3", "Ally 4"], "death_1");
+		this.add_text_cell(grid, null, "Death 2?");
+		this.add_select_cell(grid, ["None", "Ally 1", "Ally 2", "Ally 3", "Ally 4"], "death_2");
+		
+		add_to(this.tree[0], "br");
+		add_to(
+			this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Auto-set Raziel's skills",
+				onclick:(() => {
+					for(let i = 1; i <= 6; ++i)
+					{
+						if(this.elements["name_" + i].value.toLowerCase() == "raziel")
+						{
+							this.elements["" + i + "_1"].value = "Red";
+							this.elements["" + i + "_2"].value = "Yellow";
+							this.elements["" + i + "_3"].value = "Yellow";
+							this.elements["" + i + "_4"].value = "None/Other";
+							for(let j = 1; j < 4; ++j)
+							{
+								this.color_cell(this.elements["" + i + "_" + j]);
+							}
+						}
+						this.update();
+					}
+				}),
+				br:true
+			}
+		).style.width = "300px";
+		add_to(
+			this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Reset",
+				onclick:(() => {
+					if(window.confirm("The characters will be reset.\nAre you sure?"))
+					{
+						this.elements.name_1.value = "Gran/Djeeta";
+						this.elements.name_2.value = "Raziel";
+						this.elements.name_3.value = "Ally 3";
+						this.elements.name_4.value = "Ally 4";
+						this.elements.name_5.value = "Backline 1";
+						this.elements.name_6.value = "Backline 2";
+						
+						for(let i = 1; i <= 4; ++i)
+						{
+							for(let j = 1; j <= 6; ++j)
+							{
+								this.color_cell(this.elements["name_" + j]);
+								
+								const cell = this.elements["" + j + "_" + i];
+								if(j == 2) // raziel
+								{
+									switch(i)
+									{
+										case 1:
+											cell.value = "Red";
+											break;
+										case 2:
+										case 3:
+											cell.value = "Yellow";
+											break;
+										default:
+											cell.value = "None/Other";
+											break;
+									}
+									this.color_cell(cell);
+								}
+								else
+								{
+									cell.value = "None/Other";
+									this.color_cell(cell);
+								}
+							}
+						}
+						this.update();
+					}
+				})
+			}
+		).style.width = "300px";
 		
 		// results
 		add_to(this.tree[0], "hr");
@@ -211,7 +297,14 @@ class RazielCalculator extends ToolBase
 			node.textContent
 		);
 		const access = node.getAttribute("access");
-		if(access && access.startsWith("result_"))
+		if(access && access.startsWith("name_"))
+		{
+			if(val.toLowerCase() == "raziel")
+				node.style.background = "#357a47";
+			else
+				node.style.background = "";
+		}
+		else if(access && access.startsWith("result_"))
 		{
 			if(["result_1_3", "result_2_3"].includes(access))
 			{
@@ -233,6 +326,7 @@ class RazielCalculator extends ToolBase
 			switch(val)
 			{
 				case "None/Other":
+				case "None":
 				{
 					node.style.background = "#4e4e4e";
 					break;
@@ -248,6 +342,10 @@ class RazielCalculator extends ToolBase
 					break;
 				}
 				case "Yes":
+				case "Ally 1":
+				case "Ally 2":
+				case "Ally 3":
+				case "Ally 4":
 				{
 					node.style.background = "#357a47";
 					break;
@@ -268,42 +366,118 @@ class RazielCalculator extends ToolBase
 	
 	update()
 	{
-		let yellow = 0;
-		let red = 0;
-		let kirin = this.elements.kirin.value == "Yes" ? 2 : 1;
+		let raziel_index = null;
+		let has_raziel = false;
 		
-		for(let i = 1; i <= 4; ++i)
+		// determine front line and if raziel is in
+		const front_line = [1, 2, 3, 4];
+		let death1 = this.elements.death_1.value;
+		if(death1 != "None")
 		{
-			for(let j = 1; j <= 4; ++j)
+			const i = parseInt(death1[5]); // 5th character of Ally X
+			front_line[i - 1] = 5;
+		}
+		let death2 = this.elements.death_2.value;
+		if(death2 != "None" && death2 != death1)
+		{
+			const i = parseInt(death2[5]); // 5th character of Ally X
+			front_line[i - 1] = death1 != "None" ? 6 : 5;
+		}
+		for(let i  = 1; i <= 6; ++i)
+		{
+			if(this.elements["name_" + i].value.toLowerCase() == "raziel")
 			{
-				const node = this.elements["" + j + "_" + i];
-				const val = (
-					typeof(node.value) != "undefined" ?
-					node.value :
-					node.textContent
-				);
-				if(val == "Red")
-				{
-					++red;
-				}
-				else if(val == "Yellow")
-				{
-					++yellow;
-				}
+				if(front_line.includes(i))
+					raziel_index = i;
+				has_raziel = true;
+				break
 			}
 		}
-		let after_red = red + Math.floor(red * kirin / 3);
-		let after_yellow = yellow + Math.floor((yellow - 1) * kirin / 3); // ignore raziel's s3
-		let missing_red = Math.max(0, (10 - red) * 3 - red * kirin);
-		let missing_yellow = Math.max(0, (10 - yellow) * 3 - (yellow - 1) * kirin);
-		
-		this.set_text_cell(this.elements.result_1_1, Math.min(10, red));
-		this.set_text_cell(this.elements.result_1_2, Math.min(10, after_red));
-		this.set_text_cell(this.elements.result_1_3, missing_red);
-		
-		this.set_text_cell(this.elements.result_2_1, Math.min(10, yellow));
-		this.set_text_cell(this.elements.result_2_2, Math.min(10, after_yellow));
-		this.set_text_cell(this.elements.result_2_3, missing_yellow);
+		if(!has_raziel)
+		{
+			// no raziel in team
+			this.set_text_cell(this.elements.result_1_1, "?");
+			this.set_text_cell(this.elements.result_1_2, "?");
+			this.set_text_cell(this.elements.result_1_3, "?");
+			
+			this.set_text_cell(this.elements.result_2_1, "?");
+			this.set_text_cell(this.elements.result_2_2, "?");
+			this.set_text_cell(this.elements.result_2_3, "?");
+		}
+		else
+		{
+			// parsing skills
+			let start_red = 0;
+			let start_yellow = 0;
+			let press_red = 0;
+			let press_yellow = 0;
+			for(let i = 1; i <= 4; ++i)
+			{
+				for(let j = 1; j <= 6; ++j)
+				{
+					const node = this.elements["" + j + "_" + i];
+					const val = (
+						typeof(node.value) != "undefined" ?
+						node.value :
+						node.textContent
+					);
+					if(val == "Red")
+					{
+						if(j <= 4) // front
+							++start_red;
+						if(front_line.includes(j))
+							++press_red;
+					}
+					else if(val == "Yellow")
+					{
+						if(j <= 4) // front
+							++start_yellow;
+						if(front_line.includes(j) && (raziel_index != j || i != 3)) // ignore raziel skill 3
+							++press_yellow;
+					}
+				}
+			}
+			if(this.elements.kirin.value == "Yes")
+			{
+				press_red *= 2;
+				press_yellow *= 2;
+			}
+			
+			// start stack
+			this.set_text_cell(this.elements.result_1_1, Math.min(10, start_red));
+			this.set_text_cell(this.elements.result_2_1, Math.min(10, start_yellow));
+			
+			let red = start_red;
+			let yellow = start_yellow;
+			if(raziel_index != null)
+			{
+				red += Math.floor(press_red / 3);
+				yellow += Math.floor(press_yellow / 3);
+			}
+			let missing_red = Math.max(0, (10 - start_red) * 3 - press_red);
+			let missing_yellow = Math.max(0, (10 - start_yellow) * 3 - press_yellow);
+			
+			this.set_text_cell(this.elements.result_1_1, Math.min(10, start_red));
+			
+			this.set_text_cell(this.elements.result_2_1, Math.min(10, start_yellow));
+			
+			if(raziel_index != null)
+			{
+				this.set_text_cell(this.elements.result_1_2, Math.min(10, red));
+				this.set_text_cell(this.elements.result_1_3, missing_red);
+				
+				this.set_text_cell(this.elements.result_2_2, Math.min(10, yellow));
+				this.set_text_cell(this.elements.result_2_3, missing_yellow);
+			}
+			else // not front lined
+			{
+				this.set_text_cell(this.elements.result_1_2, "?");
+				this.set_text_cell(this.elements.result_1_3, "?");
+			
+				this.set_text_cell(this.elements.result_2_2, "?");
+				this.set_text_cell(this.elements.result_2_3, "?");
+			}
+		}
 	}
 	
 	load()
