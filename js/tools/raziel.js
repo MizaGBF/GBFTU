@@ -21,7 +21,7 @@ class RazielCalculator extends ToolBase
 		// name row
 		this.add_invisible_cell(grid);
 		this.add_input_cell(grid, "Gran/Djeeta", "name_1");
-		this.add_text_cell(grid, null, "Raziel", "name_2");
+		this.add_input_cell(grid, "Raziel", "name_2");
 		this.add_input_cell(grid, "Ally 3", "name_3");
 		this.add_input_cell(grid, "Ally 4", "name_4");
 		
@@ -30,25 +30,23 @@ class RazielCalculator extends ToolBase
 			this.add_text_cell(grid, "assets/ui/raziel/" + i + ".png", "Skill " + i);
 			for(let j = 1; j <= 4; ++j)
 			{
+				const cell = this.add_select_cell(grid, ["None/Other", "Red", "Yellow"], "" + j + "_" + i);
 				if(j == 2) // raziel
 				{
 					switch(i)
 					{
 						case 1:
-							this.add_text_cell(grid, null, "Red", "" + j + "_" + i);
+							cell.value = "Red";
 							break;
 						case 2:
 						case 3:
-							this.add_text_cell(grid, null, "Yellow", "" + j + "_" + i);
+							cell.value = "Yellow";
 							break;
 						default:
-							this.add_text_cell(grid, null, "None/Other", "" + j + "_" + i);
+							cell.value = "None/Other";
 							break;
 					}
-				}
-				else
-				{
-					this.add_select_cell(grid, ["None/Other", "Red", "Yellow"], "" + j + "_" + i);
+					this.color_cell(cell);
 				}
 			}
 		}
