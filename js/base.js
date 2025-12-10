@@ -47,6 +47,23 @@ class ToolBase
 		});
 	}
 	
+	add_save_button(node = null)
+	{
+		const btn = add_to(
+			node ? node : this.tree[0],
+			"button",
+			{
+				cls:["std-button"],
+				innertext:"Save",
+				onclick:(() => {
+					this.save();
+				})
+			}
+		);
+		this.save_buttons.push(btn);
+		return btn;
+	}
+	
 	// export the locale storage content
 	// don't bother to re-implement if no save data
 	static export_storage_data(obj)

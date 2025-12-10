@@ -159,17 +159,7 @@ class RazielCalculator extends ToolBase
 		this.add_text_cell(grid, null, "0", "result_2_3");
 
 		add_to(this.tree[0], "br");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		this.load();
 		this.update();
 	}

@@ -511,17 +511,7 @@ class DamageCalculator extends ToolBase
 		).innerHTML = "Tool based on a spreadsheet from <a href=\"https://gbf.wiki/User:Cajunwildcat\">Cajun</a>.<br>Do note that the layout isn't optimized for mobile users or small-width windows.<br>This tool is for research purpose, to determine modifiers, etc... and works first and foremost in conjunction with the in-game estimate/calculator (i.e. auto-attack damage).<br><br>Please report bugs and consider it experimental.";
 		
 		add_to(this.tree[0], "br");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "General");
@@ -753,17 +743,7 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, null, "", "info_flurry");
 		
 		add_to(this.tree[0], "hr");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		
 		// bonus damage
 		add_to(this.tree[0], "hr");
@@ -792,17 +772,7 @@ class DamageCalculator extends ToolBase
 		this.add_select_cell(grid, ["Yes", "No"], "echo_supp");
 		
 		add_to(this.tree[0], "br");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		this.load();
 		this.update();
 	}

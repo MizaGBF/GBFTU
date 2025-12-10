@@ -62,17 +62,7 @@ class KirinCalculator extends ToolBase
 				add_to(this.tree[0], "br");
 		}
 		add_to(this.tree[0], "br", {br:true});
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		this.load();
 	}
 	

@@ -61,17 +61,7 @@ class CCWTracker extends ToolBase
 			cls:["tab-content", "container"]
 		}));
 		this.elements = {};
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		add_to(this.tree[0], "hr");
 		
 		this.cell_size = "calc(min(90px, 14vw))"; // 100vw / 7 = 14vw
@@ -111,17 +101,7 @@ class CCWTracker extends ToolBase
 			}
 		}
 		add_to(this.tree[0], "hr");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		add_to(this.tree[0], "hr");
 		add_to(this.tree[0], "div").textContent = "The following are the materials required to craft everything you're missing, for the purpose of filling the field notes (i.e. some steps are ignored, such as Emblems or maxing Tier V CCW).";
 		add_to(this.tree[0], "br");
@@ -146,18 +126,7 @@ class CCWTracker extends ToolBase
 		save.style.height = "50px";
 		save.style.textAlign = "center";
 		
-		const btn = add_to(
-			save,
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		);
-		this.save_buttons.push(btn);
+		const btn = this.add_save_button(save);
 		btn.style.width = "90%";
 		btn.style.fontSize = "16px";
 		

@@ -208,17 +208,8 @@ class BulletTracker extends ToolBase
 		this.elements = {};
 		this.result_tree = [];
 		
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
+		
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("Left click and Right click to select the bullets that you need."));
 		this.tree[0].appendChild(document.createElement("br"));
@@ -308,17 +299,8 @@ class BulletTracker extends ToolBase
 			}
 		}
 		this.tree[0].appendChild(document.createElement("hr"));
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
+		
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("For mobile users:"));
 		this.tree[0].appendChild(this.mobile_bottom);
@@ -343,17 +325,7 @@ class BulletTracker extends ToolBase
 		this.result_tree.push(add_to(result, "span"));
 		this.result_tree.push(add_to(result, "hr"));
 		
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				})
-			}
-		));
+		this.add_save_button();
 		this.load();
 	}
 	

@@ -153,18 +153,9 @@ class AdvyrntureOptimizer extends ToolBase
 		this.tree[0].appendChild(document.createElement("br"));
 		this.tree[0].appendChild(document.createTextNode("The top 10 results are sorted by requirements met and skill bonuses (drop boosts, huge success boosts, etc...)."));
 		this.tree[0].appendChild(document.createElement("br"));
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				}),
-				br:true
-			}
-		));
+		
+		this.add_save_button();
+		add_to(this.tree[0], "br");
 		add_to(
 			this.tree[0],
 			"label",
@@ -313,18 +304,8 @@ class AdvyrntureOptimizer extends ToolBase
 		}
 		// save
 		add_to(this.tree[0],"hr");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				}),
-				br:true
-			}
-		));
+		this.add_save_button();
+		add_to(this.tree[0],"br");
 		// zones
 		for(const zone of AdvyrntureOptimizer.c_zones)
 		{
@@ -340,18 +321,9 @@ class AdvyrntureOptimizer extends ToolBase
 		}
 		// save
 		add_to(this.tree[0],"hr");
-		this.save_buttons.push(add_to(
-			this.tree[0],
-			"button",
-			{
-				cls:["std-button"],
-				innertext:"Save",
-				onclick:(() => {
-					this.save();
-				}),
-				br:true
-			}
-		));
+		this.add_save_button();
+		add_to(this.tree[0],"br");
+		
 		this.load();
 		this.update();
 	}
