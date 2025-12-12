@@ -75,14 +75,14 @@ class AdvyrntureOptimizer extends ToolBase
 	});
 	static c_zones = Object.freeze([
 		{name:"Western Phantagrande Skydom",id:"1",combat:4,perception:2,endurance:3,affinity:5,luck:5,unlock:0},
-		{name:"Eastern Phantagrande Skydom",id:"2",combat:5,perception:8,endurance:10,affinity:5,luck:2,unlock:5},
-		{name:"Alohas Super Resort",id:"7",combat:11,perception:10,endurance:23,affinity:26,luck:10,unlock:15},
-		{name:"Micenos Island",id:"9",combat:28,perception:26,endurance:15,affinity:16,luck:12,unlock:20},
+		{name:"Eastern Phantagrande Skydom",id:"2",combat:5,perception:5,endurance:7,affinity:5,luck:2,unlock:5},
+		{name:"Alohas Super Resort",id:"7",combat:11,perception:10,endurance:16,affinity:19,luck:10,unlock:15},
+		{name:"Micenos Island",id:"9",combat:24,perception:22,endurance:15,affinity:16,luck:12,unlock:20},
 		{name:"Jewel Resort Casino Liner",id:"5",combat:18,perception:16,endurance:29,affinity:42,luck:50,unlock:25},
 		{name:"Nalhegrande Skydom",id:"3",combat:42,perception:36,endurance:35,affinity:37,luck:16,unlock:30},
 		{name:"Feendrache",id:"8",combat:54,perception:37,endurance:57,affinity:48,luck:18,unlock:35},
 		{name:"Stardust Town",id:"10",combat:32,perception:47,endurance:36,affinity:58,luck:37,unlock:35},
-		{name:"Great Oarlyegrande Skydom",id:"4",combat:62,perception:42,endurance:68,affinity:55,luck:32,unlock:40},
+		{name:"Great Oarlyegrande Skydom",id:"4",combat:62,perception:42,endurance:68,affinity:55,luck:24,unlock:40},
 		{name:"Pandemonium",id:"6",combat:89,perception:61,endurance:60,affinity:55,luck:42,unlock:45}
 	]);
 	static c_helms = Object.freeze({
