@@ -12,6 +12,7 @@ class DamageCalculator extends ToolBase
 		[
 			"might",
 			"might_magna",
+			"might_odious",
 			"might_ex",
 			"might_ex_sp"
 		],
@@ -1439,6 +1440,7 @@ class DamageCalculator extends ToolBase
 		let modifiers = ( // pre-calculated here so it can be reused in bonus dmg part
 			(1.0 + mods.might) *
 			(1.0 + mods.might_magna) *
+			(1.0 + mods.might_odious) *
 			(1.0 + mods.might_ex + mods.might_ex_sp) *
 			(1.0 + mods.stamina) *
 			(1.0 + mods.stamina_magna) *
