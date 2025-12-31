@@ -772,6 +772,8 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, null, "Supp.?");
 		this.add_select_cell(grid, ["Yes", "No"], "echo_supp");
 		
+		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"(C.A. bonus damage don't benefit from Supplemental, so you can turn it off above)"});
+		
 		add_to(this.tree[0], "br");
 		this.add_save_button();
 		this.load();
