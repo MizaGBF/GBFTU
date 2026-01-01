@@ -1465,13 +1465,7 @@ class DamageCalculator extends ToolBase
 			) *
 			(
 				use_buff ?
-				(
-					(1.0 + mods.buff_perp) *
-					(1.0 + mods.buff_assassin) *
-					(1.0 + mods.buff_unique_a) *
-					(1.0 + mods.buff_unique_b) *
-					(1.0 + mods.buff_unique_c)
-				) :
+				this.calculate_buff_mod(mods) :
 				1.0
 			) /
 			effective_defense
@@ -1605,6 +1599,16 @@ class DamageCalculator extends ToolBase
 				this.set_text_cell(this.elements["variation_" + j + "_" + i], dmg_sum);
 			}
 		}
+	}
+	
+	calculate_buff_mod(mods)
+	{
+		let val = 1.0;
+		for(const [unused, key] of Object.values(DamageCalculator.c_special_mod_list))
+		{
+			val *= (1.0 + mods[key]);
+		}
+		return val;
 	}
 	
 	adjust_raw_atk(atk, bullet, crew_ship, crew_reactor)
