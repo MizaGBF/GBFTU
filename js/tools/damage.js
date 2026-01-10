@@ -1453,6 +1453,11 @@ class DamageCalculator extends ToolBase
 			(1.0 + elemental_atk) *
 			(1.0 + amplification) *
 			crit_modifier *
+			( // auto wide open
+				damage_type == DamageCalculator.c_dmg_type.AUTO ?
+				wide_open :
+				1.0
+			) *
 			( // found on some obscure JP blog that it multiplies
 				gw_atk ?
 				1.25 :
