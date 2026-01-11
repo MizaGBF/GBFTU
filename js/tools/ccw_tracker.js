@@ -106,6 +106,7 @@ class CCWTracker extends ToolBase
 		add_to(this.tree[0], "div").textContent = "The following are the materials required to craft everything you're missing, for the purpose of filling the field notes (i.e. some steps are ignored, such as Emblems or maxing Tier V CCW).";
 		add_to(this.tree[0], "br");
 		this.result = add_to(this.tree[0], "div");
+		this.distinction = add_to(this.tree[0], "div");
 		this.load();
 	}
 	
@@ -261,6 +262,7 @@ class CCWTracker extends ToolBase
 		let materials = {};
 		let anything = {};
 		let evolutions = {};
+		let distinction_count = 0;
 		for(const entry of CCWTracker.c_weapons)
 		{
 			if(!("label" in entry) && entry.id in this.elements)
@@ -284,6 +286,7 @@ class CCWTracker extends ToolBase
 								this.add_item(materials, entry.creed, 35);
 								this.add_item(materials, entry.esteem, 20);
 								this.add_item(materials, entry.distinction, 40);
+								distinction_count += 40;
 								if(first_time_check)
 								{
 									this.add_item(materials, entry.stone, 200+255);
@@ -376,6 +379,7 @@ class CCWTracker extends ToolBase
 								this.add_item(materials, entry.esteem, 20);
 								this.add_item(materials, entry.silver, 15);
 								this.add_item(materials, entry.distinction, 40);
+								distinction_count += 40;
 								if(first_time_check)
 								{
 									this.add_item(materials, entry.stone, 280);
@@ -499,6 +503,9 @@ class CCWTracker extends ToolBase
 		{
 			this.result.childNodes[i].remove();
 		}
+		this.distinction.style.display = distinction_count > 0 ? "" : "none";
+		if(distinction_count > 0)
+			this.distinction.innerText = "" + distinction_count + " distinctions total";
 	}
 	
 	add_result(url, amount)
