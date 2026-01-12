@@ -10,7 +10,7 @@ class CCWTracker extends ToolBase
 		{id:"1040411600", type:"t4-1", replica:"1030402000", creed:"20221", esteem:"20241", distinction:"20431", stone:"4051", coop:"20651"}, // bunny
 		{id:"1040412200", type:"t4-1", replica:"1030404100", creed:"20221", esteem:"20241", distinction:"20441", stone:"4051", coop:"20631"}, // warlock
 		{id:"1040508000", type:"t4-1", replica:"1030501700", creed:"20211", esteem:"20231", distinction:"20451", stone:"4061", coop:"20641"}, // gizoku
-		{id:"1040013200", type:"t4-1", replica:"1030102800", creed:"20221", esteem:"20241", distinction:"20461", stone:"4021", coop:"20661"}, // cr
+		{id:"1040013200", type:"t4-1", replica:"1030102800", creed:"20221", esteem:"20241", distinction:"20461", stone1:"4021", stone2:"4011", coop:"20661"}, // cr
 		{id:"1040609100", type:"t4-1", replica:"1030602500", creed:"20211", esteem:"20231", distinction:"20471", stone:"4071", coop:"20611"}, // lucha
 		{id:"1040707500", type:"t4-1", replica:"1030701500", creed:"20211", esteem:"20231", distinction:"20481", stone:"4081", coop:"20641"}, // nh
 		{id:"1040807600", type:"t4-1", replica:"1030800700", creed:"20221", esteem:"20241", distinction:"20491", stone:"4091", coop:"20621"}, // ely
@@ -287,13 +287,28 @@ class CCWTracker extends ToolBase
 								this.add_item(materials, entry.esteem, 20);
 								this.add_item(materials, entry.distinction, 40);
 								distinction_count += 40;
-								if(first_time_check)
+								if("stone" in entry)
 								{
-									this.add_item(materials, entry.stone, 200+255);
-									first_time_check = false;
+									if(first_time_check)
+									{
+										this.add_item(materials, entry.stone, 200+255);
+										first_time_check = false;
+									}
+									else
+										this.add_item(materials, entry.stone, 768+255);
 								}
-								else
-									this.add_item(materials, entry.stone, 768+255);
+								else if("stone1" in entry && "stone2" in entry)
+								{
+									// exception for Original Sin
+									if(first_time_check)
+									{
+										this.add_item(materials, entry.stone1, 200);
+										first_time_check = false;
+									}
+									else
+										this.add_item(materials, entry.stone1, 768);
+									this.add_item(materials, entry.stone2, 255);
+								}
 								this.add_item(materials, entry.coop, 50);
 								this.add_item(materials, "1201", 170); // prism chip
 								this.add_item(materials, "54", 20); // antique cloth
