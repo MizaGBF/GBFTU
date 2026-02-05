@@ -184,6 +184,15 @@ class YoutubeSearch extends ToolBase
 		{jp:"ライジングフォース", value:"Rising Force"},
 		{jp:"マスカレード", value:"Masquerade"}
 	]);
+	static c_output = Object.freeze([
+		{label:"Copy the Text", mode:"copy"},
+		{group:true, label:"Youtube", icon:"yt_icon.png"},
+		{label:"Relevant", mode:"youtube-relevant"},
+		{label:"Popular", mode:"youtube-popular"},
+		{group:true, label:"Twitter", icon:"x_icon.png"},
+		{label:"Relevant", mode:"twitter-relevant"},
+		{label:"Popular", mode:"twitter-popular"},
+	])
 	
 	constructor()
 	{
@@ -306,20 +315,39 @@ class YoutubeSearch extends ToolBase
 		let container = add_to(this.tree[0], "div", {
 			cls:["audio-inner-container"]
 		});
-		add_to(container, "button", {
-			cls:["audio-button"],
-			innertext:"Copy",
-			onclick:() => {
-				this.copy_clipboard();
+		for(const elem of YoutubeSearch.c_output)
+		{
+			if(elem.group ?? false)
+			{
+				container = add_to(this.tree[0], "div", {
+					cls:["audio-inner-container"]
+				});
+				if(elem.icon)
+				{
+					add_to(
+						container,
+						"img",
+						{
+							cls:["tab-button-icon"]
+						}
+					).src = "assets/ui/youtube_search/" + elem.icon;
+				}
+				container.appendChild(document.createTextNode(elem.label));
+				container = add_to(this.tree[0], "div", {
+					cls:["audio-inner-container"]
+				});
 			}
-		});
-		add_to(container, "button", {
-			cls:["audio-button"],
-			innertext:"Search",
-			onclick:() => {
-				this.open_youtube();
+			else
+			{
+				add_to(container, "button", {
+					cls:["audio-button"],
+					innertext:elem.label,
+					onclick:() => {
+						this.button_action(elem.mode);
+					}
+				});
 			}
-		});
+		}
 	}
 	
 	format_name(str)
@@ -409,6 +437,31 @@ class YoutubeSearch extends ToolBase
 		this.elements.string_output.textContent = this.output;
 	}
 	
+	button_action(mode)
+	{
+		switch(mode)
+		{
+			case "copy":
+			{
+				this.copy_clipboard();
+				break;
+			}
+			case "youtube-relevant":
+			case "youtube-popular":
+			case "youtube-recent":
+			{
+				this.open_youtube(mode);
+				break;
+			}
+			case "twitter-relevant":
+			case "twitter-popular":
+			{
+				this.open_twitter(mode);
+				break;
+			}
+		}
+	}
+	
 	copy_clipboard()
 	{
 		try
@@ -429,7 +482,7 @@ class YoutubeSearch extends ToolBase
 		}
 	}
 	
-	open_youtube()
+	open_youtube(mode)
 	{
 		if(this.output == "")
 		{
@@ -437,8 +490,52 @@ class YoutubeSearch extends ToolBase
 		}
 		else
 		{
+			let extra = "";
+			switch(mode)
+			{
+				case "youtube-relevant":
+				{
+					extra = "";
+					break;
+				}
+				case "youtube-popular":
+				{
+					extra = "&sp=CAMSAhAB";
+					break;
+				}
+			}
 			const a = document.createElement("a");
-			a.href = "https://www.youtube.com/results?search_query=" + this.output;
+			a.href = "https://www.youtube.com/results?search_query=" + this.output + extra;
+			a.target = "_blank";
+			a.rel = "noopener noreferrer";
+			a.click();
+		}
+	}
+	
+	open_twitter(mode)
+	{
+		if(this.output == "")
+		{
+			push_popup("Select some options first.");
+		}
+		else
+		{
+			let extra = "";
+			switch(mode)
+			{
+				case "twitter-relevant":
+				{
+					extra = "";
+					break;
+				}
+				case "twitter-popular":
+				{
+					extra = "&f=live";
+					break;
+				}
+			}
+			const a = document.createElement("a");
+			a.href = "https://x.com/search?q=" + this.output + extra;
 			a.target = "_blank";
 			a.rel = "noopener noreferrer";
 			a.click();
