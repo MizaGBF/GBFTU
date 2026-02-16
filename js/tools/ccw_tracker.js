@@ -86,7 +86,7 @@ class CCWTracker extends ToolBase
 				a.rel = "noopener noreferrer";
 				a.style.height = this.cell_size;
 				const img = add_to(a, "img");
-				img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + entry.id + "_note.jpg";
+				img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + entry.id + "_note.jpg";
 				img.style.width = this.cell_size;
 				img.style.height = this.cell_size;
 				
@@ -485,17 +485,17 @@ class CCWTracker extends ToolBase
 		for(const [id, amount] of Object.entries(weapons))
 		{
 			if(index < len)
-				this.modify_result(index, "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
+				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
 			else
-				this.add_result("https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
+				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
 			++index;
 		}
 		for(const [id, amount] of Object.entries(materials))
 		{
 			if(index < len)
-				this.modify_result(index, "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
+				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
 			else
-				this.add_result("https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
+				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
 			++index;
 		}
 		for(const [id, amount] of Object.entries(anything))
@@ -509,9 +509,9 @@ class CCWTracker extends ToolBase
 		for(const [id, amount] of Object.entries(evolutions))
 		{
 			if(index < len)
-				this.modify_result(index, "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
+				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
 			else
-				this.add_result("https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
+				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
 			++index;
 		}
 		for(let i = len - 1; i >= index; --i)

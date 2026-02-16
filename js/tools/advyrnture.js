@@ -219,7 +219,7 @@ class AdvyrntureOptimizer extends ToolBase
 			img.style.minWidth = "140px";
 			img.style.maxWidth = "140px";
 			img.style.height = "80px";
-			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + buddy + ".jpg";
+			img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + buddy + ".jpg";
 			let txt = add_to(
 				block,
 				"span",
@@ -264,7 +264,7 @@ class AdvyrntureOptimizer extends ToolBase
 			img.style.minWidth = "140px";
 			img.style.maxWidth = "140px";
 			img.style.height = "80px";
-			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + helm + ".jpg";
+			img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + helm + ".jpg";
 			this.elements["helm-" + helm] = {block:block, img:img};
 		}
 		add_to(this.tree[0],"hr");
@@ -299,7 +299,7 @@ class AdvyrntureOptimizer extends ToolBase
 			img.style.minWidth = "140px";
 			img.style.maxWidth = "140px";
 			img.style.height = "80px";
-			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + arm + ".jpg";
+			img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + arm + ".jpg";
 			this.elements["arm-" + arm] = {block:block, img:img};
 		}
 		// save
@@ -313,7 +313,7 @@ class AdvyrntureOptimizer extends ToolBase
 			let details = add_to(this.tree[0],"details");
 			let summary = add_to(details,"summary");
 			const img = add_to(summary, "img");
-			img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_mid/sp/vyrnsampo/assets/area/thumb/" + zone.id + ".png";
+			img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_mid/sp/vyrnsampo/assets/area/thumb/" + zone.id + ".png";
 			img.classList.toggle("effect-dim", zone.unlock);
 			const block = add_to(details, "div");
 			this.elements["zone-" + zone.id] = {block:block, img:img};
@@ -546,29 +546,29 @@ class AdvyrntureOptimizer extends ToolBase
 						div.style.marginTop = "2px";
 						let img = add_to(div, "img");
 						if(ref.equipment.hid == "0")
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_1.jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_1.jpg";
 						else
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.hid + ".jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.hid + ".jpg";
 						img.style.width = "60px";
 						img = add_to(div, "img");
 						if(ref.equipment.aid == "0")
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_2.jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_2.jpg";
 						else
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.aid + ".jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.aid + ".jpg";
 						img.style.width = "60px";
 						add_to(div, "br");
 						img = add_to(div, "img");
 						if(ref.equipment.bud[0] == null)
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
 						else
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[0] + ".jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[0] + ".jpg";
 						img.style.width = "120px";
 						add_to(div, "br");
 						img = add_to(div, "img");
 						if(ref.equipment.bud[1] == null)
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
 						else
-							img.src = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[1] + ".jpg";
+							img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[1] + ".jpg";
 						img.style.width = "120px";
 						add_to(div, "br");
 						let txt = add_to(
@@ -588,27 +588,27 @@ class AdvyrntureOptimizer extends ToolBase
 						// children list: img img br img br img br span
 						let new_url; // only update src if needed
 						if(ref.equipment.hid == "0")
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_1.jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_1.jpg";
 						else
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.hid + ".jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.hid + ".jpg";
 						if(nodes[0].src != new_url)
 							nodes[0].src = new_url;
 						if(ref.equipment.aid == "0")
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_2.jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/empty_2.jpg";
 						else
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.aid + ".jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/cosmetic/s/" + ref.equipment.aid + ".jpg";
 						if(nodes[1].src != new_url)
 							nodes[1].src = new_url;
 						if(ref.equipment.bud[0] == null)
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
 						else
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[0] + ".jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[0] + ".jpg";
 						if(nodes[3].src != new_url)
 							nodes[3].src = new_url;
 						if(ref.equipment.bud[1] == null)
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/empty.jpg";
 						else
-							new_url = "https://prd-game-a1-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[1] + ".jpg";
+							new_url = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/vyrnsampo/assets/character/thumb/" + ref.equipment.bud[1] + ".jpg";
 						if(nodes[5].src != new_url)
 							nodes[5].src = new_url;
 						nodes[7].innerText = "" + ref.stat_met + " / 5";
