@@ -34,6 +34,8 @@ class YoutubeSearch extends ToolBase
 		{group:true, label:"Taboo"},
 		{jp:"ベルメルヴォルク", value:"Belmervolk"},
 		{jp:"ニフイヴィンテ", value:"Nihuyvintae"},
+		{jp:"ナロフィルミダス", value:"Narophirmidas"},
+		{jp:"マクタンマカル", value:"Macutanmacar"},
 		{group:true, label:"Six Dragons"},
 		{jp:"ウィルナスhl", value:"Wilnas"},
 		{jp:"ワムデュスhl", value:"Wamdus"},
