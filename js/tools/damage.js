@@ -1291,7 +1291,6 @@ class DamageCalculator extends ToolBase
 		const wm2 = this.elements.wonder_m2.value == "Yes";
 		const use_buff = this.elements.buff_enable.value == "Enabled";
 		const round_up = this.elements.round_up.value == "Yes";
-		const echo_supp = this.elements.echo_supp.value == "Yes";
 		switch(this.elements.summon_supp.value)
 		{
 			case "Robur 0★":
