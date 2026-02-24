@@ -769,8 +769,6 @@ class DamageCalculator extends ToolBase
 		}
 		this.add_text_cell(grid, null, "Round up?");
 		this.add_select_cell(grid, ["No", "Yes"], "round_up");
-		this.add_text_cell(grid, null, "Supp.?");
-		this.add_select_cell(grid, ["Yes", "No"], "echo_supp");
 		
 		add_to(this.tree[0], "span", {cls:["small-text"], innertext:"(C.A. bonus damage don't benefit from Supplemental, so you can turn it off above)"});
 		
@@ -1583,8 +1581,8 @@ class DamageCalculator extends ToolBase
 				let dmg_sum = this.apply_simple_soft_caps(dmg, soft_caps);
 				// apply wide open
 				dmg_sum *= wide_open;
-				// add supp
-				if(!echo_supp)
+				// add supp (others)
+				if(damage_type != DamageCalculator.c_dmg_type.AUTO)
 				{
 					dmg_sum += mods.dmg_supp;
 				}
@@ -1592,6 +1590,11 @@ class DamageCalculator extends ToolBase
 				if(echo != 1.0 && damage_type != DamageCalculator.c_dmg_type.AUTO)
 				{
 					dmg_sum *= echo;
+				}
+				// add supp (auto)
+				if(damage_type == DamageCalculator.c_dmg_type.AUTO)
+				{
+					dmg_sum += mods.dmg_supp;
 				}
 				// extra caps
 				if(skill_caps.length > 0)
