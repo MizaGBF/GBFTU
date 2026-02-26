@@ -167,7 +167,9 @@ class AdvyrntureOptimizer extends ToolBase
 		"121":{name:"Joy's Rolling Pin",combat:4,perception:0,endurance:4,affinity:0,luck:0,skill:[5,"Joy"]},
 		"122":{name:"Fresh Cucumber",combat:0,perception:0,endurance:0,affinity:0,luck:3,skill:[4,"Kyuta"]},
 		"123":{name:"Cat Teaser",combat:0,perception:0,endurance:0,affinity:3,luck:0,skill:[4,"Young Cat"]},
-		"124":{name:"Beach Ball",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Ursula"]}
+		"124":{name:"Beach Ball",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Ursula"]},
+		//"126":{name:"?",combat:0,perception:0,endurance:0,affinity:0,luck:0,skill:[5,"Malinda"]},
+		"127":{name:"Codex of Mysteria",combat:5,perception:7,endurance:0,affinity:0,luck:0,skill:[1,"Mysteria Academy of Magic","affinity",8]}
 	});
 	/********************************************
 	Equipment skills format (Might need refactor in the future):
