@@ -73,21 +73,32 @@ class AdvyrntureOptimizer extends ToolBase
 			stat: "combat"
 		}
 	});
+	static c_buddy_skill = Object.freeze({
+		"102":{zone:"3", success:1, stall:2},
+		"103":{zone:"9", success:1, stall:2},
+		"201":{zone:"3", success:1, stall:2},
+		"204":{zone:"1", maxdrop:1},
+		"305":{zone:"12", exp:2},
+		"406":{zone:"11", maxdrop:1},
+	});
 	static c_zones = Object.freeze([
 		{name:"Western Phantagrande Skydom",id:"1",combat:4,perception:2,endurance:3,affinity:5,luck:5,unlock:0},
 		{name:"Eastern Phantagrande Skydom",id:"2",combat:5,perception:5,endurance:7,affinity:5,luck:2,unlock:5},
 		{name:"Alohas Super Resort",id:"7",combat:11,perception:10,endurance:16,affinity:19,luck:10,unlock:15},
 		{name:"Micenos Island",id:"9",combat:24,perception:22,endurance:15,affinity:16,luck:12,unlock:20},
+		{name:"Medvecia Island",id:"11",combat:25,perception:31,endurance:25,affinity:32,luck:15,unlock:23},
 		{name:"Jewel Resort Casino Liner",id:"5",combat:18,perception:16,endurance:29,affinity:42,luck:50,unlock:25},
 		{name:"Nalhegrande Skydom",id:"3",combat:42,perception:36,endurance:35,affinity:37,luck:16,unlock:30},
-		{name:"Feendrache",id:"8",combat:54,perception:37,endurance:57,affinity:48,luck:18,unlock:35},
-		{name:"Stardust Town",id:"10",combat:32,perception:47,endurance:36,affinity:58,luck:37,unlock:35},
+		{name:"Mysteria Academy of Magic",id:"12",combat:25,perception:31,endurance:25,affinity:32,luck:15,unlock:33},
+		{name:"Feendrache",id:"8",combat:54,perception:37,endurance:57,affinity:47,luck:18,unlock:35},
+		{name:"Stardust Town",id:"10",combat:50,perception:37,endurance:36,affinity:58,luck:17,unlock:35},
 		{name:"Great Oarlyegrande Skydom",id:"4",combat:62,perception:42,endurance:68,affinity:55,luck:24,unlock:40},
 		{name:"Pandemonium",id:"6",combat:89,perception:61,endurance:60,affinity:55,luck:42,unlock:45}
 	]);
 	static c_helms = Object.freeze({
 		"0":{name:"",combat:0,perception:0,endurance:0,affinity:0,luck:0,skill:[0]},
 		"1":{name:"Straw Hat",combat:0,perception:0,endurance:0,affinity:3,luck:3,skill:[3]},
+		"2":{name:"Cloth Headband",combat:9,perception:0,endurance:5,affinity:0,luck:0,skill:[1,"Mysteria Academy of Magic","affinity",8]},
 		"3":{name:"Knight's Armet",combat:0,perception:6,endurance:10,affinity:0,luck:0,skill:[1,"Feendrache","endurance",10]},
 		"5":{name:"Albacore Hood",combat:0,perception:0,endurance:0,affinity:1,luck:0,skill:[2,"Western Phantagrande Skydom"]},
 		"6":{name:"Luminiera Helm",combat:2,perception:0,endurance:0,affinity:0,luck:0,skill:[1,"Western Phantagrande Skydom","endurance",2]},
@@ -105,7 +116,9 @@ class AdvyrntureOptimizer extends ToolBase
 		"21":{name:"Alohas Lei",combat:0,perception:0,endurance:0,affinity:3,luck:0,skill:[4,"Joy"]},
 		"22":{name:"Bobo Mask",combat:4,perception:0,endurance:0,affinity:4,luck:0,skill:[5,"Kyuta"]},
 		"23":{name:"Cat-Ear Silk Hat",combat:0,perception:4,endurance:4,affinity:0,luck:0,skill:[5,"Young Cat"]},
-		"24":{name:"Very Ordinary Sunglasses",combat:0,perception:3,endurance:0,affinity:0,luck:0,skill:[4,"Ursula"]}
+		"24":{name:"Very Ordinary Sunglasses",combat:0,perception:3,endurance:0,affinity:0,luck:0,skill:[4,"Ursula"]},
+		"25":{name:"Dragon Fruit",combat:0,perception:0,endurance:0,affinity:0,luck:3,skill:[4,"Malinda"]},
+		"26":{name:"Vampire Headband",combat:0,perception:0,endurance:0,affinity:8,luck:3,skill:[1,"Medvecia Island","combat",8]}
 	});
 	static c_arms = Object.freeze({
 		"0":{name:"",combat:0,perception:0,endurance:0,affinity:0,luck:0,skill:[0]},
@@ -496,16 +509,19 @@ class AdvyrntureOptimizer extends ToolBase
 				// buddy skills
 				if(equipment.bud[0] != null && equipment.bud[1] != null)
 				{
-					// micenos island
-					if(zone.id == "9" && equipment.bud[0] == "1" && equipment.bud[1] == "3")
+					const bsk_id = JSON.stringify(parseInt(equipment.bud[0]) * 100 + parseInt(equipment.bud[1]));
+					if(bsk_id in AdvyrntureOptimizer.c_buddy_skill)
 					{
-						boosts.success += 1;
-						boosts.stall += 2;
-					}
-					// western skydom
-					else if(zone.id == "1" && equipment.bud[0] == "2" && equipment.bud[1] == "4")
-					{
-						boosts.maxdrop += 1;
+						if(AdvyrntureOptimizer.c_buddy_skill[bsk_id].zone == zone.id)
+						{
+							for(const [skill_key, value] of Object.entries(AdvyrntureOptimizer.c_buddy_skill[bsk_id]))
+							{
+								if(skill_key != "zone")
+								{
+									boosts[skill_key] += value;
+								}
+							}
+						}
 					}
 				}
 				let stat_met = 0;
