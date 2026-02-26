@@ -712,7 +712,7 @@ class AdvyrntureOptimizer extends ToolBase
 			if(data != null)
 			{
 				this.data = JSON.parse(data);
-				const version = data.version ?? 1;
+				const version = typeof(this.data.version) == "undefined" ? 1 : this.data.version;
 				this.level.value = "" + (this.data.lvl-1);
 				for(const zone of AdvyrntureOptimizer.c_zones)
 				{
@@ -760,12 +760,13 @@ class AdvyrntureOptimizer extends ToolBase
 						this.elements[key+"-"+id].img.classList.toggle("effect-dim", !has);
 					}
 				}
+				this.data.version = 2;
 			}
 		}
 		catch(err)
 		{
 			console.error("Exception thrown", err.stack);
-			this.data = {lvl:1,buddy:{},helm:{},arm:{}};
+			this.data = {version:2,lvl:1,buddy:{},helm:{},arm:{}};
 		}
 		this.set_save_pending(false);
 	}
