@@ -58,19 +58,46 @@ class AdvyrntureOptimizer extends ToolBase
 	static c_buddies = Object.freeze({
 		"1": {
 			name: "Joy",
-			stat: "perception"
+			stats: [
+				{lvl:0},
+				{lvl:1,perception:3},
+				{lvl:6,perception:6},
+				{lvl:10,perception:10}
+			]
 		},
 		"2": {
 			name: "Kyuta",
-			stat: "endurance"
+			stats: [
+				{lvl:0},
+				{lvl:1,endurance:3},
+				{lvl:6,endurance:6},
+				{lvl:10,endurance:10}
+			]
 		},
 		"3": {
 			name: "Young Cat",
-			stat: "affinity"
+			stats: [
+				{lvl:0},
+				{lvl:1,affinity:3},
+				{lvl:6,affinity:6},
+				{lvl:10,affinity:10}
+			]
 		},
 		"4": {
 			name: "Ursula",
-			stat: "combat"
+			stats: [
+				{lvl:0},
+				{lvl:1,combat:3},
+				{lvl:6,combat:6},
+				{lvl:10,combat:10}
+			]
+		},
+		"5": {
+			name: "Malinda",
+			stats: [
+				{lvl:0},
+				{lvl:1,combat:2,affinity:1}
+			]
 		}
 	});
 	static c_buddy_skill = Object.freeze({
@@ -160,7 +187,7 @@ class AdvyrntureOptimizer extends ToolBase
 		this.tree.push(add_to(null, "div", {
 			cls:["tab-content", "container"]
 		}));
-		this.data = {lvl:1,buddy:{},helm:{},arm:{}};
+		this.data = {version:2,lvl:1,buddy:{},helm:{},arm:{}};
 		this.elements = {};
 		this.tree[0].appendChild(document.createTextNode("Set your level, buddies and equipments and this tool will suggest configurations for each zone."));
 		this.tree[0].appendChild(document.createElement("br"));
@@ -354,17 +381,11 @@ class AdvyrntureOptimizer extends ToolBase
 	{
 		if(!(id in this.data.buddy))
 			this.data.buddy[id] = 0;
-		switch(this.data.buddy[id])
-		{
-			case 0: this.data.buddy[id] = 3; break;
-			case 3: this.data.buddy[id] = 6; break;
-			case 6: this.data.buddy[id] = 10; break;
-			default: this.data.buddy[id] = 0; break;
-		}
+		this.data.buddy[id] = (this.data.buddy[id] + 1) % AdvyrntureOptimizer.c_buddies[id].stats.length;
 		if(this.data.buddy[id])
 		{
 			this.elements["buddy-"+id].img.classList.toggle("effect-dim", false);
-			this.elements["buddy-"+id].txt.innerText = "+" + this.data.buddy[id];
+			this.elements["buddy-"+id].txt.innerText = "Lv" + AdvyrntureOptimizer.c_buddies[id].stats[this.data.buddy[id]].lvl;
 		}
 		else
 		{
@@ -405,9 +426,21 @@ class AdvyrntureOptimizer extends ToolBase
 					for(let b = a + 1; b < kbud.length; ++b)
 					{
 						const stats = { ...AdvyrntureOptimizer.c_levels[lvl]};
-						// buddies
-						stats[AdvyrntureOptimizer.c_buddies[kbud[a]].stat] += this.data.buddy[kbud[a]] ?? 0;
-						stats[AdvyrntureOptimizer.c_buddies[kbud[b]].stat] += this.data.buddy[kbud[b]] ?? 0;
+						// buddy stats
+						for(const e of [a, b])
+						{
+							const bprogress = this.data.buddy[kbud[e]] ?? 0;
+							if(bprogress)
+							{
+								for(const [sk_key, value] of Object.entries(AdvyrntureOptimizer.c_buddies[kbud[e]].stats))
+								{
+									if(sk_key != lvl)
+									{
+										stats[sk_key] += value;
+									}
+								}
+							}
+						}
 						const buddies = [];
 						if(this.data.buddy[kbud[a]] ?? 0)
 							buddies.push(kbud[a]);
@@ -677,22 +710,45 @@ class AdvyrntureOptimizer extends ToolBase
 			if(data != null)
 			{
 				this.data = JSON.parse(data);
+				const version = data.version ?? 1;
 				this.level.value = "" + (this.data.lvl-1);
 				for(const zone of AdvyrntureOptimizer.c_zones)
 				{
 					this.elements["zone-" + zone.id].img.classList.toggle("effect-dim", zone.unlock > this.data.lvl);
 				}
-				for(const [buddy, bonus] of Object.entries(this.data.buddy))
+				if(version == 1)
 				{
-					if(bonus)
+					for(const [bid, bstat] of Object.entries(this.data.buddy))
+					{
+						switch(bstat)
+						{
+							case 10:
+								this.data.buddy[bid] = 3;
+								break;
+							case 6:
+								this.data.buddy[bid] = 2;
+								break;
+							case 1:
+								this.data.buddy[bid] = 1;
+								break;
+							default:
+								this.data.buddy[bid] = 0;
+								break;
+						}
+					}
+					this.data.buddy["5"] = 0; // Malinda
+				}
+				for(const [buddy, bprogress] of Object.entries(this.data.buddy))
+				{
+					if(bprogress)
 					{
 						this.elements["buddy-"+buddy].img.classList.toggle("effect-dim", false);
-						this.elements["buddy-"+buddy].txt.innerText = "+" + bonus;
+						this.elements["buddy-"+buddy].txt.innerText = "Lv" + AdvyrntureOptimizer.c_buddies[buddy].stats[bprogress].lvl;
 					}
 					else
 					{
-						this.elements["buddy-"+id].img.classList.toggle("effect-dim", true);
-						this.elements["buddy-"+id].txt.innerText = "Locked";
+						this.elements["buddy-"+buddy].img.classList.toggle("effect-dim", true);
+						this.elements["buddy-"+buddy].txt.innerText = "Locked";
 					}
 				}
 				for(const key of ["helm", "arm"])
