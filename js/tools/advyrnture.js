@@ -106,7 +106,7 @@ class AdvyrntureOptimizer extends ToolBase
 		"201":{zone:"3", success:1, stall:2},
 		"204":{zone:"1", maxdrop:1},
 		"305":{zone:"12", exp:2},
-		"406":{zone:"11", maxdrop:1},
+		"405":{zone:"11", maxdrop:1},
 	});
 	static c_zones = Object.freeze([
 		{name:"Western Phantagrande Skydom",id:"1",combat:4,perception:2,endurance:3,affinity:5,luck:5,unlock:0},
