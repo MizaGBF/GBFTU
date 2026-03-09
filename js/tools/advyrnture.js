@@ -103,9 +103,8 @@ class AdvyrntureOptimizer extends ToolBase
 	static c_buddy_skill = Object.freeze({
 		"102":{zone:"3", success:1, stall:2},
 		"103":{zone:"9", success:1, stall:2},
-		"201":{zone:"3", success:1, stall:2},
 		"204":{zone:"1", maxdrop:1},
-		"305":{zone:"12", exp:2},
+		"305":{zone:"10", exp:1},
 		"405":{zone:"11", maxdrop:1},
 	});
 	static c_zones = Object.freeze([
@@ -429,17 +428,22 @@ class AdvyrntureOptimizer extends ToolBase
 					for(let b = a + 1; b < kbud.length; ++b)
 					{
 						const stats = { ...AdvyrntureOptimizer.c_levels[lvl]};
+						const buddy_maxlvl = [false, false];
 						// buddy stats
 						for(const e of [a, b])
 						{
 							const bprogress = this.data.buddy[kbud[e]] ?? 0;
 							if(bprogress)
 							{
-								for(const [sk_key, value] of Object.entries(AdvyrntureOptimizer.c_buddies[kbud[e]].stats))
+								for(const [sk_key, value] of Object.entries(AdvyrntureOptimizer.c_buddies[kbud[e]].stats[bprogress]))
 								{
-									if(sk_key != lvl)
+									if(sk_key != "lvl")
 									{
 										stats[sk_key] += value;
+									}
+									else
+									{
+										buddy_maxlvl[e == a ? 0 : 1] = value == 10;
 									}
 								}
 							}
@@ -459,7 +463,7 @@ class AdvyrntureOptimizer extends ToolBase
 						}
 						// store
 						const key = ""+aid+"-"+hid+"-"+buddies[0]+"-"+buddies[1];
-						equipments[key] = {hid:hid, aid:aid, bud:buddies, stats:stats};
+						equipments[key] = {hid:hid, aid:aid, bud:buddies, stats:stats, bmax:buddy_maxlvl};
 					}
 				}
 			}
@@ -536,12 +540,6 @@ class AdvyrntureOptimizer extends ToolBase
 						}
 					}
 				}
-				// give slight priority to not max-level buddies
-				for(let i = 0; i < 2; ++i)
-				{
-					if(equipment.bud[i] != null && this.data.buddy[equipment.bud[i]] < 10)
-						++boosts.exp;
-				}
 				// buddy skills
 				if(equipment.bud[0] != null && equipment.bud[1] != null)
 				{
@@ -569,11 +567,23 @@ class AdvyrntureOptimizer extends ToolBase
 				// reset req is stat requirements aren't met
 				if(stat_met < 5)
 					boosts.req = 0;
+				// give slight priority to not max-level buddies
+				for(let i = 0; i < 2; ++i)
+				{
+					if(!equipment.bmax[i])
+					{
+						boosts.exp += 1;
+					}
+				}
 				// any flag
-				if(equipment.hid == "0") ++boosts.any;
-				if(equipment.aid == "0") ++boosts.any;
-				if(equipment.bud[0] == null) ++boosts.any;
-				if(equipment.bud[1] == null) ++boosts.any;
+				if(equipment.hid == "0")
+					++boosts.any;
+				if(equipment.aid == "0")
+					++boosts.any;
+				if(equipment.bud[0] == null)
+					++boosts.any;
+				if(equipment.bud[1] == null)
+					++boosts.any;
 				results[zone.id].push({stat_met:stat_met, equipment:equipment, boosts:boosts, stats:stats});
 			}
 			results[zone.id].sort(this.result_sort);
