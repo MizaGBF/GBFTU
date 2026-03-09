@@ -96,7 +96,8 @@ class AdvyrntureOptimizer extends ToolBase
 			name: "Malinda",
 			stats: [
 				{lvl:0},
-				{lvl:1,combat:2,affinity:1}
+				{lvl:1,combat:2,affinity:1},
+				{lvl:6,combat:3,affinity:3}
 			]
 		}
 	});
