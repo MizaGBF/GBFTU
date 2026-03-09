@@ -145,6 +145,7 @@ class YoutubeSearch extends ToolBase
 		{jp:"", value:"Any", selected:true},
 		{group:true, label:"I Origin"},
 		{jp:"ファイター・オリジン", value:"Fighter Origin"},
+		{jp:"ランサー・オリジン", value:"Lancer Origin"},
 		{group:true, label:"IV"},
 		{jp:"ベルセルク", value:"Berserker"},
 		{jp:"スパルタ", value:"Spartan"},
