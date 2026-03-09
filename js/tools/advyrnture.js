@@ -115,9 +115,9 @@ class AdvyrntureOptimizer extends ToolBase
 		{name:"Medvecia Island",id:"11",combat:25,perception:31,endurance:25,affinity:32,luck:15,unlock:23},
 		{name:"Jewel Resort Casino Liner",id:"5",combat:18,perception:16,endurance:29,affinity:42,luck:50,unlock:25},
 		{name:"Nalhegrande Skydom",id:"3",combat:42,perception:36,endurance:35,affinity:37,luck:16,unlock:30},
-		{name:"Mysteria Academy of Magic",id:"12",combat:25,perception:31,endurance:25,affinity:32,luck:15,unlock:33},
+		{name:"Mysteria Academy of Magic",id:"12",combat:50,perception:37,endurance:36,affinity:47,luck:17,unlock:33},
 		{name:"Feendrache",id:"8",combat:54,perception:37,endurance:57,affinity:47,luck:18,unlock:35},
-		{name:"Stardust Town",id:"10",combat:50,perception:37,endurance:36,affinity:58,luck:17,unlock:35},
+		{name:"Stardust Town",id:"10",combat:50,perception:47,endurance:36,affinity:58,luck:37,unlock:35},
 		{name:"Great Oarlyegrande Skydom",id:"4",combat:62,perception:42,endurance:68,affinity:55,luck:24,unlock:40},
 		{name:"Pandemonium",id:"6",combat:89,perception:61,endurance:60,affinity:55,luck:42,unlock:45}
 	]);
