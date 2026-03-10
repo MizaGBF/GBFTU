@@ -5,6 +5,7 @@ class TripleAttackCalculator extends ToolBase
 	static c_storage_key = Object.freeze("gbftu-triple-attack");
 	static c_classes = Object.freeze({
 		"None/Other":0,
+		"Lancer Origin":5,
 		"Apsaras":10,
 		"Bandit Tycoon":7,
 		"Boogeyman":10,
