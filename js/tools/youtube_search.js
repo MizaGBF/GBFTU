@@ -414,42 +414,6 @@ class YoutubeSearch extends ToolBase
 		}
 	}
 	
-	add_select(node, name, list)
-	{
-		// note: Reuse audio CSS for convenience
-		let container = add_to(node, "div", {
-			cls:["audio-inner-container"]
-		});
-		let label = add_to(container, "label", {cls:["audio-label"]});
-		label.htmlFor = "youtube-search-" + this.format_name(name);
-		label.innerText = name;
-		let sel = add_to(container, "select", {
-			cls:["audio-select"],
-			id:"youtube-search-" + this.format_name(name)
-		});
-		let ref = sel;
-		for(const category of list)
-		{
-			if((category.group ?? false) == true)
-			{
-				ref = add_to(sel, "optgroup");
-				ref.label = category.label;
-			}
-			else
-			{
-				let option = add_to(ref, "option");
-				option.value = category.jp;
-				option.innerText = category.value;
-				option.selected = ((category.selected ?? false) == true);
-				option.disabled = ((category.disabled ?? false) == true);
-			}
-		}
-		sel.onchange = () => {
-			this.update();
-		};
-		this.elements[this.format_name(name)] = sel;
-	}
-	
 	add_toggle(node, name)
 	{
 		// note: Reuse audio CSS for convenience
