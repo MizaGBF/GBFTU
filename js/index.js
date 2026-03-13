@@ -6,6 +6,11 @@ var content = null;
 function init()
 {
 	content = document.getElementById("content");
+	let s = get_url_params().get("tool");
+	if(s != null)
+	{
+		open_tool(s);
+	}
 }
 
 function open_tool(key)
@@ -25,4 +30,8 @@ function open_tool(key)
 	for (let i = 0; i < tabbuttons.length; i++)
 		tabbuttons[i].classList.toggle("active", false);
 	document.getElementById("tab-"+key).classList.toggle("active", true);
+	// update url
+	let params = new URLSearchParams("");
+	params.set("tool", key);
+	history.pushState(null, '', window.location.pathname + '?' + params.toString());
 }
