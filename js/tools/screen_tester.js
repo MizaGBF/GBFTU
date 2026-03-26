@@ -63,7 +63,7 @@ class ScreenTester extends ToolBase
 			<h3>Credits</h3>\
 			<p>This tool is based on <a href="https://eriri.net/gbf-delay/">Eriri\'s GBF Delay tool</a></p>\
 			<h3>Explanations</h3>\
-			<p>You might experience delays when playing Granblue Fantasy due to a slight bug in the library used by the game for the rendering.<br/>This might significantly impact your speed.<br/>To avoid this issue, make sure your refresh rate, in your display settings, is set to a multiple of 30 (30, 60, 90, 120, etc...)<br/>Below are the explanations of the result.</p>\
+			<p>You might experience delays when playing Granblue Fantasy due to a slight bug in the library used by the game for the rendering.<br/>This might significantly impact your speed.<br/>To avoid this issue, make sure your refresh rate, in your display settings, is set to a multiple of 30 (30, 60, 90, 120, etc...).<br/>This affects all versions of the game regardless.<br/>Below are the explanations of the result.</p>\
 			<h3>Refresh Rate</h3>\
 			<p>This is the browser\'s refresh rate at the time of measurement (the number of screen updates per second).<br/>Generally, the browser automatically adjusts this to match your display\'s refresh rate.</p>\
 			<h3>Rendering Speed</h3>\
