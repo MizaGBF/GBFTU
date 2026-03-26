@@ -41,7 +41,7 @@ class ScreenTester extends ToolBase
 			"div"
 		);
 		explanations.innerHTML = '<details>\
-			<summary class="detail sub-detail">Explanations</summary>\
+			<summary class="detail sub-detail">&nbsp;&nbsp;&nbsp;&nbsp;Explanations</summary>\
 			<h3>Credits</h3>\
 			<p>This tool is based on <a href="https://eriri.net/gbf-delay/">Eriri\'s GBF Delay tool</a></p>\
 			<h3>Explanations</h3>\
@@ -70,8 +70,8 @@ class ScreenTester extends ToolBase
 		this.canvas.style.height = "1px"; 
 		this.m_stage = new createjs.Stage(this.canvas);
 		createjs.Ticker.setInterval(33);
+		createjs.Ticker.addEventListener("tick", () => {});
 		this.frame_data = null;
-		this.dummy_function = () => {};
 	}
 	
 	start()
@@ -84,7 +84,6 @@ class ScreenTester extends ToolBase
 			startTime : createjs.Ticker.getTime(),
 			lastTime : 0
 		};
-		createjs.Ticker.addEventListener("tick", this.dummy_function);
 		window.requestAnimationFrame(
 			() => {
 				this.onFrame(5000)
@@ -94,7 +93,7 @@ class ScreenTester extends ToolBase
 	
 	onFrame(duration)
 	{
-		++this.frame_data.frameCount;
+		this.frame_data.frameCount++;
 		this.frame_data.gbfFramerateAve += createjs.Ticker.getMeasuredFPS();
 		const time = createjs.Ticker.getTime() - this.frame_data.startTime;
 
@@ -122,6 +121,19 @@ class ScreenTester extends ToolBase
 	
 	end(browserFramerate, gbfFramerate)
 	{
+		let label, span;
+		// reset button
+		this.start_button.textContent = "Start Test";
+		this.start_button.disabled = false;
+
+		if(browserFramerate <= 0)
+		{
+			[label, span] = this.create_section(resType);
+			label.textContent = "Error:";
+			span.textContent = "An error occured, try again.";
+			return;
+		}
+		
 		// calculate numbers
 		const delayPerS = (1000 / gbfFramerate) * (createjs.Ticker.getFPS() - gbfFramerate);
 		const delayPerM = delayPerS * 60 / 1000;
@@ -135,19 +147,13 @@ class ScreenTester extends ToolBase
 			)
 			: "You might experience delays."
 		);
-		// reset class stuff
-		createjs.Ticker.removeEventListener("tick", this.dummy_function);
-		this.start_button.textContent = "Start Test",
-		this.start_button.disabled = false,
 		
 		// display
 		this.output_area.innerHTML = "";
 		
-		let label, span;
 		[label, span] = this.create_section(resType);
 		label.textContent = "Result:";
 		span.textContent = resText;
-		
 		
 		[label, span] = this.create_section(resType);
 		label.textContent = "Refresh Rate";
