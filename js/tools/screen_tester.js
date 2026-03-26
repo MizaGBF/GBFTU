@@ -9,6 +9,24 @@ class ScreenTester extends ToolBase
 		this.tree.push(add_to(null, "div", {
 			cls:["tab-content", "container"]
 		}));
+		this.start_button = null;
+		this.output_area = null;
+		
+		// createjs
+		this.canvas = null;
+		this.m_stage = null;
+		this.frame_data = null;
+		
+		load_script(
+			"js/vendors/createjs-min.js",
+			() => {
+				this.init();
+			}
+		);
+	}
+	
+	init()
+	{
 		this.start_button = add_to(
 			this.tree[0],
 			"button",
@@ -71,7 +89,6 @@ class ScreenTester extends ToolBase
 		this.m_stage = new createjs.Stage(this.canvas);
 		createjs.Ticker.setInterval(33);
 		createjs.Ticker.addEventListener("tick", () => {});
-		this.frame_data = null;
 	}
 	
 	start()

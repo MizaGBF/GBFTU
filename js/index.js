@@ -1,5 +1,6 @@
 var tool_constructors = {};
 var tools = {};
+var loaded_scripts = new Set();
 var running = null;
 var content = null;
 
@@ -13,11 +14,57 @@ function init()
 	}
 }
 
+function load_script(url, callback)
+{
+	try
+	{
+		const script = document.createElement('script');
+		script.src = url;
+		script.type = 'text/javascript';
+
+		script.onload = () => {
+			if(callback != null)
+			{
+				callback();
+			}
+		};
+		document.head.appendChild(script);
+		return true;
+	} catch(err) {
+		console.error("Failed to load script " + url, err.stack);
+	}
+	return false;
+}
+
+function load_tool(key, callback)
+{
+	if(!loaded_scripts.has(key))
+	{
+		return load_script(
+			"js/tools/" + key.replace("-", "_") + ".js",
+			callback
+		);
+	}
+	return false;
+}
+
 function open_tool(key)
 {
 	if(!(key in tools))
 	{
-		if(!(key in tool_constructors))
+		if(
+			load_tool(
+				key,
+				() => {
+					loaded_scripts.add(key);
+					open_tool(key);
+				}
+			)
+		)
+		{
+			return;
+		}
+		else if(!(key in tool_constructors))
 		{
 			throw new Error("Tool " + key + " doesn't exist");
 		}
@@ -28,7 +75,9 @@ function open_tool(key)
 	// update tab button active
 	let tabbuttons = document.getElementsByClassName("tab-button");
 	for (let i = 0; i < tabbuttons.length; i++)
+	{
 		tabbuttons[i].classList.toggle("active", false);
+	}
 	document.getElementById("tab-"+key).classList.toggle("active", true);
 	// update url
 	let params = new URLSearchParams("");

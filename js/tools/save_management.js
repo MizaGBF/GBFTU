@@ -1,6 +1,7 @@
 class SaveManager extends ToolBase
 {
 	static c_key = Object.freeze("save-management");
+	static c_compatible_tools = Object.freeze(['spark-tracker', 'bullet-tracker', 'advyrnture', 'ccw-tracker', 'damage', 'triple-attack', 'raziel', 'kirin-calc']);
 	
 	constructor()
 	{
@@ -49,39 +50,46 @@ class SaveManager extends ToolBase
 				br:true
 			}
 		);
-		for(const tool of Object.values(tool_constructors))
+		// load tools
+		for(const tool_key of SaveManager.c_compatible_tools)
 		{
-			const info = tool.get_tool_save_info();
-			if(info != null)
-			{
-				add_to(
-					this.tree[0],
-					"div",
+			load_tool(
+				tool_key,
+				() => {
+					const tool = tool_constructors[tool_key];
+					const info = tool.get_tool_save_info();
+					if(info != null)
 					{
-						innertext:info.name
+						add_to(
+							this.tree[0],
+							"div",
+							{
+								innertext:info.name
+							}
+						);
+						
+						this.create_manage_button(
+							"Clear",
+							(() => {
+								this.clear(info);
+							})
+						);
+						this.create_manage_button(
+							"Export",
+							(() => {
+								this.export_single(info);
+							})
+						);
+						this.create_manage_button(
+							"Import",
+							(() => {
+								this.import_single(info);
+							})
+						);
+						add_to(this.tree[0], "br");
 					}
-				);
-				
-				this.create_manage_button(
-					"Clear",
-					(() => {
-						this.clear(info);
-					})
-				);
-				this.create_manage_button(
-					"Export",
-					(() => {
-						this.export_single(info);
-					})
-				);
-				this.create_manage_button(
-					"Import",
-					(() => {
-						this.import_single(info);
-					})
-				);
-				add_to(this.tree[0], "br");
-			}
+				}
+			);
 		}
 	}
 	
