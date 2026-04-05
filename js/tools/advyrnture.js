@@ -97,7 +97,8 @@ class AdvyrntureOptimizer extends ToolBase
 			stats: [
 				{lvl:0},
 				{lvl:1,combat:2,affinity:1},
-				{lvl:6,combat:3,affinity:3}
+				{lvl:6,combat:3,affinity:3},
+				{lvl:10,combat:5,affinity:5}
 			]
 		}
 	});
@@ -169,7 +170,7 @@ class AdvyrntureOptimizer extends ToolBase
 		"123":{name:"Cat Teaser",combat:0,perception:0,endurance:0,affinity:3,luck:0,skill:[4,"Young Cat"]},
 		"124":{name:"Beach Ball",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Ursula"]},
 		"125":{name:"Vania's Bloodkin",combat:6,perception:4,endurance:0,affinity:0,luck:0,skill:[1,"Medvecia Island","perception",8]},
-		//"126":{name:"?",combat:0,perception:0,endurance:0,affinity:0,luck:0,skill:[5,"Malinda"]},
+		"126":{name:"Overflowing Goody Basket",combat:0,perception:4,endurance:0,affinity:0,luck:4,skill:[5,"Malinda"]},
 		"127":{name:"Codex of Mysteria",combat:5,perception:7,endurance:0,affinity:0,luck:0,skill:[1,"Mysteria Academy of Magic","affinity",8]}
 	});
 	/********************************************
