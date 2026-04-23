@@ -36,7 +36,7 @@ class YoutubeSearch extends ToolBase
 		{jp:"ナロフィルミダス", value:"Narophirmidas", asset:"sp/quest/assets/lobby/305731.png"},
 		{jp:"マクタンマカル", value:"Macutanmacar", asset:"sp/quest/assets/lobby/305741.png"},
 		{jp:"パパルクルヴァ", value:"Papahlukruva", asset:"sp/quest/assets/lobby/305751.png"},
-		{jp:"ザマルヴォッチ", value:"Zamalvoch", asset:"sp/quest/assets/lobby/305741.png"},
+		{jp:"ザマルヴォッチ", value:"Zamalvoch", asset:"sp/quest/assets/lobby/305761.png"},
 		{group:true, label:"Six Dragons"},
 		{jp:"ウィルナスhl", value:"Wilnas", asset:"sp/quest/assets/lobby/305191.png"},
 		{jp:"ワムデュスhl", value:"Wamdus", asset:"sp/quest/assets/lobby/305201.png"},
