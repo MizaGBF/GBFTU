@@ -266,6 +266,7 @@ class YoutubeSearch extends ToolBase
 					this.add_toggle(content, '"Granblue"');
 					this.add_toggle(content, '"Omega/Magna"');
 					this.add_toggle(content, '"Full Auto"');
+					this.add_toggle(content, '"Blue Chest"');
 					this.add_toggle(content, '"Solo"');
 					this.add_input(content, 'Honor', "eg 400k, 4m");
 					this.add_input(content, 'Turn', "eg 1, 2, 3...");
@@ -517,6 +518,8 @@ class YoutubeSearch extends ToolBase
 			words.push("マグナ");
 		if(this.elements.fullauto.classList.contains("audio-button-enabled"))
 			words.push("フルオート");
+		if(this.elements.bluechest.classList.contains("audio-button-enabled"))
+			words.push("青箱");
 		if(this.elements.solo.classList.contains("audio-button-enabled"))
 			words.push("ソロ");
 		let honor = this.elements.honor.value.toLowerCase().trim();
