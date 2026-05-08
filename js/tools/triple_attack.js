@@ -5,7 +5,7 @@ class TripleAttackCalculator extends ToolBase
 	static c_storage_key = Object.freeze("gbftu-triple-attack");
 	static c_classes = Object.freeze({
 		"None/Other":0,
-		"Lancer Origin":5,
+		"Lancer Origin":20,
 		"Apsaras":10,
 		"Bandit Tycoon":7,
 		"Boogeyman":10,
@@ -49,7 +49,7 @@ class TripleAttackCalculator extends ToolBase
 		add_to(
 			this.tree[0],
 			"div"
-		).innerHTML = "<ul><li><b>MC Class</b> assumes the class is fully maxed (max level, ultimate mastery, etc...).</li>"
+		).innerHTML = "<b><font color=\"#ff125d\">This tool is being discontinued on May 14th, please use the in-game Party screen instead.</font></b><br/><ul><li><b>MC Class</b> assumes the class is fully maxed (max level, ultimate mastery, etc...).</li>"
 			+ "<li><b>Class Mastery</b> is the Triple Attack bonuses you unlock along with mastering classes.</li>"
 			+ "<li>Deduct the <b>Ultima</b> or/and <b>Celestial</b> values from <b>Grid</b>, if your MC is affected in the in-game calculator.</li>"
 			+ "<li><b>Domain</b> is <b>5</b> for Fraux, Haaselia and Maria Theresa.</li>"
@@ -61,7 +61,7 @@ class TripleAttackCalculator extends ToolBase
 		grid.children[0].classList.toggle("tool-grid-cell", false); // remove the style of top left corner
 		// MC
 		this.add_select_row(grid, "assets/ui/triple_attack/class.png", "MC Class", Object.keys(TripleAttackCalculator.c_classes));
-		this.add_select_row(grid, "assets/ui/triple_attack/mastered.png", "Class Mastery", ["0", "1", "2", "3"]);
+		this.add_select_row(grid, "assets/ui/triple_attack/mastered.png", "Class Mastery", ["0", "1", "2", "3", "5"]);
 		this.elements.classmastery[0].value = "3";
 		this.color_cell(this.elements.classmastery[0]);
 		// crucible
