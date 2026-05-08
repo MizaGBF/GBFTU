@@ -53,42 +53,43 @@ class SaveManager extends ToolBase
 		// load tools
 		for(const tool_key of SaveManager.c_compatible_tools)
 		{
-			load_tool(
-				tool_key,
-				() => {
-					const tool = tool_constructors[tool_key];
-					const info = tool.get_tool_save_info();
-					if(info != null)
-					{
-						add_to(
-							this.tree[0],
-							"div",
-							{
-								innertext:info.name
-							}
-						);
-						this.create_manage_button(
-							"Clear",
-							(() => {
-								this.clear(info);
-							})
-						);
-						this.create_manage_button(
-							"Export",
-							(() => {
-								this.export_single(info);
-							})
-						);
-						this.create_manage_button(
-							"Import",
-							(() => {
-								this.import_single(info);
-							})
-						);
-						add_to(this.tree[0], "br");
-					}
+			const callback = () => {
+				const tool = tool_constructors[tool_key];
+				const info = tool.get_tool_save_info();
+				if(info != null)
+				{
+					add_to(
+						this.tree[0],
+						"div",
+						{
+							innertext:info.name
+						}
+					);
+					this.create_manage_button(
+						"Clear",
+						(() => {
+							this.clear(info);
+						})
+					);
+					this.create_manage_button(
+						"Export",
+						(() => {
+							this.export_single(info);
+						})
+					);
+					this.create_manage_button(
+						"Import",
+						(() => {
+							this.import_single(info);
+						})
+					);
+					add_to(this.tree[0], "br");
 				}
-			);
+			};
+			if(!load_tool(tool_key, callback))
+			{
+				callback();
+			}
 		}
 	}
 	
