@@ -89,6 +89,7 @@ class CCWTracker extends ToolBase
 				img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + entry.id + "_note.jpg";
 				img.style.width = this.cell_size;
 				img.style.height = this.cell_size;
+				img.loading = "lazy";
 				
 				if(entry.type == "t5")
 				{
@@ -485,33 +486,49 @@ class CCWTracker extends ToolBase
 		for(const [id, amount] of Object.entries(weapons))
 		{
 			if(index < len)
+			{
 				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
+			}
 			else
+			{
 				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/weapon/s/" + id + ".jpg", amount);
+			}
 			++index;
 		}
 		for(const [id, amount] of Object.entries(materials))
 		{
 			if(index < len)
+			{
 				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
+			}
 			else
+			{
 				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/article/s/" + id + ".jpg", amount);
+			}
 			++index;
 		}
 		for(const [id, amount] of Object.entries(anything))
 		{
 			if(index < len)
+			{
 				this.modify_result(index, "assets/ui/ccw_tracker/" + id + ".gif", amount);
+			}
 			else
+			{
 				this.add_result("assets/ui/ccw_tracker/" + id + ".gif", amount);
+			}
 			++index;
 		}
 		for(const [id, amount] of Object.entries(evolutions))
 		{
 			if(index < len)
+			{
 				this.modify_result(index, "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
+			}
 			else
+			{
 				this.add_result("https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/assets/item/evolution/s/" + id + ".jpg", amount);
+			}
 			++index;
 		}
 		for(let i = len - 1; i >= index; --i)
@@ -520,7 +537,9 @@ class CCWTracker extends ToolBase
 		}
 		this.distinction.style.display = distinction_count > 0 ? "" : "none";
 		if(distinction_count > 0)
+		{
 			this.distinction.innerText = "" + distinction_count + " distinctions total";
+		}
 	}
 	
 	add_result(url, amount)
@@ -531,6 +550,7 @@ class CCWTracker extends ToolBase
 		container.style.marginRight = "5px";
 		let img = add_to(container, "img", {cls:["tool-icon"]});
 		img.src = url;
+		img.loading = "lazy";
 		add_to(container, "span", {innertext:" x" + amount});
 	}
 	

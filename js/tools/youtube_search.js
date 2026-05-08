@@ -236,7 +236,9 @@ class YoutubeSearch extends ToolBase
 			tab_button.name = "tool-tab-group";
 			tab_button.id = "tool-tab-" + count;
 			if(count == 0)
+			{
 				tab_button.checked = true;
+			}
 			const label = add_to(tabs, "label", {
 				cls:["tab-button", "tool-tab-label"]
 			});
@@ -244,7 +246,6 @@ class YoutubeSearch extends ToolBase
 			label.innerText = tname;
 			++count;
 		}
-		//let tab_contents = add_to(this.tree[0], "div");
 		for(count = 0; count < 3; ++count)
 		{
 			const content = add_to(tabs, "div",{
@@ -385,6 +386,7 @@ class YoutubeSearch extends ToolBase
 			img = add_to(node, "img", {
 				cls:["mini-btn", "mini-btn-icon", "tool-big-img-btn", "tool-img-btn"]
 			});
+			img.loading = "lazy";
 			if(data.asset && data.asset.startsWith("sp"))
 			{
 				img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + data.asset;

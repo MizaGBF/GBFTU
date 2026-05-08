@@ -31,7 +31,9 @@ class KirinCalculator extends ToolBase
 			for(let i = 0; i < 4; ++i)
 			{
 				let block = add_to(this.tree[0], "div", {cls:["tool-block"]});
-				add_to(block, "img", {cls:["tab-button-icon"]}).src = KirinCalculator.c_assets[i + j * 4];
+				let img = add_to(block, "img", {cls:["tab-button-icon"]});
+				img.src = KirinCalculator.c_assets[i + j * 4];
+				img.loading = "lazy";
 				let input = add_to(block, "input", {cls:["styled-input"], id:"kirin-calc-" + i});
 				input.style.width = "200px";
 				input.type = "text";

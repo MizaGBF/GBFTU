@@ -67,7 +67,6 @@ class SaveManager extends ToolBase
 								innertext:info.name
 							}
 						);
-						
 						this.create_manage_button(
 							"Clear",
 							(() => {

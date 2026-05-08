@@ -128,6 +128,10 @@
 
 .tool-tabs {
 	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
 }
 
 .tool-tab-radio {
@@ -135,18 +139,25 @@
 }
 
 .tool-tab-content {
+	min-width: 90%;
 	display: none;
 }
 
 #tool-tab-0:checked ~ #tool-content-0,
 #tool-tab-1:checked ~ #tool-content-1,
-#tool-tab-2:checked ~ #tool-content-2 {
+#tool-tab-2:checked ~ #tool-content-2,
+#tool-tab-3:checked ~ #tool-content-3,
+#tool-tab-4:checked ~ #tool-content-4,
+#tool-tab-5:checked ~ #tool-content-5,
+#tool-tab-6:checked ~ #tool-content-6 {
 	display: block;
 }
 
 .tool-tab-label {
 	padding: 10px;
 	margin: 5px;
+	min-width: 0px; /* to negate tab button */
+	min-height: 0px;
 }
 
 .tool-tab-radio:checked + .tool-tab-label {
