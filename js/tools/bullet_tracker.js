@@ -314,7 +314,7 @@ class BulletTracker extends ToolBase
 								event.preventDefault();
 							};
 							this.data[bullet] = {using:false, owned:0, count:0};
-							this.elements[bullet] = {selector:img, container:null};
+							this.elements[bullet] = {selector:img, container:null, inputs:null};
 						}
 					}
 					break;
@@ -424,7 +424,7 @@ class BulletTracker extends ToolBase
 					slash.style.display = "inline-block";
 					slash.style.lineHeight = slash.style.height;
 					slash.style.fontSize = "30px";
-					const [needed, minus_needed, plus_needed] = this.add_control(span, data.owned);
+					const [needed, minus_needed, plus_needed] = this.add_control(span, data.count);
 					span.appendChild(document.createTextNode(" "));
 					const remove = this.add_control_button(span, "X");
 					remove.style.verticalAlign = "top";
