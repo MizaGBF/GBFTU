@@ -1372,8 +1372,9 @@ class DamageCalculator extends ToolBase
 		
 		// toggles
 		const element_str = this.elements.ele_advantage.value;
+		const is_advantaged = ["Advantaged", "Destruction"].includes(element_str);
 		const advantage = (
-			["Advantaged", "Destruction"].includes(element_str) ?
+			is_advantaged ?
 			0.5 :
 			(
 				element_str == "Disadvantaged" ?
@@ -1510,7 +1511,7 @@ class DamageCalculator extends ToolBase
 			mods.dmg_amp +
 			Math.max(0, this.parse(this.elements.wonder_amp.value) / 100) +
 			Math.max(0, this.parse(this.elements.summon_amp.value) / 100) +
-			(yupei ? 0.05 : 0)
+			(yupei && is_advantaged ? 0.05 : 0)
 		);
 		this.set_text_cell(this.elements.info_amp, 100 * amplification, 2, true);
 		this.color_cell(this.elements.info_amp);
