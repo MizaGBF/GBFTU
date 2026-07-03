@@ -122,7 +122,7 @@
 	max-height: 60px;
 }
 
-.tool-img-btn-active {
+.tool-img-btn-active, .tool-img-btn:hover {
 	filter: none;
 }
 
