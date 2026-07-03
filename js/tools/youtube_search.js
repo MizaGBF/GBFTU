@@ -220,6 +220,7 @@ class YoutubeSearch extends ToolBase
 				innerhtml:'Based on: <a href="https://gbf.wiki/Template:YoutubeTitleGenerator" target="_blank" rel="noopener noreferrer">Original</a> / <a href="https://gbf.wiki/Widget:YoutubeTitleGenerator" target="_blank" rel="noopener noreferrer">Source</a>'
 			}
 		);
+		this.update();
 	}
 	
 	generate_tabs()
@@ -264,14 +265,16 @@ class YoutubeSearch extends ToolBase
 					{
 						this.add_element_button(element_container, elem);
 					}
-					add_to(content, "div").innerText = "Add...";
-					this.add_toggle(content, '"Granblue"');
-					this.add_toggle(content, '"Omega/Magna"');
-					this.add_toggle(content, '"Full Auto"');
-					this.add_toggle(content, '"Blue Chest"');
-					this.add_toggle(content, '"Solo"');
+					add_to(content, "div").innerText = "Context";
+					this.add_toggle(content, '"Granblue"', "gbf.png", true);
+					this.add_toggle(content, '"Omega/Magna"', "magna.png");
+					this.add_toggle(content, '"Full Auto"', "fa.png");
+					this.add_toggle(content, '"Blue Chest"', "blue.png");
+					this.add_toggle(content, '"Solo"', "solo.png");
+					add_to(content, "div").innerText = "Others";
 					this.add_input(content, 'Honor', "eg 400k, 4m");
 					this.add_input(content, 'Turn', "eg 1, 2, 3...");
+					add_to(content, "div").innerText = "Result";
 					this.add_controls(content);
 					break;
 				}
@@ -420,34 +423,31 @@ class YoutubeSearch extends ToolBase
 		}
 	}
 	
-	add_toggle(node, name)
+	add_toggle(node, name, icon_file_name, default_state=false)
 	{
-		// note: Reuse audio CSS for convenience
-		let container = add_to(node, "div", {
-			cls:["audio-inner-container"]
+		let img = add_to(node, "img", {
+			cls:["mini-btn", "mini-btn-icon", "tool-img-btn"]
 		});
-		let btn = add_to(container, "button", {
-			cls:["audio-button", "tool-audio-btn-maxwidth"],
-			innertext:name
-		});
-		btn.onclick = () => {
-			btn.classList.toggle("audio-button-enabled");
+		img.src = "assets/ui/youtube_search/" + icon_file_name;
+		img.title = name;
+		img.onclick = () => {
+			img.classList.toggle("tool-img-btn-active");
 			this.update();
 		}
-		this.elements[this.format_name(name)] = btn;
+		img.classList.toggle("tool-img-btn-active", default_state);
+		this.elements[this.format_name(name)] = img;
 	}
 	
 	add_input(node, name, placeholder)
 	{
-		// note: Reuse audio CSS for convenience
 		let container = add_to(node, "div", {
-			cls:["audio-inner-container"]
+			cls:["tool-btn-container"]
 		});
-		let label = add_to(container, "label", {cls:["audio-label"]});
+		let label = add_to(container, "label", {cls:["tool-btn-label"]});
 		label.htmlFor = "youtube-search-" + this.format_name(name);
 		label.innerText = name;
 		let input = add_to(container, "input", {
-			cls:["audio-select"],
+			cls:["tool-btn-select"],
 			id:"youtube-search-" + this.format_name(name)
 		});
 		input.placeholder = placeholder;
@@ -459,19 +459,18 @@ class YoutubeSearch extends ToolBase
 	
 	add_controls(node)
 	{
-		// note: Reuse audio CSS for convenience
 		this.elements.string_output = add_to(node, "div", {
-			cls:["audio-inner-container"]
+			cls:["tool-btn-container"]
 		});
 		let container = add_to(node, "div", {
-			cls:["audio-inner-container"]
+			cls:["tool-btn-container"]
 		});
 		for(const elem of YoutubeSearch.c_output)
 		{
 			if(elem.group ?? false)
 			{
 				container = add_to(node, "div", {
-					cls:["audio-inner-container"]
+					cls:["tool-btn-container"]
 				});
 				if(elem.icon)
 				{
@@ -485,13 +484,13 @@ class YoutubeSearch extends ToolBase
 				}
 				container.appendChild(document.createTextNode(elem.label));
 				container = add_to(node, "div", {
-					cls:["audio-inner-container"]
+					cls:["tool-btn-container"]
 				});
 			}
 			else
 			{
 				add_to(container, "button", {
-					cls:["audio-button", "tool-audio-btn-maxwidth"],
+					cls:["tool-btn", "tool-btn-maxwidth"],
 					innertext:elem.label,
 					onclick:() => {
 						this.button_action(elem.mode);
@@ -509,7 +508,7 @@ class YoutubeSearch extends ToolBase
 	update()
 	{
 		let words = [];
-		if(this.elements.granblue.classList.contains("audio-button-enabled"))
+		if(this.elements.granblue.classList.contains("tool-img-btn-active"))
 			words.push("グラブル");
 		if(this.selecteds.raid != null)
 			words.push(this.selecteds.raid.jp);
@@ -517,13 +516,13 @@ class YoutubeSearch extends ToolBase
 			words.push(this.selecteds.element.jp);
 		if(this.selecteds.job != null)
 			words.push(this.selecteds.job.jp);
-		if(this.elements.omegamagna.classList.contains("audio-button-enabled"))
+		if(this.elements.omegamagna.classList.contains("tool-img-btn-active"))
 			words.push("マグナ");
-		if(this.elements.fullauto.classList.contains("audio-button-enabled"))
+		if(this.elements.fullauto.classList.contains("tool-img-btn-active"))
 			words.push("フルオート");
-		if(this.elements.bluechest.classList.contains("audio-button-enabled"))
+		if(this.elements.bluechest.classList.contains("tool-img-btn-active"))
 			words.push("青箱");
-		if(this.elements.solo.classList.contains("audio-button-enabled"))
+		if(this.elements.solo.classList.contains("tool-img-btn-active"))
 			words.push("ソロ");
 		let honor = this.elements.honor.value.toLowerCase().trim();
 		if(honor != "")
