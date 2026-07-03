@@ -143,8 +143,8 @@ class YoutubeSearch extends ToolBase
 	static c_classes = Object.freeze([
 		{group:true, label:"I Origin"},
 		{jp:"ファイター・オリジン", value:"Fighter Origin", asset:"sp/assets/leader/m/100501_01.jpg"},
-		{jp:"ランサー・オリジン", value:"Lancer Origin", asset:"sp/assets/leader/m/190501_01.jpg"},
 		{jp:"ウィザード・オリジン", value:"Wizard Origin", asset:"sp/assets/leader/m/130501_01.jpg"},
+		{jp:"ランサー・オリジン", value:"Lancer Origin", asset:"sp/assets/leader/m/190501_01.jpg"},
 		{group:true, label:"IV"},
 		{jp:"ベルセルク", value:"Berserker", asset:"sp/assets/leader/m/100301_01.jpg"},
 		{jp:"スパルタ", value:"Spartan", asset:"sp/assets/leader/m/110301_01.jpg"},
