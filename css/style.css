@@ -11,6 +11,7 @@
 }
 
 .tool-save-pending {
+	color: var(--font-col-alt);
 	animation: tool-save-pending-animation 2s infinite linear;
 }
 
@@ -46,8 +47,8 @@
 	height:30px;
 	font-size:18px;
 	background:#00000000;
-	color:white;
-	border:1px solid white;
+	color:var(--font-col);
+	border:1px solid var(--font-col);
 	overflow:hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;
@@ -96,8 +97,8 @@
 .tool-btn {
 	width: 45%;
 	height: 40px;
-	background: #2d2d30;
-	border-color: #000000;
+	background: var(--main-bg);
+	border-color: var(--font-col);
 	border-radius: 5px;
 	border-style: solid;
 	border: none;
@@ -105,16 +106,16 @@
 	justify-content: center;
 	align-items: center;
 	font-size: 20px;
-	color: white;
+	color: var(--font-col-alt);
 	margin: 5px;
 }
 
 .tool-btn.active {
-	outline: solid #007acc;
+	outline: solid var(--active);
 }
 
 .tool-btn:hover {
-	outline: solid #ffffff;
+	outline: solid var(--highlight);
 }
 
 .tool-btn:disabled {
@@ -127,7 +128,7 @@
 }
 
 .tool-btn-select {
-	background-color: #ffffffb0;
+	background-color: var(--select);
 	border: none;
 	margin: 5px;
 	font-size: 25px;
@@ -155,7 +156,6 @@
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: contain;
-	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .tool-img-btn {
@@ -211,7 +211,22 @@
 }
 
 .tool-tab-radio:checked + .tool-tab-label {
-	outline: solid #007acc;
+	outline: solid var(--active);
+}
+
+.ccw-content {
+	background-color: var(--main-bg-d);
+}
+
+.screen-test-result {
+	background-color: #555555;
+	color: white;
+	display: block;
+	margin: auto;
+	padding: 20px;
+	padding-top: 0;
+	padding-bottom: 0;
+	width: 450px;
 }
 
 /* mobile/tablet layout */

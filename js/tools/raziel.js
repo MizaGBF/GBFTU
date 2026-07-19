@@ -4,6 +4,12 @@ class RazielCalculator extends ToolBase
 	static c_key = Object.freeze("raziel");
 	static c_storage_key = Object.freeze("gbftu-raziel");
 	
+	static c_color_green = "#469e5d";
+	static c_color_grey = "#8f8f8f";
+	static c_color_red = "#e32956";
+	static c_color_orange = "#d4832f";
+	static c_color_orange_lite = "#cf7544";
+	
 	constructor()
 	{
 		super();
@@ -290,7 +296,7 @@ class RazielCalculator extends ToolBase
 		if(access && access.startsWith("name_"))
 		{
 			if(val.toLowerCase() == "raziel")
-				node.style.background = "#357a47";
+				node.style.background = RazielCalculator.c_color_green;
 			else
 				node.style.background = "";
 		}
@@ -299,14 +305,14 @@ class RazielCalculator extends ToolBase
 			if(["result_1_3", "result_2_3"].includes(access))
 			{
 				if(val == "0")
-					node.style.background = "#357a47";
+					node.style.background = RazielCalculator.c_color_green;
 				else
 					node.style.background = "";
 			}
 			else
 			{
 				if(val == "10")
-					node.style.background = "#357a47";
+					node.style.background = RazielCalculator.c_color_green;
 				else
 					node.style.background = "";
 			}
@@ -318,17 +324,17 @@ class RazielCalculator extends ToolBase
 				case "None/Other":
 				case "None":
 				{
-					node.style.background = "#4e4e4e";
+					node.style.background = RazielCalculator.c_color_grey;
 					break;
 				}
 				case "Yellow":
 				{
-					node.style.background = "#b4630f";
+					node.style.background = RazielCalculator.c_color_orange;
 					break;
 				}
 				case "Red":
 				{
-					node.style.background = "#8e0929";
+					node.style.background = RazielCalculator.c_color_red;
 					break;
 				}
 				case "Yes":
@@ -337,12 +343,12 @@ class RazielCalculator extends ToolBase
 				case "Ally 3":
 				case "Ally 4":
 				{
-					node.style.background = "#357a47";
+					node.style.background = RazielCalculator.c_color_green;
 					break;
 				}
 				case "No":
 				{
-					node.style.background = "#a15e3a";
+					node.style.background = RazielCalculator.c_color_orange_lite;
 					break;
 				}
 				default:

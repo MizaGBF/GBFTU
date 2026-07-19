@@ -47,12 +47,10 @@ class ScreenTester extends ToolBase
 			this.tree[0],
 			"div",
 			{
+				cls:["screen-test-result"],
 				br:true
 			}
 		);
-		this.output_area.style.margin = "auto";
-		this.output_area.style.display = "block";
-		this.output_area.style.width = "400px";
 		
 		const explanations = add_to(
 			this.tree[0],

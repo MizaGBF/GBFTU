@@ -123,8 +123,7 @@ class CCWTracker extends ToolBase
 	
 	add_header(grid, label)
 	{
-		const save = add_to(grid, "div");
-		save.style.backgroundColor = "#202030";
+		const save = add_to(grid, "div", {cls:["ccw-content"]});
 		save.style.height = "50px";
 		save.style.textAlign = "center";
 		
@@ -132,10 +131,9 @@ class CCWTracker extends ToolBase
 		btn.style.width = "90%";
 		btn.style.fontSize = "16px";
 		
-		const div = add_to(grid, "div");
+		const div = add_to(grid, "div", {cls:["ccw-content"]});
 		div.style.textAlign = "center";
 		div.style.gridColumn = "2 / 8";
-		div.style.backgroundColor = "#202030";
 		div.style.paddingTop = "3%";
 		div.textContent = label;
 	}
