@@ -602,11 +602,11 @@ class DamageCalculator extends ToolBase
 	});
 	
 	static c_color_critical = "#ff0000";
-	static c_color_good = "#357a47";
-	static c_color_bad = "#a15e3a";
-	static c_color_red = "#a13a3a";
-	static c_color_blue = "#3a89a1";
-	static c_color_purple = "#a13a74";
+	static c_color_good = "#469e5d";
+	static c_color_bad = "#d4832f";
+	static c_color_red = "#e63232";
+	static c_color_blue = "#38a8c9";
+	static c_color_purple = "#c73c8a";
 	
 	constructor()
 	{
