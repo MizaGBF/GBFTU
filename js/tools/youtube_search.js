@@ -210,6 +210,7 @@ class YoutubeSearch extends ToolBase
 			raid:null,
 			job:null
 		};
+		this.shared_toggles = [];
 		this.output = "";
 		this.generate_tabs();
 		
@@ -269,10 +270,13 @@ class YoutubeSearch extends ToolBase
 					}
 					add_to(content, "div").innerText = "Context";
 					this.add_toggle(content, '"Granblue"', "gbf.png", true);
-					this.add_toggle(content, '"Omega/Magna"', "magna.png");
 					this.add_toggle(content, '"Full Auto"', "fa.png");
 					this.add_toggle(content, '"Blue Chest"', "blue.png");
 					this.add_toggle(content, '"Solo"', "solo.png");
+					add_to(content, "div").innerText = "Party Type";
+					this.add_shared_toggle(content, '"Primal"', "primal.png");
+					this.add_shared_toggle(content, '"Omega/Magna"', "magna.png");
+					this.add_shared_toggle(content, '"Odious"', "odious.png");
 					add_to(content, "div").innerText = "Others";
 					this.add_input(content, 'Honor', "eg 400k, 4m");
 					this.add_input(content, 'Turn', "eg 1, 2, 3...");
@@ -319,6 +323,7 @@ class YoutubeSearch extends ToolBase
 				img.classList.toggle("tool-img-btn-active", true);
 			}
 			this.update();
+			beep();
 		}
 	}
 	
@@ -422,12 +427,13 @@ class YoutubeSearch extends ToolBase
 				img.classList.toggle("tool-img-btn-active", true);
 			}
 			this.update();
+			beep();
 		}
 	}
 	
 	add_toggle(node, name, icon_file_name, default_state=false)
 	{
-		let img = add_to(node, "img", {
+		const img = add_to(node, "img", {
 			cls:["mini-btn", "mini-btn-icon", "tool-img-btn"]
 		});
 		img.src = "assets/ui/youtube_search/" + icon_file_name;
@@ -435,9 +441,36 @@ class YoutubeSearch extends ToolBase
 		img.onclick = () => {
 			img.classList.toggle("tool-img-btn-active");
 			this.update();
+			beep();
 		}
 		img.classList.toggle("tool-img-btn-active", default_state);
 		this.elements[this.format_name(name)] = img;
+		return img;
+	}
+	
+	add_shared_toggle(node, name, icon_file_name)
+	{
+		const img = this.add_toggle(node, name, icon_file_name);
+		this.shared_toggles.push(img);
+		img.onclick = () => {
+			if(img.classList.contains("tool-img-btn-active"))
+			{
+				img.classList.toggle("tool-img-btn-active", false);
+			}
+			else
+			{
+				for(const t of this.shared_toggles)
+				{
+					if(t !== img)
+					{
+						t.classList.toggle("tool-img-btn-active", false);
+					}
+					img.classList.toggle("tool-img-btn-active", true);
+				}
+			}
+			this.update();
+			beep();
+		}
 	}
 	
 	add_input(node, name, placeholder)
@@ -518,8 +551,12 @@ class YoutubeSearch extends ToolBase
 			words.push(this.selecteds.element.jp);
 		if(this.selecteds.job != null)
 			words.push(this.selecteds.job.jp);
+		if(this.elements.primal.classList.contains("tool-img-btn-active"))
+			words.push("神石");
 		if(this.elements.omegamagna.classList.contains("tool-img-btn-active"))
 			words.push("マグナ");
+		if(this.elements.odious.classList.contains("tool-img-btn-active"))
+			words.push("禁禍");
 		if(this.elements.fullauto.classList.contains("tool-img-btn-active"))
 			words.push("フルオート");
 		if(this.elements.bluechest.classList.contains("tool-img-btn-active"))
@@ -614,6 +651,7 @@ class YoutubeSearch extends ToolBase
 				break;
 			}
 		}
+		beep();
 	}
 	
 	copy_clipboard()
