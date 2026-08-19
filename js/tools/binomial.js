@@ -98,7 +98,7 @@ class BinomialCalculator extends ToolBase
 		let prob_greater = 1.0 - prob_le;
 
 		this.result.innerHTML = "<b>Results</b><ul>"
-			+ "<li><b>" + k + "</b> successes: <b>" + this.format_percent(prob_equal) + "</b></li>"
+			+ "<li><b>" + k + "</b> success" + (k != 1 ? "es" : "") +": <b>" + this.format_percent(prob_equal) + "</b></li>"
 			+ "<li><b>Less</b> than " + k + ": <b>" + this.format_percent(prob_less) + "</b></li>"
 			+ "<li><b>Equal or Less</b> than " + k + ": <b>" + this.format_percent(prob_le) + "</b></li>"
 			+ "<li><b>Greater</b> than " + k + ": <b>" + this.format_percent(prob_greater) + "</b></li>"
