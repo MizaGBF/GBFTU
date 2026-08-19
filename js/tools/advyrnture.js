@@ -105,7 +105,9 @@ class AdvyrntureOptimizer extends ToolBase
 			name: "Phos",
 			stats: [
 				{lvl:0},
-				{lvl:1,luck:3}
+				{lvl:1,luck:3},
+				{lvl:6,luck:6},
+				{lvl:10,luck:10}
 			]
 		}
 	});
@@ -249,7 +251,7 @@ class AdvyrntureOptimizer extends ToolBase
 		grid.style.display = "grid";
 		grid.style.gridTemplateColumns = "repeat(auto-fit, min(95%, 140px))";
 		grid.style.gridAutoColumns = "min(95%, 140px)";
-		for(const buddy of Object.keys(AdvyrntureOptimizer.c_buddies))
+		for(const [buddy, data] of Object.entries(AdvyrntureOptimizer.c_buddies))
 		{
 			let block = add_to(
 				grid,
@@ -266,6 +268,7 @@ class AdvyrntureOptimizer extends ToolBase
 				"img",
 				{
 					cls:["effect-dim"],
+					title:data.name,
 					br:true
 				}
 			);
@@ -294,7 +297,7 @@ class AdvyrntureOptimizer extends ToolBase
 		grid.style.display = "grid";
 		grid.style.gridTemplateColumns = "repeat(auto-fit, min(95%, 140px))";
 		grid.style.gridAutoColumns = "min(95%, 140px)";
-		for(const helm of Object.keys(AdvyrntureOptimizer.c_helms))
+		for(const [helm, data] of Object.entries(AdvyrntureOptimizer.c_helms))
 		{
 			if(helm == "0")
 				continue;
@@ -312,7 +315,8 @@ class AdvyrntureOptimizer extends ToolBase
 				block,
 				"img",
 				{
-					cls:["effect-dim"]
+					cls:["effect-dim"],
+					title:data.name
 				}
 			);
 			img.style.minWidth = "140px";
@@ -330,7 +334,7 @@ class AdvyrntureOptimizer extends ToolBase
 		grid.style.display = "grid";
 		grid.style.gridTemplateColumns = "repeat(auto-fit, min(95%, 140px))";
 		grid.style.gridAutoColumns = "min(95%, 140px)";
-		for(const arm of Object.keys(AdvyrntureOptimizer.c_arms))
+		for(const [arm, data] of Object.entries(AdvyrntureOptimizer.c_arms))
 		{
 			if(arm == "0")
 				continue;
@@ -348,7 +352,8 @@ class AdvyrntureOptimizer extends ToolBase
 				block,
 				"img",
 				{
-					cls:["effect-dim"]
+					cls:["effect-dim"],
+					title:data.name
 				}
 			);
 			img.style.minWidth = "140px";
@@ -369,6 +374,7 @@ class AdvyrntureOptimizer extends ToolBase
 			let details = add_to(this.tree[0],"details");
 			let summary = add_to(details,"summary");
 			const img = add_to(summary, "img");
+			img.title = zone.name;
 			img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_mid/sp/vyrnsampo/assets/area/thumb/" + zone.id + ".png";
 			img.loading = "lazy";
 			img.classList.toggle("effect-dim", zone.unlock);
