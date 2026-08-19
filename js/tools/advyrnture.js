@@ -100,6 +100,13 @@ class AdvyrntureOptimizer extends ToolBase
 				{lvl:6,combat:3,affinity:3},
 				{lvl:10,combat:5,affinity:5}
 			]
+		},
+		"6": {
+			name: "Phos",
+			stats: [
+				{lvl:0},
+				{lvl:1,luck:3}
+			]
 		}
 	});
 	static c_buddy_skill = Object.freeze({
@@ -108,6 +115,8 @@ class AdvyrntureOptimizer extends ToolBase
 		"204":{zone:"1", maxdrop:1},
 		"305":{zone:"10", exp:1},
 		"405":{zone:"11", maxdrop:1},
+		"603":{zone:"5", maxdrop:1},
+		"601":{zone:"7", exp:1}
 	});
 	static c_zones = Object.freeze([
 		{name:"Western Phantagrande Skydom",id:"1",combat:4,perception:2,endurance:3,affinity:5,luck:5,unlock:0},
