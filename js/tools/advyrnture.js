@@ -114,11 +114,11 @@ class AdvyrntureOptimizer extends ToolBase
 	static c_buddy_skill = Object.freeze({
 		"102":{zone:"3", success:1, stall:2},
 		"103":{zone:"9", success:1, stall:2},
+		"106":{zone:"7", exp:1},
 		"204":{zone:"1", maxdrop:1},
 		"305":{zone:"10", exp:1},
+		"306":{zone:"5", maxdrop:1},
 		"405":{zone:"11", maxdrop:1},
-		"603":{zone:"5", maxdrop:1},
-		"601":{zone:"7", exp:1}
 	});
 	static c_zones = Object.freeze([
 		{name:"Western Phantagrande Skydom",id:"1",combat:4,perception:2,endurance:3,affinity:5,luck:5,unlock:0},
@@ -469,6 +469,10 @@ class AdvyrntureOptimizer extends ToolBase
 									}
 								}
 							}
+							else // set to true for locked buddies
+							{
+								buddy_maxlvl[e == a ? 0 : 1] = true;
+							}
 						}
 						const buddies = [];
 						if(this.data.buddy[kbud[a]] ?? 0)
@@ -575,6 +579,10 @@ class AdvyrntureOptimizer extends ToolBase
 								if(skill_key != "zone")
 								{
 									boosts[skill_key] += value;
+									if(skill_key == "exp") // bonus for non max level
+									{
+										boosts.exp += +(!equipment.bmax[0]) + (!equipment.bmax[1]);
+									}
 								}
 							}
 						}
@@ -597,15 +605,13 @@ class AdvyrntureOptimizer extends ToolBase
 						boosts.exp += 1;
 					}
 				}
-				// any flag
-				if(equipment.hid == "0")
-					++boosts.any;
-				if(equipment.aid == "0")
-					++boosts.any;
-				if(equipment.bud[0] == null)
-					++boosts.any;
-				if(equipment.bud[1] == null)
-					++boosts.any;
+				// any flag, reduce by 1 for non equipped buddy/equipment
+				boosts.any -= (
+					+(equipment.hid == "0")
+					+(equipment.aid == "0")
+					+(equipment.bud[0] == null)
+					+(equipment.bud[1] == null)
+				);
 				results[zone.id].push({stat_met:stat_met, equipment:equipment, boosts:boosts, stats:stats});
 			}
 			results[zone.id].sort(this.result_sort);
@@ -762,17 +768,15 @@ class AdvyrntureOptimizer extends ToolBase
 		let diff = b.stat_met - a.stat_met;
 		if(diff != 0)
 			return diff;
-		diff = b.boosts.success + b.boosts.req - (a.boosts.success + a.boosts.req);
+		// inverted, lesser is better
+		diff =  +a.equipment.bmax[0] + a.equipment.bmax[1] - (+b.equipment.bmax[0] + b.equipment.bmax[1]);
 		if(diff != 0)
 			return diff;
-		const list = (a.stat_met == 5) ? ["maxdrop", "exp", "any"] : ["stall", "exp", "maxdrop", "any"];
-		for(const attr of list)
-		{
-			diff = b.boosts[attr] - a.boosts[attr];
-			if(diff != 0)
-				return diff;
-		}
-		return 0;
+		diff = (
+			b.boosts.success + b.boosts.req + b.boosts.any + (b.stat_met == 5 ? b.boosts.exp + b.boosts.maxdrop : 0)
+			- (a.boosts.success + a.boosts.req + a.boosts.any + (a.stat_met == 5 ? a.boosts.exp + a.boosts.maxdrop : 0))
+		);
+		return diff;
 	}
 	
 	load()
