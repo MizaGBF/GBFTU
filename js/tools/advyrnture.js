@@ -182,7 +182,8 @@ class AdvyrntureOptimizer extends ToolBase
 		"124":{name:"Beach Ball",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Ursula"]},
 		"125":{name:"Vania's Bloodkin",combat:6,perception:4,endurance:0,affinity:0,luck:0,skill:[1,"Medvecia Island","perception",8]},
 		"126":{name:"Overflowing Goody Basket",combat:0,perception:4,endurance:0,affinity:0,luck:4,skill:[5,"Malinda"]},
-		"127":{name:"Codex of Mysteria",combat:5,perception:7,endurance:0,affinity:0,luck:0,skill:[1,"Mysteria Academy of Magic","affinity",8]}
+		"127":{name:"Codex of Mysteria",combat:5,perception:7,endurance:0,affinity:0,luck:0,skill:[1,"Mysteria Academy of Magic","affinity",8]},
+		"128":{name:"Phos's Candy Pouch",combat:0,perception:0,endurance:0,affinity:2,luck:1,skill:[4,"Phos"]}
 	});
 	/********************************************
 	Equipment skills format (Might need refactor in the future):
