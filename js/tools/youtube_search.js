@@ -472,7 +472,7 @@ class YoutubeSearch extends ToolBase
 		img.jp = data.jp;
 		img.title = data.value;
 		img.onclick = () => {
-			const target = (
+			const main_target = (
 				img.src.includes("leader")
 				? this.job
 				: this.raid
@@ -481,20 +481,20 @@ class YoutubeSearch extends ToolBase
 			{
 				this.selecteds[target].classList.toggle("tool-img-btn-active", false);
 				this.selecteds[target] = null;
-				target.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/quest/assist/assets/thumb/empty.png";
+				main_target.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/quest/assist/assets/thumb/empty.png";
 			}
 			else if(this.selecteds[target] != null)
 			{
 				this.selecteds[target].classList.toggle("tool-img-btn-active", false);
 				this.selecteds[target] = img;
 				img.classList.toggle("tool-img-btn-active", true);
-				target.src = img.src;
+				main_target.src = img.src;
 			}
 			else
 			{
 				this.selecteds[target] = img;
 				img.classList.toggle("tool-img-btn-active", true);
-				target.src = img.src;
+				main_target.src = img.src;
 			}
 			this.update();
 			beep();
