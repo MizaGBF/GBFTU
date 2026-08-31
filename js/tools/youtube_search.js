@@ -204,6 +204,9 @@ class YoutubeSearch extends ToolBase
 		this.tree.push(add_to(null, "div", {
 			cls:["tab-content", "container"]
 		}));
+		this.tab_buttons = [];
+		this.raid = null;
+		this.job = null;
 		this.elements = {};
 		this.selecteds = {
 			element:null,
@@ -250,6 +253,7 @@ class YoutubeSearch extends ToolBase
 			label.htmlFor = tab_button.id;
 			label.innerText = tname;
 			++count;
+			this.tab_buttons.push(tab_button);
 		}
 		for(count = 0; count < 3; ++count)
 		{
@@ -262,26 +266,64 @@ class YoutubeSearch extends ToolBase
 			{
 				case 0: // main part
 				{
-					add_to(content, "div").innerText = "Element";
-					const element_container = add_to(content, "span");
+					let d = this.add_context_container(content, false);
+					add_to(d, "div").innerText = "Selected";
+					this.raid = add_to(d, "img", {
+						cls:[
+							"mini-btn", "mini-btn-icon",
+							"tool-img-background", "tool-big-img-btn", "tool-img-btn-active"
+						],
+						onclick:() => {
+							this.tab_buttons[1].click();
+						}
+					});
+					this.raid.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/quest/assist/assets/thumb/empty.png";
+					d.appendChild(document.createTextNode(" "));
+					this.job = add_to(d, "img", {
+						cls:[
+							"mini-btn", "mini-btn-icon",
+							"tool-img-background", "tool-big-img-btn", "tool-img-btn-active"
+						],
+						onclick:() => {
+							this.tab_buttons[2].click();
+						}
+					});
+					this.job.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/quest/assist/assets/thumb/empty.png";
+					
+					d = this.add_context_container(content);
+					add_to(d, "div").innerText = "Element";
+					const element_container = add_to(d, "span");
 					for(const elem of YoutubeSearch.c_elements)
 					{
 						this.add_element_button(element_container, elem);
 					}
-					add_to(content, "div").innerText = "Context";
-					this.add_toggle(content, '"Granblue"', "gbf.png", true);
-					this.add_toggle(content, '"Full Auto"', "fa.png");
-					this.add_toggle(content, '"Blue Chest"', "blue.png");
-					this.add_toggle(content, '"Solo"', "solo.png");
-					add_to(content, "div").innerText = "Party Type";
-					this.add_shared_toggle(content, '"Primal"', "primal.png");
-					this.add_shared_toggle(content, '"Omega/Magna"', "magna.png");
-					this.add_shared_toggle(content, '"Odious"', "odious.png");
-					add_to(content, "div").innerText = "Others";
-					this.add_input(content, 'Honor', "eg 400k, 4m");
-					this.add_input(content, 'Turn', "eg 1, 2, 3...");
-					add_to(content, "div").innerText = "Result";
-					this.add_controls(content);
+					
+					d = this.add_context_container(content);
+					add_to(d, "div").innerText = "Context";
+					this.add_toggle(d, '"Granblue"', "gbf.png", true);
+					this.add_toggle(d, '"Full Auto"', "fa.png");
+					this.add_toggle(d, '"Blue Chest"', "blue.png");
+					this.add_toggle(d, '"Solo"', "solo.png");
+					
+					d = this.add_context_container(content);
+					add_to(d, "div").innerText = "Party Type";
+					this.add_shared_toggle(d, '"Primal"', "primal.png");
+					this.add_shared_toggle(d, '"Omega/Magna"', "magna.png");
+					this.add_shared_toggle(d, '"Odious"', "odious.png");
+					
+					d = this.add_context_container(content, false);
+					add_to(d, "div").innerText = "Others";
+					this.add_input(d, 'Honor', "eg 400k, 4m");
+					this.add_input(d, 'Turn', "eg 1, 2, 3...");
+					
+					d = this.add_context_container(content, false);
+					add_to(d, "div").innerText = "Result";
+					this.elements.string_output = add_to(d, "div", {
+						cls:["tool-btn-container"]
+					});
+					
+					d = this.add_context_container(content, false);
+					this.add_controls(d);
 					break;
 				}
 				case 1:
@@ -296,6 +338,26 @@ class YoutubeSearch extends ToolBase
 				}
 			}
 		}
+	}
+	
+	add_context_container(node, inline=true)
+	{
+		const div = add_to(node, "div");
+		if(inline)
+		{
+			div.style.display = "inline-block";
+			div.style.marginRight = "3px";
+		}
+		else
+		{
+			div.style.display = "block";
+			div.style.maxWidth = "500px";
+			div.style.marginLeft = "auto";
+			div.style.marginRight = "auto";
+		}
+		div.style.border = "solid 1px #444444";
+		div.style.marginBottom = "3px";
+		return div;
 	}
 	
 	add_element_button(node, data)
@@ -410,24 +472,33 @@ class YoutubeSearch extends ToolBase
 		img.jp = data.jp;
 		img.title = data.value;
 		img.onclick = () => {
+			const target = (
+				img.src.includes("leader")
+				? this.job
+				: this.raid
+			);
 			if(this.selecteds[target] == img)
 			{
 				this.selecteds[target].classList.toggle("tool-img-btn-active", false);
 				this.selecteds[target] = null;
+				target.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/sp/quest/assist/assets/thumb/empty.png";
 			}
 			else if(this.selecteds[target] != null)
 			{
 				this.selecteds[target].classList.toggle("tool-img-btn-active", false);
 				this.selecteds[target] = img;
 				img.classList.toggle("tool-img-btn-active", true);
+				target.src = img.src;
 			}
 			else
 			{
 				this.selecteds[target] = img;
 				img.classList.toggle("tool-img-btn-active", true);
+				target.src = img.src;
 			}
 			this.update();
 			beep();
+			this.tab_buttons[0].click();
 		}
 	}
 	
@@ -494,9 +565,6 @@ class YoutubeSearch extends ToolBase
 	
 	add_controls(node)
 	{
-		this.elements.string_output = add_to(node, "div", {
-			cls:["tool-btn-container"]
-		});
 		let container = add_to(node, "div", {
 			cls:["tool-btn-container"]
 		});
