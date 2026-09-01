@@ -443,6 +443,7 @@ class YoutubeSearch extends ToolBase
 					+ data.asset
 					+ "')"
 				);
+				img.src = "https://prd-game-a-granbluefantasy.akamaized.net/assets_en/img_low/" + data.asset;
 			}
 			else
 			{
@@ -451,6 +452,7 @@ class YoutubeSearch extends ToolBase
 					+ data.asset
 					+ "')"
 				);
+				img.src = data.asset;
 			}
 			img.innerText = data.text;
 		}
