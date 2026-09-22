@@ -96,7 +96,7 @@ class ScreenTester extends ToolBase
 		this.frame_data = {
 			frameCount : 0,
 			gbfFramerateAve : 0,
-			startTime : createjs.Ticker.getTime(),
+			startTime : performance.now(),
 			lastTime : 0
 		};
 		window.requestAnimationFrame(
@@ -110,7 +110,7 @@ class ScreenTester extends ToolBase
 	{
 		this.frame_data.frameCount++;
 		this.frame_data.gbfFramerateAve += createjs.Ticker.getMeasuredFPS();
-		const time = createjs.Ticker.getTime() - this.frame_data.startTime;
+		const time = performance.now() - this.frame_data.startTime;
 
 		if(time - this.frame_data.lastTime >= 500)
 		{
@@ -120,7 +120,7 @@ class ScreenTester extends ToolBase
 		if(time >= duration)
 		{
 			this.end(
-				this.frame_data.frameCount / duration * 1000,
+				(this.frame_data.frameCount / time) * 1000,
 				this.frame_data.gbfFramerateAve / this.frame_data.frameCount
 			);
 		}
