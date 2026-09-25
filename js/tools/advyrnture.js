@@ -157,7 +157,8 @@ class AdvyrntureOptimizer extends ToolBase
 		"23":{name:"Cat-Ear Silk Hat",combat:0,perception:4,endurance:4,affinity:0,luck:0,skill:[5,"Young Cat"]},
 		"24":{name:"Very Ordinary Sunglasses",combat:0,perception:3,endurance:0,affinity:0,luck:0,skill:[4,"Ursula"]},
 		"25":{name:"Dragon Fruit",combat:0,perception:0,endurance:0,affinity:0,luck:3,skill:[4,"Malinda"]},
-		"26":{name:"Vampire Headband",combat:0,perception:0,endurance:0,affinity:8,luck:3,skill:[1,"Medvecia Island","combat",8]}
+		"26":{name:"Vampire Headband",combat:0,perception:0,endurance:0,affinity:8,luck:3,skill:[1,"Medvecia Island","combat",8]},
+		"27":{name:"Sparkly Pendant",combat:4,perception:0,endurance:0,affinity:0,luck:4,skill:[5,"Phos"]}
 	});
 	static c_arms = Object.freeze({
 		"0":{name:"",combat:0,perception:0,endurance:0,affinity:0,luck:0,skill:[0]},
