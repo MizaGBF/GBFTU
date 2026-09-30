@@ -104,8 +104,9 @@ class AccountStart extends ToolBase
 		{date:new Date("2026-07-01"), id:39897400},
 		{date:new Date("2026-08-01"), id:39961359},
 		{date:new Date("2026-09-01"), id:40020220},
+		{date:new Date("2026-10-01"), id:40061686},
 	];
-	static c_last_update = "2026-09-01";
+	static c_last_update = "2026-10-01";
 	
 	constructor()
 	{
