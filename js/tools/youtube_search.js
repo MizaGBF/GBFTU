@@ -136,6 +136,7 @@ class YoutubeSearch extends ToolBase
 		{group:true, label:"Other Events"},
 		{jp:"ブレイブグラウンド", value:"Proving Grounds", asset:"sp/archive/assets/island_m2/90050.png"},
 		{jp:"バブ・イールの塔", value:"Tower of Babyl", asset:"sp/archive/assets/island_m2/75830.png"},
+		{jp:"ソロモナスの賢者", value:"Evoking Solomonis", asset:"sp/archive/assets/island_m2/95000.png"},
 		{jp:"エイプリルフール", value:"April Fool's Day", text:"April Fools", asset:"sp/archive/assets/island_m2/72760.png"},
 		{jp:"コラボイベント", value:"Collaboration", text:"Collab.", asset:"sp/archive/assets/island_m2/72770.png"}
 	]);
