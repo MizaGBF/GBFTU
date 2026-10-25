@@ -147,7 +147,7 @@ class CCWTracker extends ToolBase
 		{
 			const div = add_to(grid, "div");
 			const img = add_to(div, "img");
-			img.src = "assets/ui/ccw_tracker/" + elems[i] + ".png";
+			img.src = "assets/webp/ui/ccw_tracker/" + elems[i] + ".webp";
 			div.style.height = "50px";
 			div.style.textAlign = "center";
 			div.style.backgroundColor = bg_colors[i];
@@ -509,11 +509,11 @@ class CCWTracker extends ToolBase
 		{
 			if(index < len)
 			{
-				this.modify_result(index, "assets/ui/ccw_tracker/" + id + ".gif", amount);
+				this.modify_result(index, "assets/gif/ui/ccw_tracker/" + id + ".gif", amount);
 			}
 			else
 			{
-				this.add_result("assets/ui/ccw_tracker/" + id + ".gif", amount);
+				this.add_result("assets/gif/ui/ccw_tracker/" + id + ".gif", amount);
 			}
 			++index;
 		}

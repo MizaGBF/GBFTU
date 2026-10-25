@@ -629,17 +629,17 @@ class DamageCalculator extends ToolBase
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "General");
 		grid = this.create_grid(this.tree[0], 3, false);
-		this.add_text_cell(grid, "assets/ui/damage/atk.png", "ATK");
-		this.add_text_cell(grid, "assets/ui/damage/atk_up.png", "Base Mod. (%)");
-		this.add_text_cell(grid, "assets/ui/damage/skill.png", "Skill DMG Boost (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/atk.webp", "ATK");
+		this.add_text_cell(grid, "assets/webp/ui/damage/atk_up.webp", "Base Mod. (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/skill.webp", "Skill DMG Boost (%)");
 		
 		this.add_input_cell(grid, "0", "atk");
 		this.add_input_cell(grid, "100", "base_mod");
 		this.add_input_cell(grid, "0", "skill_boost");
 		
-		this.add_text_cell(grid, "assets/ui/damage/def_up.png", "Enemy DEF.");
-		this.add_text_cell(grid, "assets/ui/damage/def_down.png", "Def Down (%)");
-		this.add_text_cell(grid, "assets/ui/damage/flurry.png", "Flurry");
+		this.add_text_cell(grid, "assets/webp/ui/damage/def_up.webp", "Enemy DEF.");
+		this.add_text_cell(grid, "assets/webp/ui/damage/def_down.webp", "Def Down (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/flurry.webp", "Flurry");
 		
 		this.add_input_cell(grid, "10", "def");
 		this.add_input_cell(grid, "0", "def_down");
@@ -650,9 +650,9 @@ class DamageCalculator extends ToolBase
 			"13 Hits", "14 Hits", "15 Hits", "16 Hits"
 		], "flurry");
 		
-		this.add_text_cell(grid, "assets/ui/damage/wpn.png", "Crit. WPN.");
-		this.add_text_cell(grid, "assets/ui/damage/bullet.png", "Bullet Mod. (%)");
-		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/wpn.webp", "Crit. WPN.");
+		this.add_text_cell(grid, "assets/webp/ui/damage/bullet.webp", "Bullet Mod. (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/wide_open.webp", "Wide Open (%)");
 		
 		this.add_select_cell(grid, ["None", "Crab Grab", "Gae Bulg", "Mjolnir"], "crit_wpn");
 		this.add_input_cell(grid, "0", "bullet");
@@ -661,20 +661,20 @@ class DamageCalculator extends ToolBase
 		add_to(this.tree[0], "hr");
 		this.add_anchor(this.tree[0], "Toggles");
 		grid = this.create_grid(this.tree[0], 4, false);
-		this.add_text_cell(grid, "assets/ui/damage/ele_up.png", "Element");
-		this.add_text_cell(grid, "assets/ui/damage/dmg_type.png", "DMG Type");
-		this.add_text_cell(grid, "assets/ui/damage/crew.png", "Crew Ship");
-		this.add_text_cell(grid, "assets/ui/damage/reactor.png", "Crew Reactor");
+		this.add_text_cell(grid, "assets/webp/ui/damage/ele_up.webp", "Element");
+		this.add_text_cell(grid, "assets/webp/ui/damage/dmg_type.webp", "DMG Type");
+		this.add_text_cell(grid, "assets/webp/ui/damage/crew.webp", "Crew Ship");
+		this.add_text_cell(grid, "assets/webp/ui/damage/reactor.webp", "Crew Reactor");
 
 		this.add_select_cell(grid, ["Advantaged", "None", "Disadvantaged", "Destruction"], "ele_advantage");
 		this.add_select_cell(grid, ["Auto", "Skill", "C.A."], "damage_type");
 		this.add_select_cell(grid, ["Yes", "No"], "ship");
 		this.add_select_cell(grid, ["Yes", "No"], "reactor");
 		
-		this.add_text_cell(grid, "assets/ui/damage/assassin.png", "C.A. Assassin");
-		this.add_text_cell(grid, "assets/ui/damage/gw_fo.png", "GW First Officer");
-		this.add_text_cell(grid, "assets/ui/damage/gw_atk.png", "GW Attack");
-		this.add_text_cell(grid, "assets/ui/damage/atk_up.png", "GW Pity");
+		this.add_text_cell(grid, "assets/webp/ui/damage/assassin.webp", "C.A. Assassin");
+		this.add_text_cell(grid, "assets/webp/ui/damage/gw_fo.webp", "GW First Officer");
+		this.add_text_cell(grid, "assets/webp/ui/damage/gw_atk.webp", "GW Attack");
+		this.add_text_cell(grid, "assets/webp/ui/damage/atk_up.webp", "GW Pity");
 		
 		this.add_select_cell(grid, ["No", "Yes"], "is_assassin");
 		this.add_select_cell(grid, ["No", "Yes"], "gw_fo");
@@ -688,10 +688,10 @@ class DamageCalculator extends ToolBase
 		this.add_anchor(this.tree[0], "Wonders", "https://gbf.wiki/Wonders");
 		grid = this.create_grid(this.tree[0], 4, false);
 		
-		this.add_text_cell(grid, "assets/ui/damage/wonder_amp.jpg", "Chara. AMP. (%)");
-		this.add_text_cell(grid, "assets/ui/damage/yupei.png", "Yupei");
-		this.add_text_cell(grid, "assets/ui/damage/wonder_6d.jpg", "Six Dragons");
-		this.add_text_cell(grid, "assets/ui/damage/wonder_m2.jpg", "Regalia");
+		this.add_text_cell(grid, "assets/jpg/ui/damage/wonder_amp.jpg", "Chara. AMP. (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/yupei.webp", "Yupei");
+		this.add_text_cell(grid, "assets/jpg/ui/damage/wonder_6d.jpg", "Six Dragons");
+		this.add_text_cell(grid, "assets/jpg/ui/damage/wonder_m2.jpg", "Regalia");
 		
 		this.add_input_cell(grid, "0", "wonder_amp");
 		this.add_select_cell(grid, ["Yes", "No"], "wonder_yupei");
@@ -703,9 +703,9 @@ class DamageCalculator extends ToolBase
 		this.add_anchor(this.tree[0], "Summons");
 		grid = this.create_grid(this.tree[0], 4, false);
 		
-		this.add_text_cell(grid, "assets/ui/damage/arcarum.png", "AMP. (%)");
-		this.add_text_cell(grid, "assets/ui/damage/robur.png", "Supplemental");
-		this.add_text_cell(grid, "assets/ui/damage/angel.png", "Cap up");
+		this.add_text_cell(grid, "assets/webp/ui/damage/arcarum.webp", "AMP. (%)");
+		this.add_text_cell(grid, "assets/webp/ui/damage/robur.webp", "Supplemental");
+		this.add_text_cell(grid, "assets/webp/ui/damage/angel.webp", "Cap up");
 		this.add_invisible_cell(grid);
 		
 		this.add_input_cell(grid, "0", "summon_amp");
@@ -761,7 +761,7 @@ class DamageCalculator extends ToolBase
 		
 		grid = this.create_grid(this.tree[0], 5, false);
 		
-		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Soft Cap type");
+		this.add_text_cell(grid, "assets/webp/ui/damage/cap.webp", "Soft Cap type");
 		this.add_select_cell(grid, Object.keys(DamageCalculator.c_soft_caps), "soft_cap_type");
 		this.add_invisible_cell(grid);
 		this.add_invisible_cell(grid);
@@ -783,7 +783,7 @@ class DamageCalculator extends ToolBase
 		}
 		grid = this.create_grid(this.tree[0], 5, false);
 		this.skill_cap_grid = grid;
-		this.add_text_cell(grid, "assets/ui/damage/skill.png", "Skill reduction");
+		this.add_text_cell(grid, "assets/webp/ui/damage/skill.webp", "Skill reduction");
 		this.add_invisible_cell(grid);
 		this.add_invisible_cell(grid);
 		this.add_invisible_cell(grid);
@@ -799,7 +799,7 @@ class DamageCalculator extends ToolBase
 		}
 		
 		grid = this.create_grid(this.tree[0], 5, false);
-		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Hard cap");
+		this.add_text_cell(grid, "assets/webp/ui/damage/cap.webp", "Hard cap");
 		this.add_select_cell(grid, ["6.6M", "13.1M"], "raid_cap");
 		this.add_invisible_cell(grid);
 		this.add_invisible_cell(grid);
@@ -819,11 +819,11 @@ class DamageCalculator extends ToolBase
 		this.add_anchor(this.tree[0], "Results");
 		grid = this.create_grid(this.tree[0], 5, false);
 		
-		this.add_text_cell(grid, "assets/ui/damage/atk.png", "Raw");
-		this.add_text_cell(grid, "assets/ui/damage/def_up.png", "DEF");
-		this.add_text_cell(grid, "assets/ui/damage/ele_atk.png", "");
-		this.add_text_cell(grid, "assets/ui/damage/dmg_amp.png", "");
-		this.add_text_cell(grid, "assets/ui/damage/wide_open.png", "Wide Open");
+		this.add_text_cell(grid, "assets/webp/ui/damage/atk.webp", "Raw");
+		this.add_text_cell(grid, "assets/webp/ui/damage/def_up.webp", "DEF");
+		this.add_text_cell(grid, "assets/webp/ui/damage/ele_atk.webp", "");
+		this.add_text_cell(grid, "assets/webp/ui/damage/dmg_amp.webp", "");
+		this.add_text_cell(grid, "assets/webp/ui/damage/wide_open.webp", "Wide Open");
 		
 		this.add_text_cell(grid, null, "", "info_atk");
 		this.add_text_cell(grid, null, "", "info_def");
@@ -831,11 +831,11 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, null, "", "info_amp");
 		this.add_text_cell(grid, null, "", "info_wide_open");
 		
-		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Cap up");
-		this.add_text_cell(grid, "assets/ui/damage/cap.png", "Effect. Cap");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Raw DMG.");
-		this.add_text_cell(grid, "assets/ui/damage/over_soft.png", "Over Soft");
-		this.add_text_cell(grid, "assets/ui/damage/over_hard.png", "Over Hard");
+		this.add_text_cell(grid, "assets/webp/ui/damage/cap.webp", "Cap up");
+		this.add_text_cell(grid, "assets/webp/ui/damage/cap.webp", "Effect. Cap");
+		this.add_text_cell(grid, "assets/webp/ui/damage/icon.webp", "Raw DMG.");
+		this.add_text_cell(grid, "assets/webp/ui/damage/over_soft.webp", "Over Soft");
+		this.add_text_cell(grid, "assets/webp/ui/damage/over_hard.webp", "Over Hard");
 		
 		this.add_text_cell(grid, null, "", "info_dmg_cap");
 		this.add_text_cell(grid, null, "", "info_effective_cap");
@@ -843,11 +843,11 @@ class DamageCalculator extends ToolBase
 		this.add_text_cell(grid, null, "", "info_over_soft");
 		this.add_text_cell(grid, null, "", "info_over_hard");
 		
-		this.add_text_cell(grid, "assets/ui/damage/supplemental.png", "Supplemental");
-		this.add_text_cell(grid, "assets/ui/damage/icon.png", "Final DMG");
-		this.add_text_cell(grid, "assets/ui/damage/ingame.png", "In-game");
-		this.add_text_cell(grid, "assets/ui/damage/difference.png", "Difference");
-		this.add_text_cell(grid, "assets/ui/damage/flurry.png", "Flurry Sum");
+		this.add_text_cell(grid, "assets/webp/ui/damage/supplemental.webp", "Supplemental");
+		this.add_text_cell(grid, "assets/webp/ui/damage/icon.webp", "Final DMG");
+		this.add_text_cell(grid, "assets/webp/ui/damage/ingame.webp", "In-game");
+		this.add_text_cell(grid, "assets/webp/ui/damage/difference.webp", "Difference");
+		this.add_text_cell(grid, "assets/webp/ui/damage/flurry.webp", "Flurry Sum");
 		
 		this.add_text_cell(grid, null, "", "info_supplemental");
 		this.add_text_cell(grid, null, "", "info_final");
@@ -941,7 +941,7 @@ class DamageCalculator extends ToolBase
 			a.target = "_blank";
 			a.rel = "noopener noreferrer";
 			a.href = wiki_link;
-			add_to(a, "img", {cls:["mini-btn-icon"]}).src = "../GBFML/assets/ui/icon/wiki.png";
+			add_to(a, "img", {cls:["mini-btn-icon"]}).src = "../GBFML/assets/webp/icon/wiki.webp";
 		}
 		span.appendChild(document.createTextNode(" " + txt));
 		this.anchors.push(span);
@@ -985,7 +985,7 @@ class DamageCalculator extends ToolBase
 	{
 		for(const file of files)
 		{
-			this.add_text_cell(grid, "assets/ui/damage/" + file + ".png", "");
+			this.add_text_cell(grid, "assets/webp/ui/damage/" + file + ".webp", "");
 			this.add_input_cell(grid, "0", file + "_1");
 			this.add_input_cell(grid, "0", file + "_2");
 			this.add_input_cell(grid, "0", file + "_3");

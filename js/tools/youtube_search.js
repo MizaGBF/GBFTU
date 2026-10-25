@@ -87,20 +87,20 @@ class YoutubeSearch extends ToolBase
 		{jp:"リンドヴルム", value:"Lindwurm", asset:"sp/quest/assets/lobby/305171.png"},
 		{jp:"ワールドhl", value:"The World", asset:"sp/quest/assets/lobby/305571.png"},
 		{group:true, label:"Rise of the Beasts"},
-		{jp:"四象降臨 朱雀", value:"Zhuque", asset:"assets/ui/youtube_search/zhuque.jpg"},
-		{jp:"四象降臨 アグニス", value:"Agni", asset:"assets/ui/youtube_search/agni.jpg"},
-		{jp:"四象降臨 玄武", value:"Xuanwu", asset:"assets/ui/youtube_search/xuanwu.jpg"},
-		{jp:"四象降臨 ネプチューン", value:"Neptune", asset:"assets/ui/youtube_search/neptune.jpg"},
-		{jp:"四象降臨 白虎", value:"Baihu", asset:"assets/ui/youtube_search/baihu.jpg"},
-		{jp:"四象降臨 ティターン", value:"Titan", asset:"assets/ui/youtube_search/titan.jpg"},
-		{jp:"四象降臨 青竜", value:"Qinglong", asset:"assets/ui/youtube_search/qinglong.jpg"},
-		{jp:"四象降臨 ゼピュロス", value:"Zephyrus", asset:"assets/ui/youtube_search/zephyrus.jpg"},
-		{jp:"四象降臨 四象瑞神100", value:"Shenxian", asset:"assets/ui/youtube_search/shenxian.png"},
-		{jp:"四象降臨 四象瑞神Lv.100", value:"Shenxian (Lv.100)", asset:"assets/ui/youtube_search/shenxian_100.png"},
-		{jp:"四象降臨 四象瑞神Lv.150", value:"Shenxian (Lv.150)", asset:"assets/ui/youtube_search/shenxian_150.png"},
+		{jp:"四象降臨 朱雀", value:"Zhuque", asset:"assets/jpg/ui/youtube_search/zhuque.jpg"},
+		{jp:"四象降臨 アグニス", value:"Agni", asset:"assets/jpg/ui/youtube_search/agni.jpg"},
+		{jp:"四象降臨 玄武", value:"Xuanwu", asset:"assets/jpg/ui/youtube_search/xuanwu.jpg"},
+		{jp:"四象降臨 ネプチューン", value:"Neptune", asset:"assets/jpg/ui/youtube_search/neptune.jpg"},
+		{jp:"四象降臨 白虎", value:"Baihu", asset:"assets/jpg/ui/youtube_search/baihu.jpg"},
+		{jp:"四象降臨 ティターン", value:"Titan", asset:"assets/jpg/ui/youtube_search/titan.jpg"},
+		{jp:"四象降臨 青竜", value:"Qinglong", asset:"assets/jpg/ui/youtube_search/qinglong.jpg"},
+		{jp:"四象降臨 ゼピュロス", value:"Zephyrus", asset:"assets/jpg/ui/youtube_search/zephyrus.jpg"},
+		{jp:"四象降臨 四象瑞神100", value:"Shenxian", asset:"assets/webp/ui/youtube_search/shenxian.webp"},
+		{jp:"四象降臨 四象瑞神Lv.100", value:"Shenxian (Lv.100)", asset:"assets/webp/ui/youtube_search/shenxian_100.webp"},
+		{jp:"四象降臨 四象瑞神Lv.150", value:"Shenxian (Lv.150)", asset:"assets/webp/ui/youtube_search/shenxian_150.webp"},
 		{group:true, label:"Unite and Fight"},
-		{jp:"古戦場 3500万", value:"Extreme+", asset:"assets/ui/youtube_search/ex+.png"},
-		{jp:"古戦場 SWARM", value:"Horde", asset:"assets/ui/youtube_search/horde.png"},
+		{jp:"古戦場 3500万", value:"Extreme+", asset:"assets/webp/ui/youtube_search/ex+.webp"},
+		{jp:"古戦場 SWARM", value:"Horde", asset:"assets/webp/ui/youtube_search/horde.webp"},
 		{jp:"古戦場 90hell", value:"Nightmare Lv.90", asset:"sp/event/teamraid081/assets/thumb/teamraid081_hell90.png"},
 		{jp:"古戦場 95hell", value:"Nightmare Lv.95", asset:"sp/event/teamraid081/assets/thumb/teamraid081_hell95.png"},
 		{jp:"古戦場 100hell", value:"Nightmare Lv.100", asset:"sp/event/teamraid081/assets/thumb/teamraid081_hell100.png"},
@@ -118,17 +118,17 @@ class YoutubeSearch extends ToolBase
 		{jp:"ドレバラ 強敵175", value:"Unparalleled Foe Lv.175", asset:"sp/assets/summon/qm/teamforce13_strong3.png"},
 		{jp:"ドレバラ 強敵215", value:"Unparalleled Foe Lv.215", asset:"sp/assets/summon/qm/teamforce13_strong4.png"},
 		{group:true, label:"Records of the Ten"},
-		{jp:"十天衆戦記 EX", value:"Extreme", asset:"assets/ui/youtube_search/record_ex.png"},
-		{jp:"十天衆戦記 HL", value:"Impossible", asset:"assets/ui/youtube_search/record_hl.png"},
+		{jp:"十天衆戦記 EX", value:"Extreme", asset:"assets/webp/ui/youtube_search/record_ex.webp"},
+		{jp:"十天衆戦記 HL", value:"Impossible", asset:"assets/webp/ui/youtube_search/record_hl.webp"},
 		{jp:"十天衆戦記 100hell", value:"Nightmare Lv.100", asset:"sp/event/common/terra/top/assets/quest/terra001_hell100.png"},
 		{jp:"十天衆戦記 150hell", value:"Nightmare Lv.150", asset:"sp/event/common/terra/top/assets/quest/terra001_hell150.png"},
 		{group:true, label:"Exo Crucibles"},
-		{jp:"エクス･イフリート", value:"Exo Ifrit", asset:"assets/ui/youtube_search/exo_ifrit.png"},
-		{jp:"エクス･コキュートス", value:"Exo Cocytus", asset:"assets/ui/youtube_search/exo_cocytus.png"},
-		{jp:"エクス･ウォフマナフ", value:"Exo Vohu Manah", asset:"assets/ui/youtube_search/exo_vohu_manah.png"},
-		{jp:"エクス･サジタリウス", value:"Exo Sagittarius", asset:"assets/ui/youtube_search/exo_sagittarius.png"},
-		{jp:"エクス･コロゥ", value:"Exo Corow", asset:"assets/ui/youtube_search/exo_corow.png"},
-		{jp:"エクス･ディアボロス", value:"Exo Diablo", asset:"assets/ui/youtube_search/exo_diablo.png"},
+		{jp:"エクス･イフリート", value:"Exo Ifrit", asset:"assets/webp/ui/youtube_search/exo_ifrit.webp"},
+		{jp:"エクス･コキュートス", value:"Exo Cocytus", asset:"assets/webp/ui/youtube_search/exo_cocytus.webp"},
+		{jp:"エクス･ウォフマナフ", value:"Exo Vohu Manah", asset:"assets/webp/ui/youtube_search/exo_vohu_manah.webp"},
+		{jp:"エクス･サジタリウス", value:"Exo Sagittarius", asset:"assets/webp/ui/youtube_search/exo_sagittarius.webp"},
+		{jp:"エクス･コロゥ", value:"Exo Corow", asset:"assets/webp/ui/youtube_search/exo_corow.webp"},
+		{jp:"エクス･ディアボロス", value:"Exo Diablo", asset:"assets/webp/ui/youtube_search/exo_diablo.webp"},
 		{group:true, label:"Story Event"},
 		{jp:"シナリオイベント VH", value:"Very Hard", asset:"sp/assets/summon/qm/treasureraid169_vhard_1.png"},
 		{jp:"シナリオイベント EX", value:"Extreme", asset:"sp/assets/summon/qm/treasureraid169_ex_1.png"},
@@ -196,10 +196,10 @@ class YoutubeSearch extends ToolBase
 	]);
 	static c_output = Object.freeze([
 		{label:"Copy the Text", mode:"copy"},
-		{group:true, label:"Youtube", icon:"yt_icon.png"},
+		{group:true, label:"Youtube", icon:"yt_icon.webp"},
 		{label:"Relevant", mode:"youtube-relevant"},
 		{label:"Popular", mode:"youtube-popular"},
-		{group:true, label:"Twitter", icon:"x_icon.png"},
+		{group:true, label:"Twitter", icon:"x_icon.webp"},
 		{label:"Relevant", mode:"twitter-relevant"},
 		{label:"Popular", mode:"twitter-popular"},
 	])
@@ -307,16 +307,16 @@ class YoutubeSearch extends ToolBase
 					
 					d = this.add_context_container(content);
 					add_to(d, "div").innerText = "Context";
-					this.add_toggle(d, '"Granblue"', "gbf.png", true);
-					this.add_toggle(d, '"Full Auto"', "fa.png");
-					this.add_toggle(d, '"Blue Chest"', "blue.png");
-					this.add_toggle(d, '"Solo"', "solo.png");
+					this.add_toggle(d, '"Granblue"', "gbf.webp", true);
+					this.add_toggle(d, '"Full Auto"', "fa.webp");
+					this.add_toggle(d, '"Blue Chest"', "blue.webp");
+					this.add_toggle(d, '"Solo"', "solo.webp");
 					
 					d = this.add_context_container(content);
 					add_to(d, "div").innerText = "Party Type";
-					this.add_shared_toggle(d, '"Primal"', "primal.png");
-					this.add_shared_toggle(d, '"Omega/Magna"', "magna.png");
-					this.add_shared_toggle(d, '"Odious"', "odious.png");
+					this.add_shared_toggle(d, '"Primal"', "primal.webp");
+					this.add_shared_toggle(d, '"Omega/Magna"', "magna.webp");
+					this.add_shared_toggle(d, '"Odious"', "odious.webp");
 					
 					d = this.add_context_container(content, false);
 					add_to(d, "div").innerText = "Others";
@@ -372,7 +372,7 @@ class YoutubeSearch extends ToolBase
 		let img = add_to(node, "img", {
 			cls:["mini-btn", "mini-btn-icon", "tool-img-btn"]
 		});
-		img.src = "assets/ui/youtube_search/" + data.value.toLowerCase() + ".png";
+		img.src = "assets/webp/ui/youtube_search/" + data.value.toLowerCase() + ".webp";
 		img.jp = data.jp;
 		img.onclick = () => {
 			if(this.selecteds.element == img)
@@ -516,7 +516,7 @@ class YoutubeSearch extends ToolBase
 		const img = add_to(node, "img", {
 			cls:["mini-btn", "mini-btn-icon", "tool-img-btn"]
 		});
-		img.src = "assets/ui/youtube_search/" + icon_file_name;
+		img.src = "assets/webp/ui/youtube_search/" + icon_file_name;
 		img.title = name;
 		img.onclick = () => {
 			img.classList.toggle("tool-img-btn-active");
@@ -592,7 +592,7 @@ class YoutubeSearch extends ToolBase
 						{
 							cls:["tab-button-icon"]
 						}
-					).src = "assets/ui/youtube_search/" + elem.icon;
+					).src = "assets/webp/ui/youtube_search/" + elem.icon;
 				}
 				container.appendChild(document.createTextNode(elem.label));
 				container = add_to(node, "div", {

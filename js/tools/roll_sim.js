@@ -133,27 +133,27 @@ class RollSimulator extends ToolBase
 					case 0:
 					{
 						obj.ssr_flag = true;
-						img.src = "assets/ui/roll_sim/ssr_rateup.gif";
+						img.src = "assets/gif/ui/roll_sim/ssr_rateup.gif";
 						++obj.results[0];
 						break;
 					}
 					case 1:
 					{
 						obj.ssr_flag = true;
-						img.src = "assets/ui/roll_sim/ssr.png";
+						img.src = "assets/webp/ui/roll_sim/ssr.webp";
 						++obj.results[1];
 						break;
 					}
 					case 2:
 					{
 						obj.ssr_flag = true;
-						img.src = "assets/ui/roll_sim/sr.png";
+						img.src = "assets/webp/ui/roll_sim/sr.webp";
 						++obj.results[2];
 						break;
 					}
 					default:
 					{
-						img.src = "assets/ui/roll_sim/r.png";
+						img.src = "assets/webp/ui/roll_sim/r.webp";
 						++obj.results[3];
 						break;
 					}
@@ -175,9 +175,9 @@ class RollSimulator extends ToolBase
 			// game is over
 			this.result.innerHTML += "<b>Results</b><ul>"
 				+ "<li><b>" + obj.count + "</b> draws</li>"
-				+ "<li></b><img src=\"assets/ui/roll_sim/ssr.png\"> <b>" + (obj.results[0] + obj.results[1]) + "</b> SSR (" + this.format_percent((obj.results[0] + obj.results[1]) / obj.count) + "), <b>" + obj.results[0] + "</b> rate ups (" + this.format_percent(obj.results[0] / obj.count) + ")</li>"
-				+ "<li></b><img src=\"assets/ui/roll_sim/sr.png\"> <b>" + obj.results[2] + "</b> SR (" + this.format_percent(obj.results[2] / obj.count) + ")</li>"
-				+ "<li></b><img src=\"assets/ui/roll_sim/r.png\"> <b>" + obj.results[3] + "</b> R (" + this.format_percent(obj.results[3] / obj.count) + ")</li></ul>"
+				+ "<li></b><img src=\"assets/webp/ui/roll_sim/ssr.webp\"> <b>" + (obj.results[0] + obj.results[1]) + "</b> SSR (" + this.format_percent((obj.results[0] + obj.results[1]) / obj.count) + "), <b>" + obj.results[0] + "</b> rate ups (" + this.format_percent(obj.results[0] / obj.count) + ")</li>"
+				+ "<li></b><img src=\"assets/webp/ui/roll_sim/sr.webp\"> <b>" + obj.results[2] + "</b> SR (" + this.format_percent(obj.results[2] / obj.count) + ")</li>"
+				+ "<li></b><img src=\"assets/webp/ui/roll_sim/r.webp\"> <b>" + obj.results[3] + "</b> R (" + this.format_percent(obj.results[3] / obj.count) + ")</li></ul>"
 			
 			this.inputs[0].disabled = false;
 			this.inputs[1].disabled = false;

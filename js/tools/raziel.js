@@ -35,7 +35,7 @@ class RazielCalculator extends ToolBase
 		
 		for(let i = 1; i <= 4; ++i)
 		{
-			this.add_text_cell(grid, "assets/ui/raziel/" + i + ".png", "Skill " + i);
+			this.add_text_cell(grid, "assets/webp/ui/raziel/" + i + ".webp", "Skill " + i);
 			for(let j = 1; j <= 6; ++j)
 			{
 				const cell = this.add_select_cell(grid, ["None/Other", "Red", "Yellow"], "" + j + "_" + i);
@@ -154,12 +154,12 @@ class RazielCalculator extends ToolBase
 		this.add_text_cell(grid, null, "After all presses");
 		this.add_text_cell(grid, null, "Missing presses");
 		
-		this.add_text_cell(grid, "assets/ui/raziel/b_red.png", "Red stack");
+		this.add_text_cell(grid, "assets/webp/ui/raziel/b_red.webp", "Red stack");
 		this.add_text_cell(grid, null, "0", "result_1_1");
 		this.add_text_cell(grid, null, "0", "result_1_2");
 		this.add_text_cell(grid, null, "0", "result_1_3");
 		
-		this.add_text_cell(grid, "assets/ui/raziel/b_yellow.png", "Yellow stack");
+		this.add_text_cell(grid, "assets/webp/ui/raziel/b_yellow.webp", "Yellow stack");
 		this.add_text_cell(grid, null, "0", "result_2_1");
 		this.add_text_cell(grid, null, "0", "result_2_2");
 		this.add_text_cell(grid, null, "0", "result_2_3");

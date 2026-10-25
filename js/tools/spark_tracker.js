@@ -18,7 +18,7 @@ class SparkTracker extends ToolBase
 		for(let i = 0; i < entries.length; ++i)
 		{
 			let block = add_to(this.tree[0], "div", {cls:["tool-block"]});
-			add_to(block, "img", {cls:["tab-button-icon"]}).src = "assets/ui/spark_tracker/" + entries[i] + ".png";
+			add_to(block, "img", {cls:["tab-button-icon"]}).src = "assets/webp/ui/spark_tracker/" + entries[i] + ".webp";
 			let input = add_to(block, "input", {cls:["styled-input"], id:"spark-tracker-" + i});
 			input.style.width = "200px";
 			input.type = "text";
