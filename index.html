@@ -43,16 +43,24 @@
 	</script>
 </head>
 <body onload="init()">
-	<button class="theme-toggle" onclick="toggle_theme();"></button>
-	<a href="index.html"><img id="title-header" src="assets/ui/header.png" alt="header"></a>
-	<!-- Mini buttons -->
-	<div class="margin">
-		<a class="sub-link-btn" href="../GBFAL" title="Asset Lookup"><img class="mini-btn-icon" src="../GBFAL/assets/icon.png" /> Assets</a>
-		<a class="sub-link-btn" href="../GBFAL/spark.html" title="Spark Maker"><img class="mini-btn-icon" src="../GBFAL/assets/spark/moon.png" /> Spark</a>
-		<a class="sub-link-btn" href="../GBFAL/ranker.html" title="Character Ranker"><img class="mini-btn-icon" src="../GBFML/assets/ui/icon/appear.png" /> Ranker</a>
-		<a class="sub-link-btn" href="../GBFAL/smash.html" title="Smash or Pass"><img class="mini-btn-icon" src="../GBFAL/assets/smash/smash.png" /> Smash</a>
-		<a class="sub-link-btn" href="../GBFAP" title="Animation Player"><img class="mini-btn-icon" src="../GBFAP/assets/icon.png" /> Animations</a>
-	</div>
+	<header class="header-container">
+		<a href="index.html">
+			<img class="header-icon" src="assets/icon.png">
+		</a>
+		<div class="header-content">
+			<div class="header-line header-text">
+				<span class="header-word-group"><span class="header-colored-capitalized">G</span>ranblue</span>&nbsp;<span class="header-word-group"><span class="header-colored-capitalized">F</span>antasy</span>&nbsp;<span class="header-word-group"><span class="header-colored-capitalized">T</span>ool</span>&nbsp;<span class="header-word-group"><span class="header-colored-capitalized">U</span>tility</span>
+			</div>
+			<div class="header-line">
+				<button class="theme-toggle" onclick="toggle_theme();"></button>
+				<a class="sub-link-btn" href="../GBFAL" title="Asset Lookup"><img class="mini-btn-icon" src="../GBFAL/assets/icon.png" /> Assets</a>
+				<a class="sub-link-btn" href="../GBFAL/spark.html" title="Spark Maker"><img class="mini-btn-icon" src="../GBFAL/assets/spark/moon.png" /> Spark</a>
+				<a class="sub-link-btn" href="../GBFAL/ranker.html" title="Character Ranker"><img class="mini-btn-icon" src="../GBFML/assets/ui/icon/appear.png" /> Ranker</a>
+				<a class="sub-link-btn" href="../GBFAL/smash.html" title="Smash or Pass"><img class="mini-btn-icon" src="../GBFAL/assets/smash/smash.png" /> Smash</a>
+				<a class="sub-link-btn" href="../GBFAP" title="Animation Player"><img class="mini-btn-icon" src="../GBFAP/assets/icon.png" /> Animations</a>
+			</div>
+		</div>
+	</header>
 	<!-- Tab buttons -->
 	<div class="margin">
 		<button class="tab-button" id="tab-spark-tracker" alt="index" onclick="open_tool('spark-tracker')"><img class="tab-button-icon" src="assets/ui/spark_tracker/crystal.png" />Spark Tracker</button>
